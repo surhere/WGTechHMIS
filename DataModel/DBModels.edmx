@@ -1,0 +1,572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HMISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HMIS.dbo.hmis_link_role_persmissions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="hmis_link_role_persmissions">
+          <Key>
+            <PropertyRef Name="role_id" />
+            <PropertyRef Name="permission_id" />
+            <PropertyRef Name="created_on" />
+            <PropertyRef Name="modified_on" />
+          </Key>
+          <Property Name="role_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="permission_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="modified_on" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HMIS.dbo.hmis_link_user_roles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="hmis_link_user_roles">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="role_id" />
+            <PropertyRef Name="created_on" />
+            <PropertyRef Name="modified_on" />
+          </Key>
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="role_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="modified_on" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hmis_permission_base">
+          <Key>
+            <PropertyRef Name="permissions_id" />
+          </Key>
+          <Property Name="permissions_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="permissions_descriptions" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="modified_on" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hmis_user_base">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="modified_date" Type="datetime" Nullable="false" />
+          <Property Name="createdby" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="modifiedby" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="is_password_reset" Type="bit" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'attribute_value' in the table 'HMIS.dbo.hmis_user_ext' was excluded.
+warning 6002: The table/view 'HMIS.dbo.hmis_user_ext' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="hmis_user_ext">
+          <Key>
+            <PropertyRef Name="SID" />
+            <PropertyRef Name="attribute_name" />
+          </Key>
+          <Property Name="SID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="attribute_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hsmis_role_base">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="role_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="role_description" Type="nvarchar" MaxLength="50" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="modified_on" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="modified_by" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tokens">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AuthToken" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IssuedOn" Type="datetime" Nullable="false" />
+          <Property Name="ExpiresOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_user_roles">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="role_name" />
+            <PropertyRef Name="is_active" />
+          </Key>
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="role_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="role_description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_hmis_link_role_persmissions_hmis_permission_base">
+          <End Role="hmis_permission_base" Type="Self.hmis_permission_base" Multiplicity="1" />
+          <End Role="hmis_link_role_persmissions" Type="Self.hmis_link_role_persmissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_permission_base">
+              <PropertyRef Name="permissions_id" />
+            </Principal>
+            <Dependent Role="hmis_link_role_persmissions">
+              <PropertyRef Name="permission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_link_role_persmissions_hsmis_role_base">
+          <End Role="hsmis_role_base" Type="Self.hsmis_role_base" Multiplicity="1" />
+          <End Role="hmis_link_role_persmissions" Type="Self.hmis_link_role_persmissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hsmis_role_base">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="hmis_link_role_persmissions">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_link_user_roles_hmis_user_base">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_link_user_roles" Type="Self.hmis_link_user_roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_link_user_roles">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_link_user_roles_hsmis_role_base">
+          <End Role="hsmis_role_base" Type="Self.hsmis_role_base" Multiplicity="1" />
+          <End Role="hmis_link_user_roles" Type="Self.hmis_link_user_roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hsmis_role_base">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="hmis_link_user_roles">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_user_ext_hmis_user_base">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_user_ext" Type="Self.hmis_user_ext" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_user_ext">
+              <PropertyRef Name="SID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tokens_User">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="Tokens" Type="Self.Tokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="Tokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HMISModelStoreContainer">
+          <EntitySet Name="hmis_permission_base" EntityType="Self.hmis_permission_base" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hmis_user_base" EntityType="Self.hmis_user_base" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hsmis_role_base" EntityType="Self.hsmis_role_base" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hmis_link_role_persmissions" EntityType="Self.hmis_link_role_persmissions" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [hmis_link_role_persmissions].[role_id] AS [role_id], 
+    [hmis_link_role_persmissions].[permission_id] AS [permission_id], 
+    [hmis_link_role_persmissions].[created_on] AS [created_on], 
+    [hmis_link_role_persmissions].[modified_on] AS [modified_on]
+    FROM [dbo].[hmis_link_role_persmissions] AS [hmis_link_role_persmissions]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="hmis_link_user_roles" EntityType="Self.hmis_link_user_roles" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [hmis_link_user_roles].[user_id] AS [user_id], 
+    [hmis_link_user_roles].[role_id] AS [role_id], 
+    [hmis_link_user_roles].[created_on] AS [created_on], 
+    [hmis_link_user_roles].[modified_on] AS [modified_on]
+    FROM [dbo].[hmis_link_user_roles] AS [hmis_link_user_roles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="hmis_user_ext" EntityType="Self.hmis_user_ext" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [hmis_user_ext].[SID] AS [SID], 
+    [hmis_user_ext].[attribute_name] AS [attribute_name]
+    FROM [dbo].[hmis_user_ext] AS [hmis_user_ext]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_user_roles" EntityType="Self.vw_user_roles" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_user_roles].[user_id] AS [user_id], 
+    [vw_user_roles].[role_name] AS [role_name], 
+    [vw_user_roles].[is_active] AS [is_active], 
+    [vw_user_roles].[role_description] AS [role_description]
+    FROM [dbo].[vw_user_roles] AS [vw_user_roles]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_hmis_link_role_persmissions_hmis_permission_base" Association="Self.FK_hmis_link_role_persmissions_hmis_permission_base">
+            <End Role="hmis_permission_base" EntitySet="hmis_permission_base" />
+            <End Role="hmis_link_role_persmissions" EntitySet="hmis_link_role_persmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_link_role_persmissions_hsmis_role_base" Association="Self.FK_hmis_link_role_persmissions_hsmis_role_base">
+            <End Role="hsmis_role_base" EntitySet="hsmis_role_base" />
+            <End Role="hmis_link_role_persmissions" EntitySet="hmis_link_role_persmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_link_user_roles_hmis_user_base" Association="Self.FK_hmis_link_user_roles_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_link_user_roles" EntitySet="hmis_link_user_roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_link_user_roles_hsmis_role_base" Association="Self.FK_hmis_link_user_roles_hsmis_role_base">
+            <End Role="hsmis_role_base" EntitySet="hsmis_role_base" />
+            <End Role="hmis_link_user_roles" EntitySet="hmis_link_user_roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_user_ext_hmis_user_base" Association="Self.FK_hmis_user_ext_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_user_ext" EntitySet="hmis_user_ext" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tokens_User" Association="Self.FK_Tokens_User">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="Tokens" EntitySet="Tokens" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HMISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="hmis_permission_base">
+          <Key>
+            <PropertyRef Name="permissions_id" />
+          </Key>
+          <Property Name="permissions_id" Type="Guid" Nullable="false" />
+          <Property Name="permissions_descriptions" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="hmis_link_role_persmissions" Relationship="Self.FK_hmis_link_role_persmissions_hmis_permission_base" FromRole="hmis_permission_base" ToRole="hmis_link_role_persmissions" />
+        </EntityType>
+        <EntityType Name="hmis_user_base">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Guid" Nullable="false" />
+          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="createdby" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="modifiedby" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="is_password_reset" Type="Boolean" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="hmis_link_user_roles" Relationship="Self.FK_hmis_link_user_roles_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_link_user_roles" />
+          <NavigationProperty Name="hmis_user_ext" Relationship="Self.FK_hmis_user_ext_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_user_ext" />
+          <NavigationProperty Name="Tokens" Relationship="HMISModel.FK_Tokens_User" FromRole="hmis_user_base" ToRole="Token" />
+        </EntityType>
+        <EntityType Name="hsmis_role_base">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Guid" Nullable="false" />
+          <Property Name="role_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="role_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="modified_by" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="hmis_link_role_persmissions" Relationship="Self.FK_hmis_link_role_persmissions_hsmis_role_base" FromRole="hsmis_role_base" ToRole="hmis_link_role_persmissions" />
+          <NavigationProperty Name="hmis_link_user_roles" Relationship="Self.FK_hmis_link_user_roles_hsmis_role_base" FromRole="hsmis_role_base" ToRole="hmis_link_user_roles" />
+        </EntityType>
+        <EntityType Name="hmis_link_role_persmissions">
+          <Key>
+            <PropertyRef Name="role_id" />
+            <PropertyRef Name="permission_id" />
+            <PropertyRef Name="created_on" />
+            <PropertyRef Name="modified_on" />
+          </Key>
+          <Property Name="role_id" Type="Guid" Nullable="false" />
+          <Property Name="permission_id" Type="Guid" Nullable="false" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="hmis_permission_base" Relationship="Self.FK_hmis_link_role_persmissions_hmis_permission_base" FromRole="hmis_link_role_persmissions" ToRole="hmis_permission_base" />
+          <NavigationProperty Name="hsmis_role_base" Relationship="Self.FK_hmis_link_role_persmissions_hsmis_role_base" FromRole="hmis_link_role_persmissions" ToRole="hsmis_role_base" />
+        </EntityType>
+        <EntityType Name="hmis_link_user_roles">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="role_id" />
+            <PropertyRef Name="created_on" />
+            <PropertyRef Name="modified_on" />
+          </Key>
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="role_id" Type="Guid" Nullable="false" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="hmis_user_base" Relationship="Self.FK_hmis_link_user_roles_hmis_user_base" FromRole="hmis_link_user_roles" ToRole="hmis_user_base" />
+          <NavigationProperty Name="hsmis_role_base" Relationship="Self.FK_hmis_link_user_roles_hsmis_role_base" FromRole="hmis_link_user_roles" ToRole="hsmis_role_base" />
+        </EntityType>
+        <EntityType Name="hmis_user_ext">
+          <Key>
+            <PropertyRef Name="SID" />
+            <PropertyRef Name="attribute_name" />
+          </Key>
+          <Property Name="SID" Type="Guid" Nullable="false" />
+          <Property Name="attribute_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="hmis_user_base" Relationship="Self.FK_hmis_user_ext_hmis_user_base" FromRole="hmis_user_ext" ToRole="hmis_user_base" />
+        </EntityType>
+        <Association Name="FK_hmis_link_role_persmissions_hmis_permission_base">
+          <End Role="hmis_permission_base" Type="Self.hmis_permission_base" Multiplicity="1" />
+          <End Role="hmis_link_role_persmissions" Type="Self.hmis_link_role_persmissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_permission_base">
+              <PropertyRef Name="permissions_id" />
+            </Principal>
+            <Dependent Role="hmis_link_role_persmissions">
+              <PropertyRef Name="permission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_link_user_roles_hmis_user_base">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_link_user_roles" Type="Self.hmis_link_user_roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_link_user_roles">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_user_ext_hmis_user_base">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_user_ext" Type="Self.hmis_user_ext" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_user_ext">
+              <PropertyRef Name="SID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_link_role_persmissions_hsmis_role_base">
+          <End Role="hsmis_role_base" Type="Self.hsmis_role_base" Multiplicity="1" />
+          <End Role="hmis_link_role_persmissions" Type="Self.hmis_link_role_persmissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hsmis_role_base">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="hmis_link_role_persmissions">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_link_user_roles_hsmis_role_base">
+          <End Role="hsmis_role_base" Type="Self.hsmis_role_base" Multiplicity="1" />
+          <End Role="hmis_link_user_roles" Type="Self.hmis_link_user_roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hsmis_role_base">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="hmis_link_user_roles">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBModels" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="hmis_permission_base" EntityType="Self.hmis_permission_base" />
+          <EntitySet Name="hmis_user_base" EntityType="Self.hmis_user_base" />
+          <EntitySet Name="hsmis_role_base" EntityType="Self.hsmis_role_base" />
+          <EntitySet Name="hmis_link_role_persmissions" EntityType="Self.hmis_link_role_persmissions" />
+          <EntitySet Name="hmis_link_user_roles" EntityType="Self.hmis_link_user_roles" />
+          <EntitySet Name="hmis_user_ext" EntityType="Self.hmis_user_ext" />
+          <AssociationSet Name="FK_hmis_link_role_persmissions_hmis_permission_base" Association="Self.FK_hmis_link_role_persmissions_hmis_permission_base">
+            <End Role="hmis_permission_base" EntitySet="hmis_permission_base" />
+            <End Role="hmis_link_role_persmissions" EntitySet="hmis_link_role_persmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_link_user_roles_hmis_user_base" Association="Self.FK_hmis_link_user_roles_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_link_user_roles" EntitySet="hmis_link_user_roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_user_ext_hmis_user_base" Association="Self.FK_hmis_user_ext_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_user_ext" EntitySet="hmis_user_ext" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_link_role_persmissions_hsmis_role_base" Association="Self.FK_hmis_link_role_persmissions_hsmis_role_base">
+            <End Role="hsmis_role_base" EntitySet="hsmis_role_base" />
+            <End Role="hmis_link_role_persmissions" EntitySet="hmis_link_role_persmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_link_user_roles_hsmis_role_base" Association="Self.FK_hmis_link_user_roles_hsmis_role_base">
+            <End Role="hsmis_role_base" EntitySet="hsmis_role_base" />
+            <End Role="hmis_link_user_roles" EntitySet="hmis_link_user_roles" />
+          </AssociationSet>
+          <EntitySet Name="Tokens" EntityType="HMISModel.Token" />
+          <AssociationSet Name="FK_Tokens_User" Association="HMISModel.FK_Tokens_User">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="Token" EntitySet="Tokens" />
+          </AssociationSet>
+          <EntitySet Name="vw_user_roles" EntityType="HMISModel.vw_user_roles" />
+        </EntityContainer>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="AuthToken" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IssuedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpiresOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="hmis_user_base" Relationship="HMISModel.FK_Tokens_User" FromRole="Token" ToRole="hmis_user_base" />
+        </EntityType>
+        <Association Name="FK_Tokens_User">
+          <End Type="HMISModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="HMISModel.Token" Role="Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vw_user_roles">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="role_name" />
+            <PropertyRef Name="is_active" />
+          </Key>
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="role_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="role_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HMISModelStoreContainer" CdmEntityContainer="DBModels">
+          <EntitySetMapping Name="hmis_permission_base">
+            <EntityTypeMapping TypeName="HMISModel.hmis_permission_base">
+              <MappingFragment StoreEntitySet="hmis_permission_base">
+                <ScalarProperty Name="permissions_id" ColumnName="permissions_id" />
+                <ScalarProperty Name="permissions_descriptions" ColumnName="permissions_descriptions" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="modified_on" ColumnName="modified_on" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_user_base">
+            <EntityTypeMapping TypeName="HMISModel.hmis_user_base">
+              <MappingFragment StoreEntitySet="hmis_user_base">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="is_password_reset" ColumnName="is_password_reset" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hsmis_role_base">
+            <EntityTypeMapping TypeName="HMISModel.hsmis_role_base">
+              <MappingFragment StoreEntitySet="hsmis_role_base">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+                <ScalarProperty Name="role_description" ColumnName="role_description" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="modified_on" ColumnName="modified_on" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_link_role_persmissions">
+            <EntityTypeMapping TypeName="HMISModel.hmis_link_role_persmissions">
+              <MappingFragment StoreEntitySet="hmis_link_role_persmissions">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="permission_id" ColumnName="permission_id" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="modified_on" ColumnName="modified_on" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_link_user_roles">
+            <EntityTypeMapping TypeName="HMISModel.hmis_link_user_roles">
+              <MappingFragment StoreEntitySet="hmis_link_user_roles">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="modified_on" ColumnName="modified_on" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_user_ext">
+            <EntityTypeMapping TypeName="HMISModel.hmis_user_ext">
+              <MappingFragment StoreEntitySet="hmis_user_ext">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="attribute_name" ColumnName="attribute_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="HMISModel.Token">
+              <MappingFragment StoreEntitySet="Tokens">
+                <ScalarProperty Name="ExpiresOn" ColumnName="ExpiresOn" />
+                <ScalarProperty Name="IssuedOn" ColumnName="IssuedOn" />
+                <ScalarProperty Name="AuthToken" ColumnName="AuthToken" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_user_roles">
+            <EntityTypeMapping TypeName="HMISModel.vw_user_roles">
+              <MappingFragment StoreEntitySet="vw_user_roles">
+                <ScalarProperty Name="role_description" ColumnName="role_description" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

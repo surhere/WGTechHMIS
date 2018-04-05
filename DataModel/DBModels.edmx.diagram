@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="39bbfeebfb12447c88f8410f608226bd" Name="Diagram1" ZoomLevel="98">
+        <EntityTypeShape EntityType="HMISModel.hmis_permission_base" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMISModel.hmis_user_base" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMISModel.hsmis_role_base" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMISModel.hmis_link_role_persmissions" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMISModel.hmis_link_user_roles" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMISModel.hmis_user_ext" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="HMISModel.FK_hmis_link_role_persmissions_hmis_permission_base" ManuallyRouted="false" />
+        <AssociationConnector Association="HMISModel.FK_hmis_link_user_roles_hmis_user_base" ManuallyRouted="false" />
+        <AssociationConnector Association="HMISModel.FK_hmis_user_ext_hmis_user_base" ManuallyRouted="false" />
+        <AssociationConnector Association="HMISModel.FK_hmis_link_role_persmissions_hsmis_role_base" ManuallyRouted="false" />
+        <AssociationConnector Association="HMISModel.FK_hmis_link_user_roles_hsmis_role_base" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="HMISModel.Token" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="HMISModel.FK_Tokens_User" />
+        <EntityTypeShape EntityType="HMISModel.vw_user_roles" Width="1.5" PointX="5.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
