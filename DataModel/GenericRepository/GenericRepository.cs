@@ -196,44 +196,15 @@ namespace DataModel.GenericRepository
         /// </summary>
         /// <param name="predicate">Criteria to match on</param>
         /// <returns>A single record containing the first record matching the specified criteria</returns>
-        //public TEntity ValidateUser(int productID)
+        //public List<vw_user_roles> GetUserRoles(Guid usersid)
         //{
-        //    hmisUserBase ubn = new hmisUserBase();
-
-        //    using (HMISEntities1 db = new HMISEntities1())
+        //    using (var entities = new DBModels())
         //    {
-        //        var person = (from ub in db.hmis_user_base
-        //                      join ue in db.hmis_user_ext
-        //                      on ub.SID equals ue.SID
-        //                      join ur in db.hmis_link_user_roles
-        //                      on ub.SID equals ur.user_id
-        //                      join rb in db.hsmis_role_base
-        //                      on ur.role_id equals rb.role_id
-        //                      join rp in db.hmis_link_role_persmissions
-        //                      on ur.role_id equals rp.role_id
-        //                      join pb in db.hmis_permission_base
-        //                      on rp.permission_id equals pb.permissions_id
-        //                      where ub.user_name == "CA" && ub.password == "Test1"
-        //                      select new
-        //                      {
-        //                          ID = ub.SID,
-        //                          FirstName = ub.first_name,
-        //                          LastName = ub.last_name,
-        //                          Password = ub.password,
-        //                          Roles = rb.role_name,
-        //                          Permissions = pb.permissions_id
-        //                      }).ToList();
-
-        //        foreach (var p in person)
-        //        {
-        //            ubn.SID = p.ID;
-        //            ubn.first_name = p.FirstName;
-        //            ubn.last_name = p.LastName;
-        //            //ubn.hmis_link_user_roles.Add(p.Roles);
-
-        //        }
+        //        var prod = (from p in entities.vw_user_roles
+        //                    where p.user_id == usersid
+        //                    select p).ToList();
+        //        return prod;
         //    }
-        //    return DbSet.First<TEntity>(predicate);
         //}
 
         #endregion

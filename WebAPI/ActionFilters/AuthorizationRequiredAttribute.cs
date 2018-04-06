@@ -5,7 +5,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using BusinessServices.Services;
 
-namespace WebApi.ActionFilters
+namespace WebAPI.ActionFilters
 {
     public class AuthorizationRequiredAttribute : ActionFilterAttribute
     {

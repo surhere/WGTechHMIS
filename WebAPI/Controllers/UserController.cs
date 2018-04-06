@@ -42,23 +42,41 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/User
+
+        /// <summary>
+        /// Code for Client Session with a Tocken to be passed on success.
+        /// Over all login logic with token generation goes here.
+        /// ValidateUser Checks userid and password with DB abd returns user object.
+        /// Password hash will be applied from utility. Custom encryption with salt
+        /// </summary>
+        /// <param name="ss"></param>
+        /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage Post(UserEntity ss)
+        public HttpResponseMessage Post(hmisUserBase userObject)
         {
             try
-            {
-                //var user = _userServices.ValidateUser(ss.UserName, ss.Password);
-                // _roleService.GetUserRoles(user.SID);
-                //return GetUserInformation(ss.UserName,ss.Password);
-                               
+            {               
+                var user = _userServices.ValidateUser(userObject.user_name, userObject.password);
+                if (user.SID != Guid.Empty)
+                {
+                    var urole = _roleService.GetUserRoles(user.SID);
+                    foreach (var roles in urole.ToList())
+                    {
+                        ///Add all roles to the specified user authenticated at the top validatre method
+                        ///user.hmis_link_user_roles.Add(roles.na)
+                    }
+
                 }
+                /// will return user object in Json via IActionresult 
+                //return GetUserInformation(ss.UserName,ss.Password);                
+            }
             catch (Exception ex)
             {
-
+                //Write Application Log
             }
 
             //to be blocked after role selection. we will return a single user object having all roles in it
-            return GetUserInformation(ss.UserName, ss.Password);
+            return GetUserInformation(userObject.user_name, userObject.password);
         }
 
         /// <summary>
@@ -68,14 +86,22 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         public HttpResponseMessage GetUserInformation([FromUri]string uname, [FromUri]string pass)
         {
-            var user = _userServices.ValidateUser(uname, pass);
-            if (user.SID != Guid.Empty)
+            try
             {
-                var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
-                if (basicAuthenticationIdentity != null)
-                    basicAuthenticationIdentity.UserId = user.SID;
-                return GetAuthToken(user);
+                var user = _userServices.ValidateUser(uname, pass);
+                if (user.SID != Guid.Empty)
+                {
+                    var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+                    if (basicAuthenticationIdentity != null)
+                        basicAuthenticationIdentity.UserId = user.SID;
+                    return GetAuthToken(user);
+                }
             }
+            catch(Exception ex)
+            {
+                // Write Application Log
+            }
+            
             return null;
         }
 
@@ -92,7 +118,7 @@ namespace WebAPI.Controllers
             response.Headers.Add("Token", token.AuthToken);
             response.Headers.Add("TokenExpiry", ConfigurationManager.AppSettings["AuthTokenExpiry"]);
             response.Headers.Add("Access-Control-Expose-Headers", "Token,TokenExpiry");
-            var session = System.Web.HttpContext.Current.Session;
+            //var session = System.Web.HttpContext.Current.Session;
             //if(session!=null)
             //{
             //    if(session["AuthUser"]==null)

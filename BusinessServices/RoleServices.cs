@@ -1,4 +1,5 @@
 ﻿using BusinessEntities;
+using DataModel;
 using DataModel.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -27,14 +28,13 @@ namespace BusinessServices
         /// <summary>
         /// Public method to get user roles for specific user appended to user role list.
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public List<UserRoles> GetUserRoles(Guid UsersID)
+        /// <param name="userid"></param>
+        /// <returns>List of Roles</returns>
+        public List<string> GetUserRoles(Guid UsersID)
         {
-            List<UserRoles> userRoles = null;
-            _unitOfWork.vwRoleRepository.GetAll();
-
+            List<string> userRoles = null;
+            var roles =( from m in _unitOfWork.vwRoleRepository.GetMany(u => u.user_id == UsersID)
+                       select m).ToList();
            
             return userRoles;
         }

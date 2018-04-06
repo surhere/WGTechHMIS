@@ -1,4 +1,5 @@
 ﻿using BusinessEntities;
+using DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace BusinessServices
 {
     public interface IRoleService
     {
-        List<UserRoles> GetUserRoles(Guid UsersID);
+        List<string> GetUserRoles(Guid UsersID);
     }
 }
