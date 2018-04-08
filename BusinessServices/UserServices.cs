@@ -88,10 +88,16 @@ namespace BusinessServices.Services
             {
                 var userHMIS = new hmis_user_base
                 {
+                    SID = Guid.NewGuid(),
                     user_name = userEntity.user_name,
                     password = userEntity.password,
                     first_name = userEntity.first_name,
                     last_name = userEntity.last_name,
+                    createdby = "Test Data",
+                    created_date = DateTime.Now,
+                    modifiedby = "Test Data",
+                    modified_date = DateTime.Now
+          
 
                 };
                 _unitOfWork.UserRepository.Insert(userHMIS);

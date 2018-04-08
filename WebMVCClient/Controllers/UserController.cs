@@ -28,9 +28,8 @@ namespace WebMVCClient.Controllers
         [HttpPost]
         public ActionResult Register(hmisUserBase user)
         {
-            UserEntity usr = new UserEntity();
 
-            HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("User", usr).Result;
+            HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("Admin", user).Result;
             //userList = response.Content.ReadAsByteArrayAsync<IEnumerable<hmisUserBase>>().Result;
             //HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("User?name="+username+"&&pass="+ password).Result;
             //HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("User").Result;
@@ -55,9 +54,9 @@ namespace WebMVCClient.Controllers
                 ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", EmpResponse);
                 //Deserializing the response recieved from web api and storing into the Employee list  
                 // EmpInfo =  JsonConvert.DeserializeObject<List<hmisUserBase>>(EmpResponse);
-                return View(Users);
+               
             }
-            return View();
+            return RedirectToAction("Index", "User");
         }
 
 

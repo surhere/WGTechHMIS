@@ -13,7 +13,7 @@ using WebAPI.ErrorHelper;
 
 namespace WebAPI.Controllers
 {
-    [AuthorizationRequired]
+   // [AuthorizationRequired]
     [RoutePrefix("v1/Users/User")]
     public class AdminController : ApiController
     {
