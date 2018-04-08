@@ -52,5 +52,11 @@
     <Compile Include="UserEntity.cs" />
     <Compile Include="UserRoles.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataModel\DataModel.csproj">
+      <Project>{958F8926-6298-4A59-B597-1A62D5B097D1}</Project>
+      <Name>DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

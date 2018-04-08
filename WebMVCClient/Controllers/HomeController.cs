@@ -20,13 +20,12 @@ namespace WebMVCClient.Controllers
         {
             IEnumerable<hmisUserBase> userList;
             List<hmisUserBase> EmpInfo = new List<hmisUserBase>();
-            HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("values").Result;
+            HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("User").Result;
             //userList = response.Content.ReadAsByteArrayAsync<IEnumerable<hmisUserBase>>().Result;
             if (response.IsSuccessStatusCode)
             {
                 //Storing the response details recieved from web api   
-                var EmpResponse = response.Content.ReadAsStringAsync().Result;                
-              
+                var EmpResponse = response.Content.ReadAsStringAsync().Result;
                 //Deserializing the response recieved from web api and storing into the Employee list  
                 EmpInfo = JsonConvert.DeserializeObject<List<hmisUserBase>>(EmpResponse);
 
@@ -35,9 +34,9 @@ namespace WebMVCClient.Controllers
             //GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", 1);
         }
 
-        public ActionResult About()
+        public ActionResult Register()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Your application Register page.";
 
             return View();
         }
@@ -64,6 +63,9 @@ namespace WebMVCClient.Controllers
             UserEntity usr = new UserEntity();
             usr.UserName = username;
             usr.Password = password;
+
+            
+
             HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("User",usr).Result;
             //userList = response.Content.ReadAsByteArrayAsync<IEnumerable<hmisUserBase>>().Result;
             //HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("User?name="+username+"&&pass="+ password).Result;
@@ -76,6 +78,8 @@ namespace WebMVCClient.Controllers
                 var EmpResponse = response1.Content.ReadAsStringAsync().Result;
 
                 var readTask = response1.Content.ReadAsAsync<IList<UserEntity>>();
+                var Users = JsonConvert.DeserializeObject<List<UserEntity>>(EmpResponse);
+
                 if (Session != null)
                 {
                     if (Session["AuthUser"] == null)
@@ -87,9 +91,10 @@ namespace WebMVCClient.Controllers
                 ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", EmpResponse);
                 //Deserializing the response recieved from web api and storing into the Employee list  
                 // EmpInfo =  JsonConvert.DeserializeObject<List<hmisUserBase>>(EmpResponse);
-
+                return View(Users);
             }
 
+          
             return RedirectToAction("Index","User");
         }
         

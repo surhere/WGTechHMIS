@@ -13,6 +13,7 @@ using WebAPI.ErrorHelper;
 
 namespace WebAPI.ActionFilters
 {
+    /// Global Exception FIleters
     /// <summary>
     /// Action filter to handle for Global application errors.
     /// </summary>

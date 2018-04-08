@@ -25,14 +25,16 @@ namespace WebAPI
             Bootstrapper.Initialise();
 
             //Define Formatters
+            //Define Formatters
             var formatters = GlobalConfiguration.Configuration.Formatters;
             var jsonFormatter = formatters.JsonFormatter;
             var settings = jsonFormatter.SerializerSettings;
             settings.Formatting = Formatting.Indented;
             // settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            var appXmlType = formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
-            formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
-
+            //var appXmlType = formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
+            //formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+            // GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+            // GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
             //Add CORS Handler
             GlobalConfiguration.Configuration.MessageHandlers.Add(new CorsHandler());
         }

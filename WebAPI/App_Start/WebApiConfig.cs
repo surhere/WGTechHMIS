@@ -17,7 +17,9 @@ namespace WebAPI
             config.Filters.Add(new GlobalExceptionAttribute());
             // Web API routes
             // config.MapHttpAttributeRoutes();
-     
+            var json = config.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

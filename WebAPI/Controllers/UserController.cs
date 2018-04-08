@@ -8,7 +8,9 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using WebApi.Filters;
 
@@ -28,11 +30,10 @@ namespace WebAPI.Controllers
             _roleService = roleService;
         }
         // GET: api/User
-        [AllowAnonymous]
-        public string Get()
+        [HttpGet]
+        public IEnumerable<hmisUserBase> Get()
         {
-
-            return "value";
+            return _userServices.GetAllUsers(); 
         }
 
         // GET: api/User/5
@@ -55,16 +56,17 @@ namespace WebAPI.Controllers
         public HttpResponseMessage Post(hmisUserBase userObject)
         {
             try
-            {               
+            {
+                userObject.user_name = "admin";
                 var user = _userServices.ValidateUser(userObject.user_name, userObject.password);
                 if (user.SID != Guid.Empty)
                 {
                     var urole = _roleService.GetUserRoles(user.SID);
-                    foreach (var roles in urole.ToList())
-                    {
-                        ///Add all roles to the specified user authenticated at the top validatre method
-                        ///user.hmis_link_user_roles.Add(roles.na)
-                    }
+                    //foreach (var roles in urole.ToList())
+                    //{
+                    //    ///Add all roles to the specified user authenticated at the top validatre method
+                    //    ///user.hmis_link_user_roles.Add(roles.na)
+                    //}
 
                 }
                 /// will return user object in Json via IActionresult 
@@ -78,6 +80,18 @@ namespace WebAPI.Controllers
             //to be blocked after role selection. we will return a single user object having all roles in it
             return GetUserInformation(userObject.user_name, userObject.password);
         }
+
+        //[HttpGet]
+        //public async Task<IHttpActionResult> AsyncGet200MsDelay()
+        //{
+        //    // simulate a delay - could be a database query or another service request
+        //    await Task.Delay(200);
+        //    //call ValidateUser method asynchronously
+        //    //hmisUserBase hmisUserBase = await Task.Run(() => _userServices.ValidateUser("admin", "Test"));
+        //    hmisUserBase hmisUserBase =  _userServices.ValidateUser("admin", "Test");
+        //    return await Task.FromResult(Ok(hmisUserBase));
+            
+        //}
 
         /// <summary>
         /// MVC Login Client
@@ -118,6 +132,7 @@ namespace WebAPI.Controllers
             response.Headers.Add("Token", token.AuthToken);
             response.Headers.Add("TokenExpiry", ConfigurationManager.AppSettings["AuthTokenExpiry"]);
             response.Headers.Add("Access-Control-Expose-Headers", "Token,TokenExpiry");
+            //response.Content = new StringContent("hello Subhamay"+Json(user), Encoding.Unicode);
             //var session = System.Web.HttpContext.Current.Session;
             //if(session!=null)
             //{
