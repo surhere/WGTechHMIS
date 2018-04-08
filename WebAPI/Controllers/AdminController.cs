@@ -14,7 +14,7 @@ using WebAPI.ErrorHelper;
 namespace WebAPI.Controllers
 {
     [AuthorizationRequired]
-    [RoutePrefix("v1/Products/Product")]
+    [RoutePrefix("v1/Users/User")]
     public class AdminController : ApiController
     {
 
@@ -30,9 +30,15 @@ namespace WebAPI.Controllers
             _roleService = roleService;
         }
         // GET: api/Admin
-        public IEnumerable<string> Get()
+        [GET("allusers")]
+        [GET("all")]
+        public HttpResponseMessage Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = _userServices.GetAllUsers();
+            var productEntities = users as List<hmisUserBase> ?? users.ToList();
+            if (productEntities.Any())
+                return Request.CreateResponse(HttpStatusCode.OK, productEntities);
+            throw new ApiDataException(1000, "Products not found", HttpStatusCode.NotFound);
         }
 
         // GET: api/Admin/5
@@ -62,13 +68,33 @@ namespace WebAPI.Controllers
 
 
         // PUT: api/Admin/5
-        public void Put(int id, [FromBody]string value)
+        [PUT("Update/userid/{id}")]
+        [PUT("Modify/userid/{id}")]
+        public bool Put(Guid id, [FromBody] hmisUserBase userEntity)
         {
+            if (id != Guid.Empty)
+            {
+                return _userServices.UpdateUser(id, userEntity);
+            }
+            return false;
         }
 
         // DELETE: api/Admin/5
-        public void Delete(int id)
+        [DELETE("remove/userid/{id}")]
+        [DELETE("clear/userid/{id}")]
+        [PUT("delete/userid/{id}")]
+        public bool Delete(Guid id)
         {
+            if (id != null && id != Guid.Empty)
+            {
+                var isSuccess = _userServices.DeleteUser(id);
+                if (isSuccess)
+                {
+                    return isSuccess;
+                }
+                throw new ApiDataException(1002, "User is already deleted or not exist in system.", HttpStatusCode.NoContent);
+            }
+            throw new ApiException() { ErrorCode = (int)HttpStatusCode.BadRequest, ErrorDescription = "Bad Request..." };
         }
     }
 }
