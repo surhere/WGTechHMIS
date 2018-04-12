@@ -1,4 +1,5 @@
-﻿using BusinessEntities;
+﻿using AttributeRouting.Web.Http;
+using BusinessEntities;
 using BusinessServices;
 using BusinessServices.Service.Interfaces;
 using BusinessServices.Services;
@@ -13,9 +14,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebApi.Filters;
+using WebAPI.ErrorHelper;
 
 namespace WebAPI.Controllers
 {
+    [ApiAuthenticationFilter]
     public class UserController : ApiController
     {
         private readonly IUserServices _userServices;
@@ -37,10 +40,23 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/User/5
-        public string Get(int id)
+        // GET: api/Admin/5
+        [GET("userid/{id?}")]
+        [GET("particularuser/{id?}")]
+        [GET("myuser/{id:range(1, 3)}")]
+        public HttpResponseMessage Get(Guid id)
         {
-            return "value";
+            if (id != null)
+            {
+                var product = _userServices.GetUserById(id);
+                if (product != null)
+                    return Request.CreateResponse(HttpStatusCode.OK, product);
+
+                throw new ErrorHelper.ApiDataException(1001, "No product found for this id.", HttpStatusCode.NotFound);
+            }
+            throw new ApiException() { ErrorCode = (int)HttpStatusCode.BadRequest, ErrorDescription = "Bad Request..." };
         }
+
 
         // POST: api/User
 

@@ -55,47 +55,56 @@ namespace WebMVCClient.Controllers
         /// <param name="password"></param>
         /// <returns></returns>
         [HttpPost]     
-        public ActionResult Login(string username, string password)
+        public ActionResult Login(hmisUserBase objUser)
         {
             //HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("Authenticate/Authenticate").Result;
             //GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Authorization Basic", "Basic admin" + ":" + "Test");
-            username = "admin";password = "Test";
+           string  username = "admin"; string password = "Test";
             UserEntity usr = new UserEntity();
             usr.UserName = username;
             usr.Password = password;
 
-            
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Authorization", "Basic " + ("admin" + ":" + "Test"));
 
-            HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("User",usr).Result;
+            HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("Authenticate", objUser).Result;
             //userList = response.Content.ReadAsByteArrayAsync<IEnumerable<hmisUserBase>>().Result;
-            //HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("User?name="+username+"&&pass="+ password).Result;
-            //HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("User").Result;
-
-
             if (response1.IsSuccessStatusCode)
             {
                 //Storing the response details recieved from web api   
                 var EmpResponse = response1.Content.ReadAsStringAsync().Result;
-
-                var readTask = response1.Content.ReadAsAsync<IList<UserEntity>>();
-                var Users = JsonConvert.DeserializeObject<List<UserEntity>>(EmpResponse);
-
+                string id = "";
+                String[] parts = EmpResponse.Split(':');
+                string Message = parts[0];
+                string Token = parts[1];
+                //  var readTask = response1.Content.ReadAsAsync<IList<UserEntity>>();
+                //var Users = JsonConvert.DeserializeObject<List<UserEntity>>(EmpResponse);
+                HttpHeaders headers = response1.Headers;
+                IEnumerable<string> values;
+                if (headers.TryGetValues("UserID", out values))
+                {
+                    id = values.First();
+                }
                 if (Session != null)
                 {
-                    if (Session["AuthUser"] == null)
+                    if (Session["AuthUserToken"] == null)
                     {
-                        Session["AuthUser"] = EmpResponse;
+                        Session["AuthUserToken"] = Token;
                     }
                 }
-                GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", "1");
+                GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
+
+                HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("/Admin/" + $"/{id}").Result;
+                hmisUserBase data = response.Content.ReadAsAsync<hmisUserBase>().Result;
+
                 ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", EmpResponse);
                 //Deserializing the response recieved from web api and storing into the Employee list  
                 // EmpInfo =  JsonConvert.DeserializeObject<List<hmisUserBase>>(EmpResponse);
-                return View(Users);
+
             }
 
           
-            return RedirectToAction("Index","User");
+            return RedirectToAction("Index","Home");
         }
         
     }

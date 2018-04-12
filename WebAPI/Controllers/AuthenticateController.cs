@@ -11,7 +11,7 @@ using System.Web;
 
 namespace WebApi.Controllers
 {
-    //[ApiAuthenticationFilter]
+    [ApiAuthenticationFilter]
     public class AuthenticateController : ApiController
     {
         #region Private variable.
@@ -60,11 +60,20 @@ namespace WebApi.Controllers
         /// <returns></returns>
         private HttpResponseMessage GetAuthToken(Guid userId)
         {
+            LoginResponseObject obj = new LoginResponseObject();
+          
+
             var token = _tokenServices.GenerateToken(userId);
-            var response = Request.CreateResponse(HttpStatusCode.OK, "Authorized:"+ token.AuthToken);
+            obj.Authorized = "Authorized:";
+            obj.access_token = token.AuthToken;
+            obj.userName = userId.ToString();
+            var response = Request.CreateResponse(HttpStatusCode.OK, obj);
             response.Headers.Add("Token", token.AuthToken);
+            response.Headers.Add("UserID", userId.ToString());
             response.Headers.Add("TokenExpiry", ConfigurationManager.AppSettings["AuthTokenExpiry"]);
             response.Headers.Add("Access-Control-Expose-Headers", "Token,TokenExpiry" );
+            //response.Content.Headers.Add("access_token", token.AuthToken);
+            //response.Content.Headers.Add("userName", userId.ToString());
             var session = HttpContext.Current.Session; 
             //if(session!=null)
             //{
@@ -74,6 +83,13 @@ namespace WebApi.Controllers
             //    }
             //}
             return response;
+        }
+        public class LoginResponseObject
+        {
+            public string userName { get; set; }
+            public string Authorized { get; set; }
+            public string access_token { get; set; }
+            hmisUserBase SessionUserData { get; set; }
         }
     }
 }

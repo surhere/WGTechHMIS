@@ -28,6 +28,7 @@ namespace WebMVCClient.Controllers
         [HttpPost]
         public ActionResult Register(hmisUserBase user)
         {
+            
 
             HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("Admin", user).Result;
             //userList = response.Content.ReadAsByteArrayAsync<IEnumerable<hmisUserBase>>().Result;

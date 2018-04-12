@@ -13,7 +13,7 @@ using WebAPI.ErrorHelper;
 
 namespace WebAPI.Controllers
 {
-   // [AuthorizationRequired]
+    [AuthorizationRequired]
     [RoutePrefix("v1/Users/User")]
     public class AdminController : ApiController
     {
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             var productEntities = users as List<hmisUserBase> ?? users.ToList();
             if (productEntities.Any())
                 return Request.CreateResponse(HttpStatusCode.OK, productEntities);
-            throw new ApiDataException(1000, "Products not found", HttpStatusCode.NotFound);
+            throw new ApiDataException(1000, "Users not found", HttpStatusCode.NotFound);
         }
 
         // GET: api/Admin/5
@@ -49,9 +49,9 @@ namespace WebAPI.Controllers
         {
             if (id != null)
             {
-                var product = _userServices.GetUserById(id);
-                if (product != null)
-                    return Request.CreateResponse(HttpStatusCode.OK, product);
+                var user = _userServices.GetUserById(id);
+                if (user != null)
+                    return Request.CreateResponse(HttpStatusCode.OK, user);
 
                 throw new ErrorHelper.ApiDataException(1001, "No product found for this id.", HttpStatusCode.NotFound);
             }
