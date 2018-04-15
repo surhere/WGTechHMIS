@@ -13,14 +13,25 @@
                 if (response != null && response.error != undefined) {
                     $scope.message = response.error_description;
                 }
-                else {
-                    debugger;
-                    var userdata = loginService.getUserInformation('6418baab-9f1d-4917-9ff6-33bdfc5c49cc').then(function (response) {
-                        $scope.userinfo = 'TYestr'
-                    });
+                else {                    
                     $location.path('/next');
                 }
             });
         }
+        $scope.getRight = function (id) {
+            debugger;
+            return loginService.getUserInformation(id)
+                .then(function (response) {
+                    $scope.userinfo = response.data;
+                });
+        };
+
+        $scope.userlogin = function () {
+            debugger;
+            //$scope.login();
+            $scope.getRight('6418baab-9f1d-4917-9ff6-33bdfc5c49cc');
+
+            
+        };
     }]);
 })();

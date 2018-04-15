@@ -43,19 +43,6 @@
             });
         };
 
-        this.getUserInformation = function (userID) {
-            debugger;
-            deferred = $q.defer();
-            $http.get(userInfoServiceURL + '?userid=' + userID, {              
-            }).success(function (response) {
-                debugger;
-                var o = response;                 
-                deferred.resolve(null);
-            }).error(function (err, status) {                    
-                    deferred.resolve(err);
-                });
-            return deferred.promise;
-        }
 
         this.logOut = function () {
             authenticationService.removeToken();

@@ -11,7 +11,7 @@
         <div class="container">
             <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                 <ul class="nav navbar-nav navbar-right">
-                    <li data-ng-hide="!authentication.IsAuthenticated"><a href="#">Welcome, {{authentication.userName}}</a></li>
+                    <li data-ng-hide="!authentication.IsAuthenticated"><a href="#">Welcome, {{authentication.lastName}} {{authentication.firstName}}</a></li>
                     <li data-ng-hide="!authentication.IsAuthenticated"><a href="#/myInfo">My Info</a></li>
                     <li data-ng-hide="!authentication.IsAuthenticated"><a href="" data-ng-click="logOut()">Logout</a></li>
                     <li data-ng-hide="authentication.IsAuthenticated"> <a href="#/login">Login</a></li>
