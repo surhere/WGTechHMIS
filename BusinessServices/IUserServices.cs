@@ -12,7 +12,7 @@ namespace BusinessServices.Services
         hmisUserBase ValidateUser(string userName, string password);
 
         IEnumerable<hmisUserBase> GetAllUsers();
-        hmisUserBase GetUserById(Guid userId);       
+        UserEntity GetUserById(Guid userId);       
         Guid CreateUser(hmisUserBase productEntity);
         bool UpdateUser(Guid userId, hmisUserBase userEntity);
         bool DeleteUser(Guid userId);

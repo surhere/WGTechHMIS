@@ -21,7 +21,10 @@ app.config(function ($routeProvider) {
         templateUrl: "/Modules/views/Info.html"
     });
 
-
+    $routeProvider.when("/userData", {
+        controller: "userController",
+        templateUrl: "/Modules/Admin/views/userInfo.html"
+    });
 
     $routeProvider.otherwise({ redirectTo: "/home" });
 

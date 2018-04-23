@@ -28,8 +28,17 @@ namespace WebMVCClient.Controllers
         [HttpPost]
         public ActionResult Register(hmisUserBase user)
         {
-            
+            var Token = "";
 
+            if (Session != null)
+            {
+                if (Session["AuthUserToken"] == null)
+                {
+                    Token = Session["AuthUserToken"].ToString();
+                }
+            }
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
             HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("Admin", user).Result;
             //userList = response.Content.ReadAsByteArrayAsync<IEnumerable<hmisUserBase>>().Result;
             //HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("User?name="+username+"&&pass="+ password).Result;
@@ -59,7 +68,6 @@ namespace WebMVCClient.Controllers
             }
             return RedirectToAction("Index", "User");
         }
-
 
     }
 }

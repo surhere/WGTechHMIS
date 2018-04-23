@@ -24,6 +24,12 @@ namespace DataModel
         public string permissions_descriptions { get; set; }
         public System.DateTime created_on { get; set; }
         public System.DateTime modified_on { get; set; }
+        public string access_area { get; set; }
+        public bool can_read { get; set; }
+        public bool can_update { get; set; }
+        public bool can_create { get; set; }
+        public bool can_delete { get; set; }
+        public bool is_active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<hmis_link_role_persmissions> hmis_link_role_persmissions { get; set; }

@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="hmisPatientBase.cs" />
+    <Compile Include="hmisPatientExt.cs" />
     <Compile Include="hmisPermisionBase.cs" />
     <Compile Include="hmisRoleBase.cs" />
     <Compile Include="hmisRolePermissions.cs" />
@@ -51,6 +53,7 @@
     <Compile Include="TokenEntity.cs" />
     <Compile Include="UserEntity.cs" />
     <Compile Include="UserRoles.cs" />
+    <Compile Include="vw_user_roles.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataModel\DataModel.csproj">

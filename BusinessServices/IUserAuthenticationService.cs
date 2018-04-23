@@ -11,8 +11,8 @@ namespace BusinessServices.Service.Interfaces
     /// </summary>
     public interface IUserAuthenticationService
     {
-        hmisUserBase GetUserById(int productId);
+        BusinessEntities.hmisUserBase GetUserById(int productId);
 
-        IEnumerable<hmisUserBase> GetAllUsers();
+        IEnumerable<BusinessEntities.hmisUserBase> GetAllUsers();
     }
 }

@@ -83,7 +83,7 @@ namespace WebApi.Filters
                 authHeaderValue = authRequest.Parameter;
             if (string.IsNullOrEmpty(authHeaderValue))
                 return null;
-            authHeaderValue = Encoding.Default.GetString(Convert.FromBase64String(authHeaderValue));
+            //authHeaderValue = Encoding.Default.GetString(Convert.FromBase64String(authHeaderValue));
             var credentials = authHeaderValue.Split(':');
             return credentials.Length < 2 ? null : new BasicAuthenticationIdentity(credentials[0], credentials[1]);
         }

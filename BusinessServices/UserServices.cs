@@ -165,14 +165,50 @@ namespace BusinessServices.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public BusinessEntities.hmisUserBase GetUserById(Guid userId)
+        public UserEntity GetUserById(Guid userId)
         {
-            var user = _unitOfWork.UserRepository.GetByID(userId);
+           // UserEntity responseUser = new UserEntity();
+            var user = _unitOfWork.UserRepository.GetByID(userId);            
+
             if (user != null)
             {
                 Mapper.CreateMap<hmis_user_base, hmisUserBase>();
                 var userModel = Mapper.Map<hmis_user_base, hmisUserBase>(user);
-                return userModel;
+
+                var responseUser = new UserEntity
+                {
+                    UserId = user.SID,
+                    UserName = user.user_name,
+                    Password = user.password,
+                    FirstName = user.first_name,
+                    LastName = user.last_name                  
+                };
+
+                //responseUser.UserName = user.user_name;
+                //responseUser.FirstName = user.first_name;
+                //responseUser.LastName = user.last_name;
+
+                foreach (hmis_link_user_roles uroles in userModel.hmis_link_user_roles)
+                {
+                    var userRoles = uroles.hsmis_role_base;
+                    hmisRoleBase roles = new hmisRoleBase();                    
+                    //
+                    roles.role_name = userRoles.role_name;
+                    roles.role_id = userRoles.role_id;
+                    responseUser.Roles.Add(roles);
+                    foreach(hmis_link_role_persmissions accessPermission in userRoles.hmis_link_role_persmissions)
+                    {
+                        hmisPermisionBase access = new hmisPermisionBase();
+                        //
+                        var rolePermission = accessPermission.hmis_permission_base;
+                        access.access_area = rolePermission.access_area;
+                        access.can_create = rolePermission.can_create;
+                        access.can_read = rolePermission.can_read;
+                        access.can_delete = rolePermission.can_delete;
+                        responseUser.Permissions.Add(access);
+                    }
+                }
+                return responseUser;
             }
             return null;
         }

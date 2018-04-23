@@ -19,6 +19,12 @@
         <EntityTypeShape EntityType="HMISModel.Token" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="HMISModel.FK_Tokens_User" />
         <EntityTypeShape EntityType="HMISModel.vw_user_roles" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HMISModel.hmis_patient_base" Width="1.5" PointX="3" PointY="11.25" />
+        <EntityTypeShape EntityType="HMISModel.hmis_patient_ext" Width="2.125" PointX="6.875" PointY="10.75" />
+        <EntityTypeShape EntityType="HMISModel.hmis_user_activity_log" Width="1.5" PointX="5.375" PointY="3.75" />
+        <AssociationConnector Association="HMISModel.FK_hmis_patient_base_hmis_user_base" />
+        <AssociationConnector Association="HMISModel.FK_hmis_patient_base_hmis_user_base1" />
+        <AssociationConnector Association="HMISModel.FK_hmis_patient_ext_hmis_patient_base" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

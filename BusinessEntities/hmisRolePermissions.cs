@@ -14,5 +14,6 @@ namespace BusinessEntities
 
         public virtual hmisPermisionBase hmis_permission_base { get; set; }
         public virtual hmisRoleBase hsmis_role_base { get; set; }
+
     }
 }

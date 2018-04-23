@@ -10,7 +10,11 @@ app.factory('authData', [ function () {
         lastName: "",
         tokenID: "",
         tokenExpiry: "",
-        roles:[]
+        roles: [],
+        permissions: [],
+        hasOPDAllRights: false,
+        hasIPDAllRights: false,
+        hasAdminRights: false
     };
     authDataFactory.authenticationData = _authentication;
 

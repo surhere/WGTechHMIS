@@ -1,0 +1,118 @@
+﻿@model IEnumerable<BusinessEntities.hmisPatientBase>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_registration_no)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_first_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_last_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_dob)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_sex)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_blood_type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patient_city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_on)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.modified_on)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_by)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.modified_by)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.additiona_info)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_registration_no)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_first_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_last_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_dob)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_sex)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_blood_type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patient_city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.created_on)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.modified_on)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.created_by)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.modified_by)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.additiona_info)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLibrary", "SharedLibr
 		..\..\..\..\..\Workspace\Solution Design and Architecture\WebApi\Resolver\bin\Debug\Microsoft.Practices.Unity.xml = ..\..\..\..\..\Workspace\Solution Design and Architecture\WebApi\Resolver\bin\Debug\Microsoft.Practices.Unity.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMVCClient", "WebMVCClient\WebMVCClient.csproj", "{3D9BA67D-59C6-4D02-BE84-144B5B4F652E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{8288D54C-EBCC-478F-B561-DC1CDC33B8C6}"
@@ -30,6 +28,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularJsWebApp", "AngularJsWebApp\AngularJsWebApp.csproj", "{0E9397E5-674C-413E-BA9C-CCB9D491AFBD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularJSAuthentication.Web", "AngularJSAuthentication.Web\AngularJSAuthentication.Web.csproj", "{E4156422-2684-4222-95C2-4B9AE4CBA7E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenAuthWebApiCore.Client", "TokenAuthWebApiCore.Client\TokenAuthWebApiCore.Client.csproj", "{9EE46C96-EA2C-44F7-A81D-1907104686CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +55,6 @@ Global
 		{41C4C015-F512-4FB8-913B-3FA3927B074D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41C4C015-F512-4FB8-913B-3FA3927B074D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41C4C015-F512-4FB8-913B-3FA3927B074D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3D9BA67D-59C6-4D02-BE84-144B5B4F652E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3D9BA67D-59C6-4D02-BE84-144B5B4F652E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D9BA67D-59C6-4D02-BE84-144B5B4F652E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,6 +75,14 @@ Global
 		{E4156422-2684-4222-95C2-4B9AE4CBA7E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4156422-2684-4222-95C2-4B9AE4CBA7E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4156422-2684-4222-95C2-4B9AE4CBA7E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF39877-68E7-4B3B-9F2B-E14473F74F0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EE46C96-EA2C-44F7-A81D-1907104686CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EE46C96-EA2C-44F7-A81D-1907104686CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EE46C96-EA2C-44F7-A81D-1907104686CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EE46C96-EA2C-44F7-A81D-1907104686CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

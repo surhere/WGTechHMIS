@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Converters;
-
+using System.Json;
 
 namespace WebMVCClient.Controllers
 {
@@ -60,6 +60,8 @@ namespace WebMVCClient.Controllers
             //HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("Authenticate/Authenticate").Result;
             //GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Authorization Basic", "Basic admin" + ":" + "Test");
            string  username = "admin"; string password = "Test";
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(password);
+            var converted =  System.Convert.ToBase64String(plainTextBytes).Replace('-','+');
             UserEntity usr = new UserEntity();
             usr.UserName = username;
             usr.Password = password;
@@ -78,12 +80,16 @@ namespace WebMVCClient.Controllers
                 string Message = parts[0];
                 string Token = parts[1];
                 //  var readTask = response1.Content.ReadAsAsync<IList<UserEntity>>();
-                //var Users = JsonConvert.DeserializeObject<List<UserEntity>>(EmpResponse);
+                var Users = JsonConvert.DeserializeObject<UserEntity>(EmpResponse);
                 HttpHeaders headers = response1.Headers;
                 IEnumerable<string> values;
                 if (headers.TryGetValues("UserID", out values))
                 {
                     id = values.First();
+                }
+                if (headers.TryGetValues("Token", out values))
+                {
+                    Token = values.First();
                 }
                 if (Session != null)
                 {
@@ -92,19 +98,37 @@ namespace WebMVCClient.Controllers
                         Session["AuthUserToken"] = Token;
                     }
                 }
-                GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
-
-                HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("/Admin/" + $"/{id}").Result;
-                hmisUserBase data = response.Content.ReadAsAsync<hmisUserBase>().Result;
-
+                GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
+                GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);             
+  
+                HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("admin" + "?id=" + id).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        // ... Read the string.
+                        Task<string> result = content.ReadAsStringAsync();
+                        var res = result.Result;
+                        var userData = Json(result);
+                        var userInfo = JsonConvert.DeserializeObject<hmisUserBase>(res);
+                      
+                        if (Session != null)
+                        {
+                            if (Session["UserInfo"] == null)
+                            {
+                                Session["UserInfo"] = userInfo;
+                                Session["UserName"] = userInfo.last_name + " " + userInfo.first_name;
+                            }
+                        }
+                    }
+                }
+                //Task<hmisUserBase> result1 = response.Content.ReadAsAsync<hmisUserBase>();
                 ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", EmpResponse);
                 //Deserializing the response recieved from web api and storing into the Employee list  
-                // EmpInfo =  JsonConvert.DeserializeObject<List<hmisUserBase>>(EmpResponse);
 
-            }
 
-          
-            return RedirectToAction("Index","Home");
+            }          
+            return RedirectToAction("RegisterPatient", "User");
         }
         
     }

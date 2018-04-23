@@ -22,6 +22,8 @@ namespace DataModel.UnitOfWork
         private GenericRepository<hsmis_role_base> _roleRepository;
         private GenericRepository<hmis_permission_base> _permissionRepository;
         private GenericRepository<Token> _tokenRepository;
+        private GenericRepository<hmis_patient_base> _patientbaseRepository;
+        private GenericRepository<hmis_patient_ext> _patientextRepository;
 
         private GenericRepository<vw_user_roles> _vwRoleRepository;
         #endregion
@@ -95,6 +97,33 @@ namespace DataModel.UnitOfWork
                 if (this._vwRoleRepository == null)
                     this._vwRoleRepository = new GenericRepository<vw_user_roles>(_context);
                 return _vwRoleRepository;
+            }
+        }
+
+
+        /// <summary>
+        /// Get/Set Property for Patient repository.
+        /// </summary>
+        public GenericRepository<hmis_patient_base> PatientBaseRepository
+        {
+            get
+            {
+                if (this._patientbaseRepository == null)
+                    this._patientbaseRepository = new GenericRepository<hmis_patient_base>(_context);
+                return _patientbaseRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for Patient repository.
+        /// </summary>
+        public GenericRepository<hmis_patient_ext> PatientExtRepository
+        {
+            get
+            {
+                if (this._patientextRepository == null)
+                    this._patientextRepository = new GenericRepository<hmis_patient_ext>(_context);
+                return _patientextRepository;
             }
         }
         #endregion

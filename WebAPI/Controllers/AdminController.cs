@@ -21,8 +21,7 @@ namespace WebAPI.Controllers
         private readonly IUserServices _userServices;
         private readonly ITokenServices _tokenServices;
         private readonly IRoleService _roleService;
-
-
+       
         public AdminController(IUserServices userServices, ITokenServices tokenServices, IRoleService roleService)
         {
             _userServices = userServices;
@@ -32,6 +31,7 @@ namespace WebAPI.Controllers
         // GET: api/Admin
         [GET("allusers")]
         [GET("all")]
+       // [ClaimsAuthorizationRequired(ClaimType = "UserManagement", ClaimValue = "1")]
         public HttpResponseMessage Get()
         {
             var users = _userServices.GetAllUsers();

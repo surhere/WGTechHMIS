@@ -69,12 +69,22 @@
                     var o = response;
                     $window.sessionStorage["UserInfo"] = JSON.stringify(response);
                     authData.authenticationData.IsAuthenticated = true;
-                    //var userDataJSON = JSON.stringify(response);
-                    //var objh = JSON.parse(userDataJSON);
-                    authData.authenticationData.userName = response.user_name;
-                    authData.authenticationData.firstName = response.first_name;
-                    authData.authenticationData.lastName = response.last_name;
-                    authData.authenticationData.roles = response.hmis_link_user_roles;
+                    var userDataJSON = JSON.stringify(response);
+                    var objh = JSON.parse(userDataJSON);
+                    //if (response.hmis_link_user_roles != null)
+                    //{
+                    //    //response.hmis_link_user_roles.
+                    //    response.hmis_link_user_roles[0].hmis_role_base.hmis_link_role_persmissions[0].hmis_permision_base.access_area;
+                    //}
+                    authData.authenticationData.userName = response.UserName;
+                    authData.authenticationData.firstName = response.FirstName;
+                    authData.authenticationData.lastName = response.LastName;   
+                    for (var i = 0; i < response.Roles.count; i++)
+                    {
+                        response.Roles[i].Role.rolename;
+                    }
+                    authData.authenticationData.roles = response.Roles;
+                    authData.authenticationData.roles = response.Permissions;
                     authData.authenticationData.userId = response.SID;
                     deferred.resolve(null);
                 }).error(function (err, status) {

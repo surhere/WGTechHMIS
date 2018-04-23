@@ -33,6 +33,37 @@ warning 6002: The table/view 'HMIS.dbo.hmis_link_user_roles' does not have a pri
           <Property Name="created_on" Type="datetime" Nullable="false" />
           <Property Name="modified_on" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="hmis_patient_base">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="patient_registration_no" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="patient_first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="patient_last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="patient_dob" Type="date" />
+          <Property Name="patient_sex" Type="nvarchar" MaxLength="10" />
+          <Property Name="patient_blood_type" Type="nvarchar" MaxLength="10" />
+          <Property Name="patient_phone" Type="nvarchar" MaxLength="12" />
+          <Property Name="patient_notes" Type="nvarchar(max)" />
+          <Property Name="patient_address" Type="nvarchar(max)" />
+          <Property Name="patient_city" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="modified_on" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="modified_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="additiona_info" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HMIS.dbo.hmis_patient_ext' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="hmis_patient_ext">
+          <Key>
+            <PropertyRef Name="patient_id" />
+          </Key>
+          <Property Name="patient_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="attribute_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="attribute_value" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="hmis_permission_base">
           <Key>
             <PropertyRef Name="permissions_id" />
@@ -41,6 +72,25 @@ warning 6002: The table/view 'HMIS.dbo.hmis_link_user_roles' does not have a pri
           <Property Name="permissions_descriptions" Type="nvarchar" MaxLength="50" />
           <Property Name="created_on" Type="datetime" Nullable="false" />
           <Property Name="modified_on" Type="datetime" Nullable="false" />
+          <Property Name="access_area" Type="nvarchar" MaxLength="50" />
+          <Property Name="can_read" Type="bit" Nullable="false" />
+          <Property Name="can_update" Type="bit" Nullable="false" />
+          <Property Name="can_create" Type="bit" Nullable="false" />
+          <Property Name="can_delete" Type="bit" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HMIS.dbo.hmis_user_activity_log' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="hmis_user_activity_log">
+          <Key>
+            <PropertyRef Name="Actions" />
+            <PropertyRef Name="created_on" />
+          </Key>
+          <Property Name="user_id" Type="uniqueidentifier" />
+          <Property Name="Outcome" Type="nvarchar" MaxLength="50" />
+          <Property Name="Actions" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="message" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="hmis_user_base">
           <Key>
@@ -153,6 +203,42 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_hmis_patient_base_hmis_user_base">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_patient_base" Type="Self.hmis_patient_base" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_patient_base">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_patient_base_hmis_user_base1">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_patient_base" Type="Self.hmis_patient_base" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_patient_base">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_patient_ext_hmis_patient_base">
+          <End Role="hmis_patient_base" Type="Self.hmis_patient_base" Multiplicity="1" />
+          <End Role="hmis_patient_ext" Type="Self.hmis_patient_ext" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_patient_base">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_patient_ext">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_hmis_user_ext_hmis_user_base">
           <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
           <End Role="hmis_user_ext" Type="Self.hmis_user_ext" Multiplicity="*" />
@@ -178,6 +264,7 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HMISModelStoreContainer">
+          <EntitySet Name="hmis_patient_base" EntityType="Self.hmis_patient_base" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_permission_base" EntityType="Self.hmis_permission_base" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_user_base" EntityType="Self.hmis_user_base" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hsmis_role_base" EntityType="Self.hsmis_role_base" Schema="dbo" store:Type="Tables" />
@@ -197,6 +284,22 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
     [hmis_link_user_roles].[created_on] AS [created_on], 
     [hmis_link_user_roles].[modified_on] AS [modified_on]
     FROM [dbo].[hmis_link_user_roles] AS [hmis_link_user_roles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="hmis_patient_ext" EntityType="Self.hmis_patient_ext" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [hmis_patient_ext].[patient_id] AS [patient_id], 
+    [hmis_patient_ext].[attribute_name] AS [attribute_name], 
+    [hmis_patient_ext].[attribute_value] AS [attribute_value]
+    FROM [dbo].[hmis_patient_ext] AS [hmis_patient_ext]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="hmis_user_activity_log" EntityType="Self.hmis_user_activity_log" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [hmis_user_activity_log].[user_id] AS [user_id], 
+    [hmis_user_activity_log].[Outcome] AS [Outcome], 
+    [hmis_user_activity_log].[Actions] AS [Actions], 
+    [hmis_user_activity_log].[created_on] AS [created_on], 
+    [hmis_user_activity_log].[message] AS [message]
+    FROM [dbo].[hmis_user_activity_log] AS [hmis_user_activity_log]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="hmis_user_ext" EntityType="Self.hmis_user_ext" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -228,6 +331,18 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             <End Role="hsmis_role_base" EntitySet="hsmis_role_base" />
             <End Role="hmis_link_user_roles" EntitySet="hmis_link_user_roles" />
           </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_base_hmis_user_base" Association="Self.FK_hmis_patient_base_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_base_hmis_user_base1" Association="Self.FK_hmis_patient_base_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_ext_hmis_patient_base" Association="Self.FK_hmis_patient_ext_hmis_patient_base">
+            <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
+            <End Role="hmis_patient_ext" EntitySet="hmis_patient_ext" />
+          </AssociationSet>
           <AssociationSet Name="FK_hmis_user_ext_hmis_user_base" Association="Self.FK_hmis_user_ext_hmis_user_base">
             <End Role="hmis_user_base" EntitySet="hmis_user_base" />
             <End Role="hmis_user_ext" EntitySet="hmis_user_ext" />
@@ -250,6 +365,12 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="hmis_link_role_persmissions" Relationship="Self.FK_hmis_link_role_persmissions_hmis_permission_base" FromRole="hmis_permission_base" ToRole="hmis_link_role_persmissions" />
+          <Property Name="access_area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="can_read" Type="Boolean" Nullable="false" />
+          <Property Name="can_update" Type="Boolean" Nullable="false" />
+          <Property Name="can_create" Type="Boolean" Nullable="false" />
+          <Property Name="can_delete" Type="Boolean" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="hmis_user_base">
           <Key>
@@ -269,6 +390,8 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <NavigationProperty Name="hmis_link_user_roles" Relationship="Self.FK_hmis_link_user_roles_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_link_user_roles" />
           <NavigationProperty Name="hmis_user_ext" Relationship="Self.FK_hmis_user_ext_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_user_ext" />
           <NavigationProperty Name="Tokens" Relationship="HMISModel.FK_Tokens_User" FromRole="hmis_user_base" ToRole="Token" />
+          <NavigationProperty Name="hmis_patient_base" Relationship="HMISModel.FK_hmis_patient_base_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_patient_base" />
+          <NavigationProperty Name="hmis_patient_base1" Relationship="HMISModel.FK_hmis_patient_base_hmis_user_base1" FromRole="hmis_user_base" ToRole="hmis_patient_base" />
         </EntityType>
         <EntityType Name="hsmis_role_base">
           <Key>
@@ -415,6 +538,21 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             <End Role="Token" EntitySet="Tokens" />
           </AssociationSet>
           <EntitySet Name="vw_user_roles" EntityType="HMISModel.vw_user_roles" />
+          <EntitySet Name="hmis_patient_base" EntityType="HMISModel.hmis_patient_base" />
+          <EntitySet Name="hmis_patient_ext" EntityType="HMISModel.hmis_patient_ext" />
+          <EntitySet Name="hmis_user_activity_log" EntityType="HMISModel.hmis_user_activity_log" />
+          <AssociationSet Name="FK_hmis_patient_base_hmis_user_base" Association="HMISModel.FK_hmis_patient_base_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_base_hmis_user_base1" Association="HMISModel.FK_hmis_patient_base_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_ext_hmis_patient_base" Association="HMISModel.FK_hmis_patient_ext_hmis_patient_base">
+            <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
+            <End Role="hmis_patient_ext" EntitySet="hmis_patient_ext" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Token">
           <Key>
@@ -450,6 +588,86 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <Property Name="is_active" Type="Boolean" Nullable="false" />
           <Property Name="role_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="hmis_patient_base">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="patient_registration_no" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="patient_first_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="patient_last_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="patient_dob" Type="DateTime" Precision="0" />
+          <Property Name="patient_sex" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="patient_blood_type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="patient_phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="patient_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="patient_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="patient_city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="modified_by" Type="Guid" Nullable="false" />
+          <Property Name="additiona_info" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="hmis_user_base" Relationship="HMISModel.FK_hmis_patient_base_hmis_user_base" FromRole="hmis_patient_base" ToRole="hmis_user_base" />
+          <NavigationProperty Name="hmis_user_base1" Relationship="HMISModel.FK_hmis_patient_base_hmis_user_base1" FromRole="hmis_patient_base" ToRole="hmis_user_base" />
+          <NavigationProperty Name="hmis_patient_ext" Relationship="HMISModel.FK_hmis_patient_ext_hmis_patient_base" FromRole="hmis_patient_base" ToRole="hmis_patient_ext" />
+        </EntityType>
+        <EntityType Name="hmis_patient_ext">
+          <Key>
+            <PropertyRef Name="patient_id" />
+          </Key>
+          <Property Name="patient_id" Type="Guid" Nullable="false" />
+          <Property Name="attribute_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="attribute_value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="hmis_patient_base" Relationship="HMISModel.FK_hmis_patient_ext_hmis_patient_base" FromRole="hmis_patient_ext" ToRole="hmis_patient_base" />
+        </EntityType>
+        <EntityType Name="hmis_user_activity_log">
+          <Key>
+            <PropertyRef Name="Actions" />
+            <PropertyRef Name="created_on" />
+          </Key>
+          <Property Name="user_id" Type="Guid" />
+          <Property Name="Outcome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Actions" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_hmis_patient_base_hmis_user_base">
+          <End Type="HMISModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="HMISModel.hmis_patient_base" Role="hmis_patient_base" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_patient_base">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_patient_base_hmis_user_base1">
+          <End Type="HMISModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="HMISModel.hmis_patient_base" Role="hmis_patient_base" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_patient_base">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_patient_ext_hmis_patient_base">
+          <End Type="HMISModel.hmis_patient_base" Role="hmis_patient_base" Multiplicity="1" />
+          <End Type="HMISModel.hmis_patient_ext" Role="hmis_patient_ext" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_patient_base">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_patient_ext">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -459,6 +677,12 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <EntitySetMapping Name="hmis_permission_base">
             <EntityTypeMapping TypeName="HMISModel.hmis_permission_base">
               <MappingFragment StoreEntitySet="hmis_permission_base">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="can_delete" ColumnName="can_delete" />
+                <ScalarProperty Name="can_create" ColumnName="can_create" />
+                <ScalarProperty Name="can_update" ColumnName="can_update" />
+                <ScalarProperty Name="can_read" ColumnName="can_read" />
+                <ScalarProperty Name="access_area" ColumnName="access_area" />
                 <ScalarProperty Name="permissions_id" ColumnName="permissions_id" />
                 <ScalarProperty Name="permissions_descriptions" ColumnName="permissions_descriptions" />
                 <ScalarProperty Name="created_on" ColumnName="created_on" />
@@ -542,6 +766,48 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
                 <ScalarProperty Name="role_description" ColumnName="role_description" />
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="role_name" ColumnName="role_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_patient_base">
+            <EntityTypeMapping TypeName="HMISModel.hmis_patient_base">
+              <MappingFragment StoreEntitySet="hmis_patient_base">
+                <ScalarProperty Name="additiona_info" ColumnName="additiona_info" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified_on" ColumnName="modified_on" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="patient_city" ColumnName="patient_city" />
+                <ScalarProperty Name="patient_address" ColumnName="patient_address" />
+                <ScalarProperty Name="patient_notes" ColumnName="patient_notes" />
+                <ScalarProperty Name="patient_phone" ColumnName="patient_phone" />
+                <ScalarProperty Name="patient_blood_type" ColumnName="patient_blood_type" />
+                <ScalarProperty Name="patient_sex" ColumnName="patient_sex" />
+                <ScalarProperty Name="patient_dob" ColumnName="patient_dob" />
+                <ScalarProperty Name="patient_last_name" ColumnName="patient_last_name" />
+                <ScalarProperty Name="patient_first_name" ColumnName="patient_first_name" />
+                <ScalarProperty Name="patient_registration_no" ColumnName="patient_registration_no" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_patient_ext">
+            <EntityTypeMapping TypeName="HMISModel.hmis_patient_ext">
+              <MappingFragment StoreEntitySet="hmis_patient_ext">
+                <ScalarProperty Name="attribute_value" ColumnName="attribute_value" />
+                <ScalarProperty Name="attribute_name" ColumnName="attribute_name" />
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_user_activity_log">
+            <EntityTypeMapping TypeName="HMISModel.hmis_user_activity_log">
+              <MappingFragment StoreEntitySet="hmis_user_activity_log">
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="Actions" ColumnName="Actions" />
+                <ScalarProperty Name="Outcome" ColumnName="Outcome" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>

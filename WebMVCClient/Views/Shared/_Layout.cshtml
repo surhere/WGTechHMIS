@@ -21,7 +21,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                    @if (Session["UserInfo"] != null)
+                    {
+                        <li>@Html.ActionLink("Register", "Register", "Home")</li>
+
+                    }                   
                     <li>@Html.ActionLink("Login", "Contact", "Home")</li>
                 </ul>
             </div>
@@ -31,7 +35,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - @@Webgen Hospitality Management System</p>
+            <p>&copy; @DateTime.Now.Year - @@Webgen Hospital Management Information System</p>
         </footer>
     </div>
 

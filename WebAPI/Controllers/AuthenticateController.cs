@@ -65,15 +65,20 @@ namespace WebApi.Controllers
 
             var token = _tokenServices.GenerateToken(userId);
             obj.Authorized = "Authorized:";
-            obj.access_token = token.AuthToken;
+            obj.access_token = token;          
             obj.userName = userId.ToString();
+            obj.expiration = token.ExpiresOn.ToLongDateString();
+            obj.token = token.AuthToken;
+            obj.userData.email = userId.ToString();
+            obj.userData.userName = "Subhamay Sur";
+            obj.userData.id = userId.ToString();
             var response = Request.CreateResponse(HttpStatusCode.OK, obj);
             response.Headers.Add("Token", token.AuthToken);
             response.Headers.Add("UserID", userId.ToString());
             response.Headers.Add("TokenExpiry", ConfigurationManager.AppSettings["AuthTokenExpiry"]);
             response.Headers.Add("Access-Control-Expose-Headers", "Token,TokenExpiry" );
-            //response.Content.Headers.Add("access_token", token.AuthToken);
-            //response.Content.Headers.Add("userName", userId.ToString());
+            response.Content.Headers.Add("access_token", token.AuthToken);
+            response.Content.Headers.Add("userName", userId.ToString());
             var session = HttpContext.Current.Session; 
             //if(session!=null)
             //{
@@ -86,10 +91,27 @@ namespace WebApi.Controllers
         }
         public class LoginResponseObject
         {
+            public LoginResponseObject()
+            {
+                this.userData = new UserObject();
+            }
             public string userName { get; set; }
             public string Authorized { get; set; }
-            public string access_token { get; set; }
+            public TokenEntity access_token { get; set; }
             hmisUserBase SessionUserData { get; set; }
+            public string id { get; set; }
+            public string email { get; set; }
+            public string expiration { get; set; }
+            public string token { get; set; }
+            public UserObject userData { get; set; }
+        }
+
+        public class UserObject
+        {
+            public string id { get; set; }
+            public string email { get; set; }
+            public string userName { get; set; }
+
         }
     }
 }

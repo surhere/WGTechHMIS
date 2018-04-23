@@ -20,6 +20,8 @@ namespace DataModel
             this.hmis_link_user_roles = new HashSet<hmis_link_user_roles>();
             this.hmis_user_ext = new HashSet<hmis_user_ext>();
             this.Tokens = new HashSet<Token>();
+            this.hmis_patient_base = new HashSet<hmis_patient_base>();
+            this.hmis_patient_base1 = new HashSet<hmis_patient_base>();
         }
     
         public System.Guid SID { get; set; }
@@ -40,5 +42,9 @@ namespace DataModel
         public virtual ICollection<hmis_user_ext> hmis_user_ext { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Token> Tokens { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_patient_base> hmis_patient_base { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_patient_base> hmis_patient_base1 { get; set; }
     }
 }
