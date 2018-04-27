@@ -14,6 +14,12 @@ namespace DataModel
     
     public partial class hmis_patient_base
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public hmis_patient_base()
+        {
+            this.hmis_patient_ext = new HashSet<hmis_patient_ext>();
+        }
+    
         public System.Guid ID { get; set; }
         public string patient_registration_no { get; set; }
         public string patient_first_name { get; set; }
@@ -30,9 +36,16 @@ namespace DataModel
         public System.Guid created_by { get; set; }
         public System.Guid modified_by { get; set; }
         public string additiona_info { get; set; }
+        public Nullable<bool> Is_Bpl_holder { get; set; }
+        public Nullable<bool> Is_Medicine_Adverse_Effect { get; set; }
+        public Nullable<bool> Is_Past_History { get; set; }
+        public Nullable<bool> Is_Reffered_By { get; set; }
+        public string Reffered_Doctor { get; set; }
+        public Nullable<bool> Is_Consent_Signed { get; set; }
     
         public virtual hmis_user_base hmis_user_base { get; set; }
         public virtual hmis_user_base hmis_user_base1 { get; set; }
-        public virtual hmis_patient_ext hmis_patient_ext { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_patient_ext> hmis_patient_ext { get; set; }
     }
 }

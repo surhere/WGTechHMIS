@@ -11,9 +11,9 @@
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
+    <div class="form-group" >
         @Html.LabelFor(m => m.first_name, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-sm-12 col-md-12 col-lg-12">
             @Html.TextBoxFor(m => m.first_name, new { @class = "form-control" })
         </div>
     </div>

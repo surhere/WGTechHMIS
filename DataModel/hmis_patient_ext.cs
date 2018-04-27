@@ -17,6 +17,7 @@ namespace DataModel
         public System.Guid patient_id { get; set; }
         public string attribute_name { get; set; }
         public string attribute_value { get; set; }
+        public System.Guid ID { get; set; }
     
         public virtual hmis_patient_base hmis_patient_base { get; set; }
     }

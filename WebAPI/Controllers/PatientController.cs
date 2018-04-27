@@ -44,7 +44,8 @@ namespace WebAPI.Controllers
         [POST("Register")]
         public Guid Post([FromBody] hmisPatientBase patientEntity)
         {
-            return _patientService.CreatePatient(patientEntity);
+            patientEntity.ID = _patientService.CreatePatient(patientEntity);
+            return _patientService.CreatePatientAdditionalInfo(patientEntity);
         }
     }
 }

@@ -11,5 +11,7 @@ namespace BusinessServices
     {
         Guid CreatePatient(hmisPatientBase patientEntity);
         IEnumerable<hmisPatientBase> GetAllPatients();
+
+        Guid CreatePatientAdditionalInfo(hmisPatientBase patientEntity);
     }
 }

@@ -11,7 +11,7 @@ namespace BusinessEntities
         public System.Guid patient_id { get; set; }
         public string attribute_name { get; set; }
         public string attribute_value { get; set; }
-
+        public System.Guid ID { get; set; }
         public virtual hmisPatientBase hmisPatientBase { get; set; }
     }
 }

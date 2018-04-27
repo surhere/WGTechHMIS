@@ -196,16 +196,19 @@ namespace DataModel.GenericRepository
         /// </summary>
         /// <param name="predicate">Criteria to match on</param>
         /// <returns>A single record containing the first record matching the specified criteria</returns>
-        //public List<vw_user_roles> GetUserRoles(Guid usersid)
-        //{
-        //    using (var entities = new DBModels())
-        //    {
-        //        var prod = (from p in entities.vw_user_roles
-        //                    where p.user_id == usersid
-        //                    select p).ToList();
-        //        return prod;
-        //    }
-        //}
+        public int BulkInsert(IEnumerable<TEntity> entity)
+        {
+            try
+            {
+                Context.Configuration.AutoDetectChangesEnabled = false;
+                DbSet.AddRange(entity);
+            }
+            finally
+            {
+                Context.Configuration.AutoDetectChangesEnabled = true;
+            }
+            return 1;
+        }
 
         #endregion
     }

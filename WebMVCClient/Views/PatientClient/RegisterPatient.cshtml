@@ -134,7 +134,25 @@
                 @Html.ValidationMessageFor(model => model.additiona_info, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            <label for="patient_fathers_name" class="control-label col-md-2">Father's Name</label>           
+            <div class="col-md-10">
+                <input type="text" name="FathersName" class="form-control" id="FathersName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="patient_mothers_name" class="control-label col-md-2">Mother's Name</label>
+            <div class="col-md-10">
+                <input type="text" name="MothersName"class="form-control" id="MothersName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Reffered_Doctor" class="control-label col-md-2">Reffered Doctor</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="RefferedDoctor" name="RefferedDoctor" />
+            </div>
+        </div>
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

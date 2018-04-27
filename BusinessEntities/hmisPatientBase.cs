@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,11 @@ namespace BusinessEntities
 {
     public class hmisPatientBase
     {
+        public hmisPatientBase()
+        {
+            this.hmis_patient_ext = new HashSet<hmis_patient_ext>();
+        }
+
         public System.Guid ID { get; set; }
         public string patient_registration_no { get; set; }
         public string patient_first_name { get; set; }
@@ -24,9 +30,15 @@ namespace BusinessEntities
         public System.Guid created_by { get; set; }
         public System.Guid modified_by { get; set; }
         public string additiona_info { get; set; }
+        public Nullable<bool> Is_Bpl_holder { get; set; }
+        public Nullable<bool> Is_Medicine_Adverse_Effect { get; set; }
+        public Nullable<bool> Is_Past_History { get; set; }
+        public Nullable<bool> Is_Reffered_By { get; set; }
+        public string Reffered_Doctor { get; set; }
+        public Nullable<bool> Is_Consent_Signed { get; set; }
 
-        public virtual hmisUserBase hmisUserBase { get; set; }
-        public virtual hmisUserBase hmisUserBase1 { get; set; }
-        public virtual hmisPatientExt hmisPatientExt { get; set; }
+        public virtual hmis_user_base hmis_user_base { get; set; }
+        public virtual hmis_user_base hmis_user_base1 { get; set; }
+        public virtual ICollection<hmis_patient_ext> hmis_patient_ext { get; set; }
     }
 }

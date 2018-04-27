@@ -4,27 +4,27 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="39bbfeebfb12447c88f8410f608226bd" Name="Diagram1" ZoomLevel="98">
-        <EntityTypeShape EntityType="HMISModel.hmis_permission_base" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="HMISModel.hmis_user_base" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HMISModel.hsmis_role_base" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HMISModel.hmis_link_role_persmissions" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="HMISModel.hmis_link_user_roles" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="HMISModel.hmis_user_ext" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <AssociationConnector Association="HMISModel.FK_hmis_link_role_persmissions_hmis_permission_base" ManuallyRouted="false" />
-        <AssociationConnector Association="HMISModel.FK_hmis_link_user_roles_hmis_user_base" ManuallyRouted="false" />
-        <AssociationConnector Association="HMISModel.FK_hmis_user_ext_hmis_user_base" ManuallyRouted="false" />
-        <AssociationConnector Association="HMISModel.FK_hmis_link_role_persmissions_hsmis_role_base" ManuallyRouted="false" />
-        <AssociationConnector Association="HMISModel.FK_hmis_link_user_roles_hsmis_role_base" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="HMISModel.Token" Width="1.5" PointX="3" PointY="0.75" />
-        <AssociationConnector Association="HMISModel.FK_Tokens_User" />
-        <EntityTypeShape EntityType="HMISModel.vw_user_roles" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="HMISModel.hmis_patient_base" Width="1.5" PointX="3" PointY="11.25" />
-        <EntityTypeShape EntityType="HMISModel.hmis_patient_ext" Width="2.125" PointX="6.875" PointY="10.75" />
-        <EntityTypeShape EntityType="HMISModel.hmis_user_activity_log" Width="1.5" PointX="5.375" PointY="3.75" />
-        <AssociationConnector Association="HMISModel.FK_hmis_patient_base_hmis_user_base" />
-        <AssociationConnector Association="HMISModel.FK_hmis_patient_base_hmis_user_base1" />
-        <AssociationConnector Association="HMISModel.FK_hmis_patient_ext_hmis_patient_base" />
+      <Diagram DiagramId="96ea93f0b72d48e19b5b8c390a2e19b4" Name="Diagram1">
+        <EntityTypeShape EntityType="DBModel.hmis_patient_base" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.hmis_patient_ext" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.hmis_permission_base" Width="1.5" PointX="3.75" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.hmis_user_base" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.hsmis_role_base" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Token" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.hmis_link_role_persmissions" Width="1.5" PointX="6" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.hmis_link_user_roles" Width="1.5" PointX="6" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.hmis_user_activity_log" Width="1.5" PointX="7.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.hmis_user_ext" Width="1.5" PointX="3" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.vw_user_roles" Width="1.5" PointX="7.75" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="DBModel.FK_hmis_patient_base_hmis_user_base" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_hmis_patient_base_hmis_user_base1" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_hmis_patient_ext_hmis_patient_base" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_hmis_link_role_persmissions_hmis_permission_base" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_hmis_link_user_roles_hmis_user_base" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_hmis_user_ext_hmis_user_base" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Tokens_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_hmis_link_role_persmissions_hsmis_role_base" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_hmis_link_user_roles_hsmis_role_base" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
