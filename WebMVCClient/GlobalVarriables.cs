@@ -14,6 +14,7 @@ namespace MvcToWebApi
         static GlobalVarriables()
         {
             WebApiClient.BaseAddress = new Uri("http://localhost:63947/api/");
+            //WebApiClient.BaseAddress = new Uri("http://webapihmis.azurewebsites.net/api/");
             WebApiClient.DefaultRequestHeaders.Clear();
             WebApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }

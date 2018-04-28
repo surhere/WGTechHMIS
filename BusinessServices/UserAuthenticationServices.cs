@@ -35,7 +35,13 @@ namespace BusinessServices.Services
             var user = _unitOfWork.UserRepository.GetByID(productId);
             if (user != null)
             {
-                Mapper.CreateMap<DataModel.hmis_user_base, BusinessEntities.hmisUserBase>();
+                // Mapper.CreateMap<DataModel.hmis_user_base, BusinessEntities.hmisUserBase>();
+                Mapper.Reset();
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<DataModel.hmis_user_base, BusinessEntities.hmisUserBase>();
+                    
+                });
                 var productModel = Mapper.Map<DataModel.hmis_user_base, BusinessEntities.hmisUserBase>(user);
                 return productModel;
             }
@@ -51,7 +57,13 @@ namespace BusinessServices.Services
             var users = _unitOfWork.UserRepository.GetAll().ToList();
             if (users.Any())
             {
-                Mapper.CreateMap<DataModel.hmis_user_base, BusinessEntities.hmisUserBase>();
+                // Mapper.CreateMap<DataModel.hmis_user_base, BusinessEntities.hmisUserBase>();
+                Mapper.Reset();
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<DataModel.hmis_user_base, BusinessEntities.hmisUserBase>();
+
+                });
                 var productsModel = Mapper.Map<List<DataModel.hmis_user_base>, List<BusinessEntities.hmisUserBase>>(users);
                 return productsModel;
             }

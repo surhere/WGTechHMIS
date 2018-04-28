@@ -68,6 +68,12 @@ namespace BusinessServices
         {
             //ICollection<DataModel.hmis_patient_ext> listPatientAdditionalInfo = 
             List<DataModel.hmis_patient_ext> listPatientAdditionalInfo = new List<hmis_patient_ext>();
+            Mapper.Reset();
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<hmis_user_base, hmisUserBase>();
+
+            });
             using (var scope = new TransactionScope())
             {               
                 foreach (var additionalInfo in patientEntity.hmis_patient_ext)
@@ -84,7 +90,8 @@ namespace BusinessServices
                    
                      listPatientAdditionalInfo.Add(patientHMISExt);
                 };
-                var bulkList = Mapper.Map<IEnumerable<hmis_patient_ext>>(listPatientAdditionalInfo);
+               
+                var bulkList = Mapper.Map<List<hmis_patient_ext>>(listPatientAdditionalInfo);
                 //var books = new List<hmis_patient_ext> {
                 //            new hmis_patient_ext { patient_id = patientEntity.ID, attribute_name = "Carrie",attribute_value="author",ID=Guid.NewGuid() },
                 //            new hmis_patient_ext { patient_id = patientEntity.ID, attribute_name = "Carrie2",attribute_value="author2",ID=Guid.NewGuid() },
@@ -107,9 +114,19 @@ namespace BusinessServices
             var patients = _unitOfWork.PatientBaseRepository.GetAll().ToList();
             if (patients.Any())
             {
-                Mapper.CreateMap<hmis_patient_base, hmisPatientBase>();
+                Mapper.Reset();
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<hmis_patient_base, hmisPatientBase>();
+
+                });
+                // Mapper.CreateMap<hmis_patient_base, hmisPatientBase>();
                 var patientModel = Mapper.Map<List<hmis_patient_base>, List<hmisPatientBase>>(patients);
-                return patientModel;
+                //foreach(var patientModel in patients)
+                //{
+
+                //}
+                 return patientModel;
             }
             return null;
         }

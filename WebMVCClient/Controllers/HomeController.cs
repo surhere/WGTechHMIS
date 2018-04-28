@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Converters;
 using System.Json;
+using System.Web.Script.Serialization;
 
 namespace WebMVCClient.Controllers
 {
@@ -48,6 +49,11 @@ namespace WebMVCClient.Controllers
             return View();
         }
 
+        public ActionResult Login()
+        {
+            // ViewBag.Message = "Your contact page.";
+            return View();
+        }
         /// <summary>
         /// calling api to validate current user login
         /// </summary>
@@ -55,21 +61,20 @@ namespace WebMVCClient.Controllers
         /// <param name="password"></param>
         /// <returns></returns>
         [HttpPost]     
-        public ActionResult Login(hmisUserBase objUser)
+        public ActionResult Login(UserEntity objUser)
         {
             //HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("Authenticate/Authenticate").Result;
             //GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Authorization Basic", "Basic admin" + ":" + "Test");
-           string  username = "admin"; string password = "Test";
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(password);
-            var converted =  System.Convert.ToBase64String(plainTextBytes).Replace('-','+');
-            UserEntity usr = new UserEntity();
-            usr.UserName = username;
-            usr.Password = password;
-
+            //string  username = "admin"; string password = "Test";
+            //var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(password);
+            //var converted =  System.Convert.ToBase64String(plainTextBytes).Replace('-','+');          
+            hmisUserBase userObject = new hmisUserBase();
+            userObject.user_name = objUser.UserName;
+            userObject.password = objUser.Password;
             GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
-            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Authorization", "Basic " + ("admin" + ":" + "Test"));
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Authorization", "Basic " + (objUser.UserName + ":" + objUser.Password));
 
-            HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("Authenticate", objUser).Result;
+            HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("Authenticate", userObject).Result;
             //userList = response.Content.ReadAsByteArrayAsync<IEnumerable<hmisUserBase>>().Result;
             if (response1.IsSuccessStatusCode)
             {
@@ -110,25 +115,35 @@ namespace WebMVCClient.Controllers
                         Task<string> result = content.ReadAsStringAsync();
                         var res = result.Result;
                         var userData = Json(result);
-                        var userInfo = JsonConvert.DeserializeObject<hmisUserBase>(res);
-                      
+                        //var userInfo = JsonConvert.DeserializeObject<hmisUserBase>(res);
+                        //dynamic dynObj = JsonConvert.DeserializeObject(res);
+                        JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+                        dynamic userInfo = jsonSerializer.Deserialize<dynamic>(res);
+                        string userName = userInfo["UserName"].ToString();
+                        string FirstName = userInfo["FirstName"].ToString();
+                        string LastName = userInfo["LastName"].ToString();
+                        if(userInfo["Roles"]!=null)
+                        {
+
+                        }
+                        //object result1 = dobj["Roles"][0]["User"];
                         if (Session != null)
                         {
                             if (Session["UserInfo"] == null)
                             {
+                                Session["Token"] = Token;
                                 Session["UserInfo"] = userInfo;
-                                Session["UserName"] = userInfo.last_name + " " + userInfo.first_name;
+                                Session["UserName"] = userInfo["LastName"].ToString() + " " + userInfo["FirstName"].ToString();
                             }
                         }
                     }
                 }
-                //Task<hmisUserBase> result1 = response.Content.ReadAsAsync<hmisUserBase>();
-                ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", EmpResponse);
-                //Deserializing the response recieved from web api and storing into the Employee list  
+                GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
+                GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
 
 
             }          
-            return RedirectToAction("RegisterPatient", "User");
+           return RedirectToAction("Index", "PatientClient");
         }
         
     }

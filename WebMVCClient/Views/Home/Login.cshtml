@@ -1,0 +1,172 @@
+﻿@model BusinessEntities.UserEntity
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h3>@ViewBag.Message</h3>
+
+<style type="text/css">
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    .modal {
+        position: fixed;
+        z-index: 999;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: Black;
+        filter: alpha(opacity=60);
+        opacity: 0.6;
+        -moz-opacity: 0.8;
+    }
+
+    .center {
+        z-index: 1000;
+        margin: 300px auto;
+        padding: 10px;
+        width: 130px;
+        background-color: White;
+        border-radius: 10px;
+        filter: alpha(opacity=100);
+        opacity: 1;
+        -moz-opacity: 1;
+    }
+
+        .center img {
+            height: 128px;
+            width: 128px;
+        }
+</style>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="login" type="submit" value="Log in" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+    <div class="modal" style="display: none">
+        <div class="center">
+            <img alt="" src="loader.gif" />
+        </div>
+    </div>
+
+    @*<fieldset>
+            <label for="get">Click here to try get some data</label>
+            <input id="get" type="button" value="get" />
+            <label for="username">Result</label>
+            <input id="data" type="textarea" />
+        </fieldset>*@
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    //http://stackoverflow.com/questions/5507234/how-to-use-basic-auth-and-jquery-and-ajax
+
+    $("#login").click(function () {
+        // var username = $("input#username").val();
+        // var password = $("input#password").val();
+
+        var username = $('#username').val();
+        var password = $('#password').val();
+        $.ajaxSetup({
+            global: false,
+            type: "POST",
+            url: "/Home/Login/",
+            dataType: 'json',
+            async: false,
+            headers: { "Authorization": "Basic " + btoa(username + ":" + password) },
+            beforeSend: function () {
+                $(".modal").show();
+            },
+            complete: function () {
+                $(".modal").hide();
+            }
+        });
+        $.ajax({
+            success: function (data) {
+                var res = data.split(":");
+                debugger;
+
+                alert(res[1]);
+                if (window.sessionStorage) {
+                    sessionStorage.setItem('access_token', res[1]);
+                }
+                localStorage.setItem('access_token', res[1]);
+                alert("Sucess you now have a token and should be able to click to get data");
+                $.ajaxSetup({
+                    headers: {
+                        'Authorization': "Session " + data.access_token
+                    }
+                });
+            },
+            statusCode: {
+                401: function () {
+                    alert("Unauthorised expect username to be equal to password e.g. foo & foo");
+                }
+            }
+        });
+    });
+
+    $("#get").click(function () {
+        alert(sessionStorage.getItem('access_token'));
+        var token = sessionStorage.getItem('access_token');
+        var headers = {};
+        if (token) {
+            headers.token = token;
+        }
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:63947/api/Values",
+            headers: headers,
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                $('#data').val(data);
+            },
+            statusCode: {
+                401: function () {
+                    alert("Unauthorised please log in via basic first");
+                }
+            },
+        });
+    });
+
+</script>
+
+

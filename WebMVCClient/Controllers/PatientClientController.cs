@@ -16,6 +16,16 @@ namespace WebMVCClient.Controllers
         // GET: PatientClient
         public ActionResult Index()
         {
+            var Token = "";
+            if (Session != null)
+            {
+                if (Session["AuthUserToken"] != null)
+                {
+                    Token = Session["AuthUserToken"].ToString();
+                }
+            }
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
             IEnumerable<hmisPatientBase> patientList = null;
             List<hmisPatientBase> hmisPatientBase = new List<hmisPatientBase>();
             HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("Patient").Result;
@@ -48,42 +58,50 @@ namespace WebMVCClient.Controllers
         public ActionResult RegisterPatient(hmisPatientBase patientObject)
         {
             //HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("Admin", user).Result;
+            var Token = "";
+            if (Session != null)
+            {
+                if (Session["AuthUserToken"] == null)
+                {
+                    Token = Session["AuthUserToken"].ToString();
+                }
+            }
             var Name = Request.Form.Get("RefferedDoctor");
             Dictionary<string, string> getAllAdditionalInfo = new Dictionary<string, string>();
-            //foreach (string key in Request.Form.AllKeys)
-            //{
-            //    if (key.Contains("RefferedDoctor") && key.Equals("RefferedDoctor"))
-            //    {
-            //        getAllAdditionalInfo.Add("RefferedDoctor", Request.Form[key]);
-            //        var patientHMISExt = new hmisPatientExt
-            //        {
-            //            attribute_name = "RefferedDoctor",
-            //            attribute_value = Request.Form[key]
-            //        };
-            //        patientObject.hmis_patient_ext.Add(patientHMISExt);
-            //    }
+            foreach (string key in Request.Form.AllKeys)
+            {
+                if (key.Contains("RefferedDoctor") && key.Equals("RefferedDoctor"))
+                {
+                    getAllAdditionalInfo.Add("RefferedDoctor", Request.Form[key]);
+                    var patientHMISExt = new hmisPatientExt
+                    {
+                        attribute_name = "RefferedDoctor",
+                        attribute_value = Request.Form[key]
+                    };
+                    patientObject.hmis_patient_ext.Add(patientHMISExt);
+                }
 
-            //    if (key.Contains("MothersName") && key.Equals("MothersName"))
-            //    {
-            //        getAllAdditionalInfo.Add("MothersName", Request.Form[key]);
-            //        var patientHMISExt = new hmisPatientExt
-            //        {
-            //            attribute_name = "MothersName",
-            //            attribute_value = Request.Form[key]
-            //        };
-            //        patientObject.hmis_patient_ext.Add(patientHMISExt);
-            //    }
-            //    if (key.Contains("FathersName") && key.Equals("FathersName"))
-            //    {
-            //        getAllAdditionalInfo.Add("FathersName", Request.Form[key]);
-            //        var patientHMISExt = new hmisPatientExt
-            //        {
-            //            attribute_name = "FathersName",
-            //            attribute_value = Request.Form[key]
-            //        };
-            //        patientObject.hmis_patient_ext.Add(patientHMISExt);
-            //    }
-            //}           
+                if (key.Contains("MothersName") && key.Equals("MothersName"))
+                {
+                    getAllAdditionalInfo.Add("MothersName", Request.Form[key]);
+                    var patientHMISExt = new hmisPatientExt
+                    {
+                        attribute_name = "MothersName",
+                        attribute_value = Request.Form[key]
+                    };
+                    patientObject.hmis_patient_ext.Add(patientHMISExt);
+                }
+                if (key.Contains("FathersName") && key.Equals("FathersName"))
+                {
+                    getAllAdditionalInfo.Add("FathersName", Request.Form[key]);
+                    var patientHMISExt = new hmisPatientExt
+                    {
+                        attribute_name = "FathersName",
+                        attribute_value = Request.Form[key]
+                    };
+                    patientObject.hmis_patient_ext.Add(patientHMISExt);
+                }
+            }
 
             patientObject.patient_registration_no = "CAL-MED-20992";
             HttpResponseMessage response1 = GlobalVarriables.WebApiClient.PostAsJsonAsync("Patient", patientObject).Result;

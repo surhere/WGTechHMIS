@@ -11,7 +11,7 @@ namespace BusinessEntities
     {
         public hmisPatientBase()
         {
-            this.hmis_patient_ext = new HashSet<hmis_patient_ext>();
+            this.hmis_patient_ext = new HashSet<hmisPatientExt>();
         }
 
         public System.Guid ID { get; set; }
@@ -39,6 +39,6 @@ namespace BusinessEntities
 
         public virtual hmis_user_base hmis_user_base { get; set; }
         public virtual hmis_user_base hmis_user_base1 { get; set; }
-        public virtual ICollection<hmis_patient_ext> hmis_patient_ext { get; set; }
+        public virtual ICollection<hmisPatientExt> hmis_patient_ext { get; set; }
     }
 }

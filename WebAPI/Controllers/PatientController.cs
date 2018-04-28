@@ -8,11 +8,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebAPI.ActionFilters;
 using WebAPI.ErrorHelper;
 
 namespace WebAPI.Controllers
 {
     [RoutePrefix("v1/Patients/Patient")]
+    [AuthorizationRequired]
     public class PatientController : ApiController
     {
         private readonly IUserServices _userServices;

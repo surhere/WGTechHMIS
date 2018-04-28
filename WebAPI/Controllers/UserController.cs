@@ -73,7 +73,6 @@ namespace WebAPI.Controllers
         {
             try
             {
-                userObject.user_name = "admin";
                 var user = _userServices.ValidateUser(userObject.user_name, userObject.password);
                 if (user.SID != Guid.Empty)
                 {

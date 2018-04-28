@@ -70,7 +70,13 @@ namespace BusinessServices.Services
             var users = _unitOfWork.UserRepository.GetAll().ToList();
             if (users.Any())
             {
-                Mapper.CreateMap<hmis_user_base, hmisUserBase>();
+                // Mapper.CreateMap<hmis_user_base, hmisUserBase>();
+                Mapper.Reset();
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<DataModel.hmis_user_base, BusinessEntities.hmisUserBase>();
+
+                });
                 var userModel = Mapper.Map<List<hmis_user_base>, List<hmisUserBase>>(users);
                 return userModel;
             }
@@ -172,7 +178,13 @@ namespace BusinessServices.Services
 
             if (user != null)
             {
-                Mapper.CreateMap<hmis_user_base, hmisUserBase>();
+                // Mapper.CreateMap<hmis_user_base, hmisUserBase>();
+                Mapper.Reset();
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<hmis_user_base, hmisUserBase>();
+
+                });
                 var userModel = Mapper.Map<hmis_user_base, hmisUserBase>(user);
 
                 var responseUser = new UserEntity

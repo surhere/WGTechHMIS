@@ -24,7 +24,10 @@
                     @if (Session["UserInfo"] != null)
                     {
                         <li>@Html.ActionLink("Register", "Register", "Home")</li>
-
+                        <li>
+                            @Html.ActionLink("Hello " + Session["UserName"] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                     }                   
                     <li>@Html.ActionLink("Login", "Contact", "Home")</li>
                 </ul>
