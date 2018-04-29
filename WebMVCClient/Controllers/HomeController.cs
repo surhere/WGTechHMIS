@@ -28,8 +28,8 @@ namespace WebMVCClient.Controllers
                 }
             }
             GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
-            // GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
-            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", "4e0127d4-dd95-4a5c-a202-39e5ef6a14c2");
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
+            //GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", "4e0127d4-dd95-4a5c-a202-39e5ef6a14c2");
             
             IEnumerable<hmisUserBase> userList;
             List<hmisUserBase> EmpInfo = new List<hmisUserBase>();
@@ -67,8 +67,8 @@ namespace WebMVCClient.Controllers
                 }
             }
             GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
-            // GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
-            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", "4e0127d4-dd95-4a5c-a202-39e5ef6a14c2");
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
+
             HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("admin" + "?id=" + id).Result;
             if (response.IsSuccessStatusCode)
             {
