@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - HMIS Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+   
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -16,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Organization Name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -24,12 +25,25 @@
                     @if (Session["UserInfo"] != null)
                     {
                         <li>@Html.ActionLink("Register", "Register", "Home")</li>
-                        <li>
-                            @Html.ActionLink("Hello " + Session["UserName"] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                        </li>
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                    }                   
-                    <li>@Html.ActionLink("Login", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Patients", "Index", "PatientClient")</li>
+
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Contact", "Home")</li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @*<li style="color: white; line-height: 50px;">Hello User !!</li>*@
+                    @if (Session["UserInfo"] != null)
+                    {
+                    <li>
+                        @Html.ActionLink("Hello " + Session["UserName"] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
+                 
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    }
+
                 </ul>
             </div>
         </div>
@@ -37,6 +51,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
+
         <footer>
             <p>&copy; @DateTime.Now.Year - @@Webgen Hospital Management Information System</p>
         </footer>

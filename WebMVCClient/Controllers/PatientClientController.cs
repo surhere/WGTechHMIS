@@ -13,8 +13,8 @@ namespace WebMVCClient.Controllers
     
     public class PatientClientController : Controller
     {
-        // GET: PatientClient
-        public ActionResult Index()
+
+        public ActionResult LoadPatient()
         {
             var Token = "";
             if (Session != null)
@@ -24,6 +24,19 @@ namespace WebMVCClient.Controllers
                     Token = Session["AuthUserToken"].ToString();
                 }
             }
+
+            //var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            //var start = Request.Form.GetValues("start").FirstOrDefault();
+            //var length = Request.Form.GetValues("length").FirstOrDefault();
+            //var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            //var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            //var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+
+            ////Paging Size (10,20,50,100)    
+            //int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            //int skip = start != null ? Convert.ToInt32(start) : 0;
+            //int recordsTotal = 0;
             GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
             GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
             IEnumerable<hmisPatientBase> patientList = null;
@@ -36,9 +49,34 @@ namespace WebMVCClient.Controllers
                 var EmpResponse = response.Content.ReadAsStringAsync().Result;
                 //Deserializing the response recieved from web api and storing into the Employee list  
                 patientList = JsonConvert.DeserializeObject<List<hmisPatientBase>>(EmpResponse);
+                //Sorting    
+                //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+                //{
+                //   // patientList = patientList.OrderBy((sortColumn + " " + sortColumnDir);
+                //}
+                ////Search    
+                //if (!string.IsNullOrEmpty(searchValue))
+                //{
+                //    patientList = patientList.Where(m => m.patient_last_name == searchValue);
+                //}
 
+                ////total number of rows count     
+                //recordsTotal = patientList.Count();
+                ////Paging     
+                //var data = patientList.Skip(skip).Take(pageSize).ToList();
+                ////Returning Json Data    
+                //return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+                // return Json(new { data = patientList }, JsonRequestBehavior.AllowGet);
+                return Json(new { data = patientList }, JsonRequestBehavior.AllowGet);
             }
-            return View(patientList);
+
+            return null;
+
+        }
+        // GET: PatientClient
+        public ActionResult Index()
+        {           
+            return View();
         }
 
         // GET: User
@@ -97,6 +135,16 @@ namespace WebMVCClient.Controllers
                     var patientHMISExt = new hmisPatientExt
                     {
                         attribute_name = "FathersName",
+                        attribute_value = Request.Form[key]
+                    };
+                    patientObject.hmis_patient_ext.Add(patientHMISExt);
+                }
+                if (key.Contains("bpl_card_holder") && key.Equals("bpl_card_holder"))
+                {
+                    getAllAdditionalInfo.Add("BPLCardHolder", Request.Form[key]);
+                    var patientHMISExt = new hmisPatientExt
+                    {
+                        attribute_name = "BPLCardHolder",
                         attribute_value = Request.Form[key]
                     };
                     patientObject.hmis_patient_ext.Add(patientHMISExt);

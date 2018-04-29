@@ -19,9 +19,21 @@ namespace WebMVCClient.Controllers
     {
         public ActionResult Index()
         {
+            var Token = "";
+            if (Session != null)
+            {
+                if (Session["AuthUserToken"] != null)
+                {
+                    Token = Session["AuthUserToken"].ToString();
+                }
+            }
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
+            // GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", "4e0127d4-dd95-4a5c-a202-39e5ef6a14c2");
+            
             IEnumerable<hmisUserBase> userList;
             List<hmisUserBase> EmpInfo = new List<hmisUserBase>();
-            HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("User").Result;
+            HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("Admin").Result;
             //userList = response.Content.ReadAsByteArrayAsync<IEnumerable<hmisUserBase>>().Result;
             if (response.IsSuccessStatusCode)
             {
@@ -40,6 +52,47 @@ namespace WebMVCClient.Controllers
             ViewBag.Message = "Your application Register page.";
 
             return View();
+        }
+
+        // GET: /Phone/Edit/5
+        [HttpGet]
+        public ActionResult Edit(Guid id)
+        {
+            var Token = "";
+            if (Session != null)
+            {
+                if (Session["AuthUserToken"] != null)
+                {
+                    Token = Session["AuthUserToken"].ToString();
+                }
+            }
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
+            // GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", "4e0127d4-dd95-4a5c-a202-39e5ef6a14c2");
+            HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("admin" + "?id=" + id).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                using (HttpContent content = response.Content)
+                {
+                    // ... Read the string.
+                    Task<string> result = content.ReadAsStringAsync();
+                    var res = result.Result;
+                    var userData = Json(result);
+                    //var userInfo = JsonConvert.DeserializeObject<hmisUserBase>(res);
+                    //dynamic dynObj = JsonConvert.DeserializeObject(res);
+                    JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+                    dynamic userInfo = jsonSerializer.Deserialize<dynamic>(res);
+                    string userName = userInfo["UserName"].ToString();
+                    string FirstName = userInfo["FirstName"].ToString();
+                    string LastName = userInfo["LastName"].ToString();
+                    if (userInfo["Roles"] != null)
+                    {
+
+                    }
+                    return PartialView("Edit", userInfo);
+                }
+            }
+            return HttpNotFound();
         }
 
         public ActionResult Contact()
@@ -143,7 +196,7 @@ namespace WebMVCClient.Controllers
 
 
             }          
-           return RedirectToAction("Index", "PatientClient");
+           return null;
         }
         
     }

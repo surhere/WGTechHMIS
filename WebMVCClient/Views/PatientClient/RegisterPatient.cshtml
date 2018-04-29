@@ -10,10 +10,10 @@
 @using (Html.BeginForm("RegisterPatient", "PatientClient", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
+    <h4>Register a new Patient.</h4>
+    <hr />
+    @*<div class="form-horizontal">*@
     
-    <div class="form-horizontal">
-        <h4>hmisPatientBase</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.patient_registration_no, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -95,7 +95,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.created_on, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.created_on, new { htmlAttributes = new { @class = "form-control" } })
@@ -125,7 +125,7 @@
                 @Html.EditorFor(model => model.modified_by, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.modified_by, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.additiona_info, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -152,13 +152,18 @@
                 <input type="text" class="form-control" id="RefferedDoctor" name="RefferedDoctor" />
             </div>
         </div>
-        
+        <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">BPL Card Holder</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="bpl_card_holder" name="bpl_card_holder" />
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
-    </div>
+    @*</div>*@
 }
 
 <div>

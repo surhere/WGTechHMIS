@@ -32,7 +32,7 @@ namespace WebMVCClient.Controllers
 
             if (Session != null)
             {
-                if (Session["AuthUserToken"] == null)
+                if (Session["AuthUserToken"] != null)
                 {
                     Token = Session["AuthUserToken"].ToString();
                 }
