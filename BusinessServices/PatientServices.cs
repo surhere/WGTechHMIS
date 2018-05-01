@@ -27,14 +27,16 @@ namespace BusinessServices
         /// </summary>
         /// <param name="userEntity"></param>
         /// <returns></returns>
-        public Guid CreatePatient(BusinessEntities.hmisPatientBase patientEntity)
+        public string CreatePatient(BusinessEntities.hmisPatientBase patientEntity)
         {
+           int lastNumber = _unitOfWork.PatientBaseRepository.GetLastIndex("index_number", "hmis_patient_base");
+
             using (var scope = new TransactionScope())
             {
                 var patientHMIS = new hmis_patient_base
                 {
                     ID = Guid.NewGuid(),
-                    patient_registration_no = patientEntity.patient_registration_no,
+                    patient_registration_no = patientEntity.patient_registration_no + (lastNumber+1),
                     patient_first_name = patientEntity.patient_first_name,
                     patient_last_name = patientEntity.patient_last_name,
                     patient_dob = patientEntity.patient_dob,
@@ -47,6 +49,8 @@ namespace BusinessServices
                     additiona_info = patientEntity.additiona_info,
                     created_on = System.DateTime.Now,
                     modified_on = DateTime.Now,
+
+                    // change by sending from mvc controller using session user ID
                     created_by = new Guid("6418baab-9f1d-4917-9ff6-33bdfc5c49cc") ,
                     modified_by = new Guid("6418baab-9f1d-4917-9ff6-33bdfc5c49cc")
 
@@ -55,7 +59,7 @@ namespace BusinessServices
                 _unitOfWork.PatientBaseRepository.Insert(patientHMIS);
                 _unitOfWork.Save();              
                 scope.Complete();
-                return patientHMIS.ID;
+                return patientHMIS.ID +":"+ patientHMIS.patient_registration_no;
             }
         }
 
@@ -64,7 +68,7 @@ namespace BusinessServices
         /// </summary>
         /// <param name="patientEntity"></param>
         /// <returns></returns>
-        public Guid CreatePatientAdditionalInfo(BusinessEntities.hmisPatientBase patientEntity)
+        public hmisPatientBase CreatePatientAdditionalInfo(BusinessEntities.hmisPatientBase patientEntity)
         {
             //ICollection<DataModel.hmis_patient_ext> listPatientAdditionalInfo = 
             List<DataModel.hmis_patient_ext> listPatientAdditionalInfo = new List<hmis_patient_ext>();
@@ -100,7 +104,7 @@ namespace BusinessServices
                 _unitOfWork.PatientExtRepository.BulkInsert(listPatientAdditionalInfo);
                 _unitOfWork.Save();
                 scope.Complete();
-                return patientEntity.ID;
+                return patientEntity;
             }
         }
         /// <summary>
@@ -129,6 +133,62 @@ namespace BusinessServices
                  return patientModel;
             }
             return null;
+        }
+
+        /// <summary>
+        /// Get All users.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public hmisPatientBase GetPatientById(Guid patientId)
+        {
+            var patient = _unitOfWork.PatientBaseRepository.GetByID(patientId);
+            if (patient!=null)
+            {
+                Mapper.Reset();
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<hmis_patient_base, hmisPatientBase>();
+
+                });
+                // Mapper.CreateMap<hmis_patient_base, hmisPatientBase>();
+                var patientModel = Mapper.Map<hmis_patient_base, hmisPatientBase>(patient);
+                //foreach(var patientModel in patients)
+                //{
+
+                //}
+                return patientModel;
+            }
+            return null;
+        }
+
+
+        /// <summary>
+        /// Updates a patient
+        /// </summary>
+        /// <param name="patientId"></param>
+        /// <param name="patientEntity"></param>
+        /// <returns></returns>
+        public bool UpdatePatient(Guid patientId, BusinessEntities.hmisPatientBase patientEntity)
+        {
+            var success = false;
+            if (patientEntity != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var patient = _unitOfWork.PatientBaseRepository.GetByID(patientId);
+                    if (patient != null)
+                    {
+                        patient.ID = patientEntity.ID;
+                        _unitOfWork.PatientBaseRepository.Update(patient);
+                        _unitOfWork.Save();
+                        scope.Complete();
+                        success = true;
+                    }
+                }
+            }
+            return success;
         }
     }
 }

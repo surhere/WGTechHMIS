@@ -42,6 +42,7 @@ namespace DataModel
         public Nullable<bool> Is_Reffered_By { get; set; }
         public string Reffered_Doctor { get; set; }
         public Nullable<bool> Is_Consent_Signed { get; set; }
+        public int index_number { get; set; }
     
         public virtual hmis_user_base hmis_user_base { get; set; }
         public virtual hmis_user_base hmis_user_base1 { get; set; }

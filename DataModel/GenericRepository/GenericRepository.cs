@@ -210,6 +210,19 @@ namespace DataModel.GenericRepository
             return 1;
         }
 
+        /// <summary>
+        /// Get Last Inserted Record Index Number
+        /// </summary>
+        /// <param name="columnName">string</param>
+        /// <param name="tableName">string</param>
+        /// <returns>A single record containing the first record matching the specified criteria</returns>
+        public int GetLastIndex(string columnName, string tableName)
+        {
+            string sql = string.Format("select isnull(MAX([{0}]),0) AS [{0}] FROM {1}", columnName, tableName);           
+            return  Context.Database.SqlQuery<int>(sql).First();
+            //return Context.Set<hmis_patient_base>().Select(c => c.index_number).DefaultIfEmpty(0).Max();
+            
+        }
         #endregion
     }
 }

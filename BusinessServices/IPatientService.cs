@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessEntities;
+using DataModel;
 
 namespace BusinessServices
 {
     public interface IPatientService
     {
-        Guid CreatePatient(hmisPatientBase patientEntity);
+        string CreatePatient(hmisPatientBase patientEntity);
         IEnumerable<hmisPatientBase> GetAllPatients();
-
-        Guid CreatePatientAdditionalInfo(hmisPatientBase patientEntity);
+        hmisPatientBase GetPatientById(Guid patientId);
+        bool UpdatePatient(Guid patientId, BusinessEntities.hmisPatientBase patientEntity);
+        hmisPatientBase CreatePatientAdditionalInfo(hmisPatientBase patientEntity);
     }
 }

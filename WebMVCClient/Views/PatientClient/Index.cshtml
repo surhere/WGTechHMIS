@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width" />
 
 <p>
-    <link rel="stylesheet" href="~/Content/themes/base/minified/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
     <style>
@@ -20,12 +20,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
 
 
-    <style>
-        span.field-validation-error {
-            color: red;
-        }
-    </style>
-
     @Html.ActionLink("Create New", "RegisterPatient", new { @class = "btn btn-small btn-primary" })
 </p>
 <div style="width:90%; margin:0 auto" class="tablecontainer">
@@ -36,7 +30,6 @@
                 <th>Registration No.</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>DOB</th>
                 <th>Blood Type</th>
                 <th>Phone</th>
                 <th>City</th>
@@ -48,13 +41,26 @@
     </table>
 </div>
 
-@section Scripts {
-   
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+@section Scripts {  
+@Scripts.Render("~/Scripts/jquery-3.3.1.min.js")
+@Scripts.Render("~/Scripts/jquery.validate.min.js")
+@Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+@Scripts.Render("https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js")
+@Scripts.Render("~/Scripts/jquery-ui-1.12.1.min.js")
+
+@*<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/additional-methods.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>*@
+@*<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>*@
+
+<style>
+    span.field-validation-error {
+        color: red;
+    }
+</style>
+
 <script>
     $(document).ready(function () {
         var oTable = $('#myDatatable').DataTable({
@@ -67,18 +73,18 @@
                 { "data": "patient_registration_no", "name": "CustomerID", "autoWidth": true },
                 { "data": "patient_first_name", "name": "CompanyName", "autoWidth": true },
                 { "data": "patient_last_name", "title": "ContactName", "name": "ContactName", "autoWidth": true },
-                { "data": "patient_dob", "name": "DOB", "autoWidth": true },
+                //{ "data": "patient_dob", "name": "DOB", "autoWidth": true },
                 { "data": "patient_blood_type", "name": "BloodGroup", "autoWidth": true },
                 { "data": "patient_phone", "name": "Phone", "autoWidth": true },
                 { "data": "patient_city", "name": "City", "autoWidth": true },
                 { "data": "patient_sex", "name": "Sex", "title": "Status", "autoWidth": true },
                 {
-                    "data": "ID", "width": "50px", "render": function (data) {
-                        return '<a class="popup" href="/PatientClient/RegisterPatient/' + data + '">Edit</a>';
+                    "data": "ID",  "render": function (data) {
+                        return '<a class="popup" href="/PatientClient/save/' + data + '">Edit</a>';
                     }
                 },
                 {
-                    "data": "ID", "width": "50px", "render": function (data) {
+                    "data": "ID",  "render": function (data) {
                         return '<a class="popup" href="/home/delete/' + data + '">Delete</a>';
                     }
                 }

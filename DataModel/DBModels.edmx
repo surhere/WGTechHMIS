@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HMIS.dbo.hmis_link_role_persmissions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="hmis_link_role_persmissions">
@@ -59,6 +59,7 @@ warning 6002: The table/view 'HMIS.dbo.hmis_link_user_roles' does not have a pri
           <Property Name="Is_Reffered_By" Type="bit" />
           <Property Name="Reffered_Doctor" Type="nvarchar" MaxLength="50" />
           <Property Name="Is_Consent_Signed" Type="bit" />
+          <Property Name="index_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="hmis_patient_ext">
           <Key>
@@ -351,8 +352,7 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             <End Role="Tokens" EntitySet="Tokens" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -385,6 +385,7 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <NavigationProperty Name="hmis_user_base" Relationship="Self.FK_hmis_patient_base_hmis_user_base" FromRole="hmis_patient_base" ToRole="hmis_user_base" />
           <NavigationProperty Name="hmis_user_base1" Relationship="Self.FK_hmis_patient_base_hmis_user_base1" FromRole="hmis_patient_base" ToRole="hmis_user_base" />
           <NavigationProperty Name="hmis_patient_ext" Relationship="Self.FK_hmis_patient_ext_hmis_patient_base" FromRole="hmis_patient_base" ToRole="hmis_patient_ext" />
+          <Property Name="index_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="hmis_patient_ext">
           <Key>
@@ -684,6 +685,7 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <EntitySetMapping Name="hmis_patient_base">
             <EntityTypeMapping TypeName="DBModel.hmis_patient_base">
               <MappingFragment StoreEntitySet="hmis_patient_base">
+                <ScalarProperty Name="index_number" ColumnName="index_number" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="patient_registration_no" ColumnName="patient_registration_no" />
                 <ScalarProperty Name="patient_first_name" ColumnName="patient_first_name" />

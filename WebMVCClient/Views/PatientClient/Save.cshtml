@@ -7,63 +7,25 @@
 
 <h2>RegisterPatient</h2>
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#registrationform").submit(function (e) {
-            e.preventDefault();
-            debugger;
-            if ($(this).valid()) {
-                $("#divLoading").show();
-                $.ajax({
-                    type: "POST",
-                    url:$(this).attr('action'),
-                    data: $(this).serialize(),
-                    success: function (data, textStatus, xhr) {
-                        debugger;
-                        var statusCode = xhr.status;
-                        alert(statusCode);
-                        alert("Status : " + statusCode);
-                        $("#divLoading").hide();
-                        $("#patient_registration_no").val(data);
-                    },
-                    error: function (data) {
-                        alert("Ajax request failed!");
-                    },
-                    statusCode: {
-                        401: function () {
-                            alert("Unauthorised expect username to be equal to password e.g. foo & foo");
-                        }
-                    }
-                });
-            }
-        });
-
-    })
-
-</script>
-
-@using (Html.BeginForm("RegisterPatient", "PatientClient", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "registrationform", name = "registrationform" }))
+@using (Html.BeginForm("Save", "PatientClient", FormMethod.Post, new { id = "popupForm" , @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4>Register a new Patient.</h4>
     <hr />
     @*<div class="form-horizontal">*@
+    if (Model != null && Model.ID !=Guid.Empty)
+    {
+        @Html.HiddenFor(a => a.ID)
+}
 
-     
-
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.patient_registration_no, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.patient_registration_no, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.patient_registration_no, "", new { @class = "text-danger" })
-            </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.patient_registration_no, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.patient_registration_no, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.patient_registration_no, "", new { @class = "text-danger" })
         </div>
+    </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.patient_first_name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -138,36 +100,36 @@
         </div>
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.created_on, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.created_on, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.created_on, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.created_on, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.created_on, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.created_on, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.modified_on, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.modified_on, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.modified_on, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.modified_on, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.modified_on, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.modified_on, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.created_by, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.created_by, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.created_by, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.created_by, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.created_by, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.created_by, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.modified_by, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.modified_by, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.modified_by, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.modified_by, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.modified_by, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.modified_by, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.additiona_info, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -177,7 +139,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="patient_fathers_name" class="control-label col-md-2">Father's Name</label>           
+            <label for="patient_fathers_name" class="control-label col-md-2">Father's Name</label>
             <div class="col-md-10">
                 <input type="text" name="FathersName" class="form-control" id="FathersName" />
             </div>
@@ -185,7 +147,7 @@
         <div class="form-group">
             <label for="patient_mothers_name" class="control-label col-md-2">Mother's Name</label>
             <div class="col-md-10">
-                <input type="text" name="MothersName"class="form-control" id="MothersName" />
+                <input type="text" name="MothersName" class="form-control" id="MothersName" />
             </div>
         </div>
         <div class="form-group">
@@ -205,17 +167,9 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
-    @*</div>*@
+        @*</div>*@
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-<div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
-    top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
-    opacity: .8; filter: alpha(opacity=70);display:none">
-    <p style="position: relative; top: 30%; left: 45%; color: White;">
-        Loading, please wait...<img src="~/fonts/ajax-loading (1).gif">
-    </p>
-</div>
-
