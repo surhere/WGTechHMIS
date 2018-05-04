@@ -77,6 +77,10 @@
       <Project>{41c4c015-f512-4fb8-913b-3fa3927b074d}</Project>
       <Name>Resolver</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{8288d54c-ebcc-478f-b561-dc1cdc33b8c6}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

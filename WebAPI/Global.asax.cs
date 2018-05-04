@@ -38,5 +38,9 @@ namespace WebAPI
             //Add CORS Handler
             GlobalConfiguration.Configuration.MessageHandlers.Add(new CorsHandler());
         }
+        //protected void Application_BeginRequest(object sender, EventArgs e)
+        //{
+        //    HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
+        //}
     }
 }

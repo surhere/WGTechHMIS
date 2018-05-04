@@ -14,7 +14,7 @@
             var data = "grant_type=password&" + userName + ":" + password;
             $http.post(loginServiceURL, data, {
                 headers:
-                { "Authorization": "Basic " + btoa(userName + ":" + password) }
+                { "Authorization": "Basic " + (userName + ":" + password) }
             }).success(function (response) {
                 debugger;
                 var o = response;

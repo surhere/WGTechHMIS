@@ -5,9 +5,11 @@ using DataModel.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Utilities;
 
 namespace BusinessServices
 {
@@ -70,7 +72,6 @@ namespace BusinessServices
         /// <returns></returns>
         public hmisPatientBase CreatePatientAdditionalInfo(BusinessEntities.hmisPatientBase patientEntity)
         {
-            //ICollection<DataModel.hmis_patient_ext> listPatientAdditionalInfo = 
             List<DataModel.hmis_patient_ext> listPatientAdditionalInfo = new List<hmis_patient_ext>();
             Mapper.Reset();
             Mapper.Initialize(cfg =>
@@ -125,18 +126,14 @@ namespace BusinessServices
 
                 });
                 // Mapper.CreateMap<hmis_patient_base, hmisPatientBase>();
-                var patientModel = Mapper.Map<List<hmis_patient_base>, List<hmisPatientBase>>(patients);
-                //foreach(var patientModel in patients)
-                //{
-
-                //}
-                 return patientModel;
+                var patientModel = Mapper.Map<List<hmis_patient_base>, List<hmisPatientBase>>(patients);             
+                return patientModel;
             }
             return null;
         }
 
         /// <summary>
-        /// Get All users.
+        /// Get details of a users with base and extension.
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
@@ -144,26 +141,28 @@ namespace BusinessServices
         public hmisPatientBase GetPatientById(Guid patientId)
         {
             var patient = _unitOfWork.PatientBaseRepository.GetByID(patientId);
+
+            string[] includes = { "hmis_patient_ext" };
+            var patient1 = _unitOfWork.PatientBaseRepository.GetWithInclude(c => c.ID == patientId, includes).ToList();
+
             if (patient!=null)
             {
                 Mapper.Reset();
                 Mapper.Initialize(cfg =>
                 {
-                    cfg.CreateMap<hmis_patient_base, hmisPatientBase>();
+                    cfg.CreateMap<hmis_patient_base, hmisPatientBase>();                   
+                    cfg.CreateMap<hmis_patient_ext, hmisPatientExt>()
+                    .ForMember(dest => dest.hmisPatientBase, opt => opt.Ignore());
 
                 });
                 // Mapper.CreateMap<hmis_patient_base, hmisPatientBase>();
-                var patientModel = Mapper.Map<hmis_patient_base, hmisPatientBase>(patient);
-                //foreach(var patientModel in patients)
-                //{
-
-                //}
+                var patientModel = Mapper.Map<hmis_patient_base, hmisPatientBase>(patient);               
                 return patientModel;
             }
             return null;
         }
 
-
+       
         /// <summary>
         /// Updates a patient
         /// </summary>

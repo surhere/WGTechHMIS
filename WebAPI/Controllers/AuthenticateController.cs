@@ -39,6 +39,7 @@ namespace WebApi.Controllers
         [POST("login")]
         [POST("authenticate")]
         [POST("get/token")]
+      //  [EnableCors(origins: "*", headers: "*", methods: "*")]
         public HttpResponseMessage Authenticate()
         {
             if (System.Threading.Thread.CurrentPrincipal!=null && System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
