@@ -25,6 +25,12 @@
         <AssociationConnector Association="DBModel.FK_Tokens_User" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_hmis_link_role_persmissions_hsmis_role_base" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_hmis_link_user_roles_hsmis_role_base" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBModel.hmis_patient_admission_base" Width="1.5" PointX="5.25" PointY="25.5" />
+        <EntityTypeShape EntityType="DBModel.hmis_patient_admission_ext" Width="1.5" PointX="7.5" PointY="24.5" />
+        <EntityTypeShape EntityType="DBModel.hmis_patient_operation" Width="1.5" PointX="7.5" PointY="27.25" />
+        <AssociationConnector Association="DBModel.FK_hmis_patient_admission_base_hmis_patient_base" />
+        <AssociationConnector Association="DBModel.FK_hmis_patient_admission_ext_hmis_patient_admission_base" />
+        <AssociationConnector Association="DBModel.FK_hmis_patient_operation_hmis_patient_admission_base" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

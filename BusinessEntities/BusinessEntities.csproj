@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="hmisPatientAdmission.cs" />
+    <Compile Include="hmisPatientAdmissionExt.cs" />
     <Compile Include="hmisPatientBase.cs" />
     <Compile Include="hmisPatientExt.cs" />
+    <Compile Include="hmisPatientOperation.cs" />
     <Compile Include="hmisPermisionBase.cs" />
     <Compile Include="hmisRoleBase.cs" />
     <Compile Include="hmisRolePermissions.cs" />

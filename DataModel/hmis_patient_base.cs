@@ -18,6 +18,7 @@ namespace DataModel
         public hmis_patient_base()
         {
             this.hmis_patient_ext = new HashSet<hmis_patient_ext>();
+            this.hmis_patient_admission_base = new HashSet<hmis_patient_admission_base>();
         }
     
         public System.Guid ID { get; set; }
@@ -48,5 +49,7 @@ namespace DataModel
         public virtual hmis_user_base hmis_user_base1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<hmis_patient_ext> hmis_patient_ext { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_patient_admission_base> hmis_patient_admission_base { get; set; }
     }
 }

@@ -36,5 +36,8 @@ namespace DataModel
         public virtual DbSet<hmis_user_activity_log> hmis_user_activity_log { get; set; }
         public virtual DbSet<hmis_user_ext> hmis_user_ext { get; set; }
         public virtual DbSet<vw_user_roles> vw_user_roles { get; set; }
+        public virtual DbSet<hmis_patient_admission_base> hmis_patient_admission_base { get; set; }
+        public virtual DbSet<hmis_patient_admission_ext> hmis_patient_admission_ext { get; set; }
+        public virtual DbSet<hmis_patient_operation> hmis_patient_operation { get; set; }
     }
 }

@@ -33,6 +33,35 @@ warning 6002: The table/view 'HMIS.dbo.hmis_link_user_roles' does not have a pri
           <Property Name="created_on" Type="datetime" Nullable="false" />
           <Property Name="modified_on" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="hmis_patient_admission_base">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="patient_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="admission_type" Type="nvarchar" MaxLength="50" />
+          <Property Name="diagonosed_in" Type="nvarchar" MaxLength="50" />
+          <Property Name="progressive_in_year" Type="nvarchar" MaxLength="50" />
+          <Property Name="from_health_unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="discharge_date" Type="datetime" />
+          <Property Name="discharge_type" Type="nvarchar" MaxLength="50" />
+          <Property Name="discharge_instruction" Type="nvarchar(max)" />
+          <Property Name="admission_notes" Type="nvarchar(max)" />
+          <Property Name="Is_allergic" Type="bit" />
+          <Property Name="bed_days" Type="int" />
+          <Property Name="Is_malnutritious" Type="bit" />
+          <Property Name="ward_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="index_nember" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hmis_patient_admission_ext">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="patient_admission_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="attribute_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="attribute_value" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="hmis_patient_base">
           <Key>
             <PropertyRef Name="ID" />
@@ -69,6 +98,24 @@ warning 6002: The table/view 'HMIS.dbo.hmis_link_user_roles' does not have a pri
           <Property Name="attribute_name" Type="nvarchar" MaxLength="50" />
           <Property Name="attribute_value" Type="nvarchar" MaxLength="50" />
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hmis_patient_operation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="patient_admission_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="date_of_operation" Type="datetime" />
+          <Property Name="number_of_nights" Type="int" />
+          <Property Name="proposed_surgery" Type="nvarchar(max)" />
+          <Property Name="consent_on_surgery" Type="bit" />
+          <Property Name="consent_on_admission" Type="bit" />
+          <Property Name="notes_on_surgery" Type="nvarchar(max)" />
+          <Property Name="consignee_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="consignee_relationship" Type="nvarchar" MaxLength="50" />
+          <Property Name="special_instruction" Type="nvarchar(max)" />
+          <Property Name="medical_notes" Type="nvarchar(max)" />
+          <Property Name="index_nember" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="hmis_permission_base">
           <Key>
@@ -209,6 +256,30 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_hmis_patient_admission_base_hmis_patient_base">
+          <End Role="hmis_patient_base" Type="Self.hmis_patient_base" Multiplicity="1" />
+          <End Role="hmis_patient_admission_base" Type="Self.hmis_patient_admission_base" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_patient_base">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_patient_admission_base">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_patient_admission_ext_hmis_patient_admission_base">
+          <End Role="hmis_patient_admission_base" Type="Self.hmis_patient_admission_base" Multiplicity="1" />
+          <End Role="hmis_patient_admission_ext" Type="Self.hmis_patient_admission_ext" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_patient_admission_base">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_patient_admission_ext">
+              <PropertyRef Name="patient_admission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_hmis_patient_base_hmis_user_base">
           <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
           <End Role="hmis_patient_base" Type="Self.hmis_patient_base" Multiplicity="*" />
@@ -245,6 +316,18 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_hmis_patient_operation_hmis_patient_admission_base">
+          <End Role="hmis_patient_admission_base" Type="Self.hmis_patient_admission_base" Multiplicity="1" />
+          <End Role="hmis_patient_operation" Type="Self.hmis_patient_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_patient_admission_base">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_patient_operation">
+              <PropertyRef Name="patient_admission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_hmis_user_ext_hmis_user_base">
           <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
           <End Role="hmis_user_ext" Type="Self.hmis_user_ext" Multiplicity="*" />
@@ -270,8 +353,11 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="hmis_patient_admission_base" EntityType="Self.hmis_patient_admission_base" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hmis_patient_admission_ext" EntityType="Self.hmis_patient_admission_ext" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_patient_base" EntityType="Self.hmis_patient_base" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_patient_ext" EntityType="Self.hmis_patient_ext" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hmis_patient_operation" EntityType="Self.hmis_patient_operation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_permission_base" EntityType="Self.hmis_permission_base" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_user_base" EntityType="Self.hmis_user_base" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hsmis_role_base" EntityType="Self.hsmis_role_base" Schema="dbo" store:Type="Tables" />
@@ -331,6 +417,14 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             <End Role="hsmis_role_base" EntitySet="hsmis_role_base" />
             <End Role="hmis_link_user_roles" EntitySet="hmis_link_user_roles" />
           </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_admission_base_hmis_patient_base" Association="Self.FK_hmis_patient_admission_base_hmis_patient_base">
+            <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
+            <End Role="hmis_patient_admission_base" EntitySet="hmis_patient_admission_base" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_admission_ext_hmis_patient_admission_base" Association="Self.FK_hmis_patient_admission_ext_hmis_patient_admission_base">
+            <End Role="hmis_patient_admission_base" EntitySet="hmis_patient_admission_base" />
+            <End Role="hmis_patient_admission_ext" EntitySet="hmis_patient_admission_ext" />
+          </AssociationSet>
           <AssociationSet Name="FK_hmis_patient_base_hmis_user_base" Association="Self.FK_hmis_patient_base_hmis_user_base">
             <End Role="hmis_user_base" EntitySet="hmis_user_base" />
             <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
@@ -342,6 +436,10 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <AssociationSet Name="FK_hmis_patient_ext_hmis_patient_base" Association="Self.FK_hmis_patient_ext_hmis_patient_base">
             <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
             <End Role="hmis_patient_ext" EntitySet="hmis_patient_ext" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_operation_hmis_patient_admission_base" Association="Self.FK_hmis_patient_operation_hmis_patient_admission_base">
+            <End Role="hmis_patient_admission_base" EntitySet="hmis_patient_admission_base" />
+            <End Role="hmis_patient_operation" EntitySet="hmis_patient_operation" />
           </AssociationSet>
           <AssociationSet Name="FK_hmis_user_ext_hmis_user_base" Association="Self.FK_hmis_user_ext_hmis_user_base">
             <End Role="hmis_user_base" EntitySet="hmis_user_base" />
@@ -386,6 +484,7 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <NavigationProperty Name="hmis_user_base1" Relationship="Self.FK_hmis_patient_base_hmis_user_base1" FromRole="hmis_patient_base" ToRole="hmis_user_base" />
           <NavigationProperty Name="hmis_patient_ext" Relationship="Self.FK_hmis_patient_ext_hmis_patient_base" FromRole="hmis_patient_base" ToRole="hmis_patient_ext" />
           <Property Name="index_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="hmis_patient_admission_base" Relationship="DBModel.FK_hmis_patient_admission_base_hmis_patient_base" FromRole="hmis_patient_base" ToRole="hmis_patient_admission_base" />
         </EntityType>
         <EntityType Name="hmis_patient_ext">
           <Key>
@@ -675,7 +774,110 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             <End Role="hsmis_role_base" EntitySet="hsmis_role_base" />
             <End Role="hmis_link_user_roles" EntitySet="hmis_link_user_roles" />
           </AssociationSet>
+          <EntitySet Name="hmis_patient_admission_base" EntityType="DBModel.hmis_patient_admission_base" />
+          <EntitySet Name="hmis_patient_admission_ext" EntityType="DBModel.hmis_patient_admission_ext" />
+          <EntitySet Name="hmis_patient_operation" EntityType="DBModel.hmis_patient_operation" />
+          <AssociationSet Name="FK_hmis_patient_admission_base_hmis_patient_base" Association="DBModel.FK_hmis_patient_admission_base_hmis_patient_base">
+            <End Role="hmis_patient_base" EntitySet="hmis_patient_base" />
+            <End Role="hmis_patient_admission_base" EntitySet="hmis_patient_admission_base" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_admission_ext_hmis_patient_admission_base" Association="DBModel.FK_hmis_patient_admission_ext_hmis_patient_admission_base">
+            <End Role="hmis_patient_admission_base" EntitySet="hmis_patient_admission_base" />
+            <End Role="hmis_patient_admission_ext" EntitySet="hmis_patient_admission_ext" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_patient_operation_hmis_patient_admission_base" Association="DBModel.FK_hmis_patient_operation_hmis_patient_admission_base">
+            <End Role="hmis_patient_admission_base" EntitySet="hmis_patient_admission_base" />
+            <End Role="hmis_patient_operation" EntitySet="hmis_patient_operation" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="hmis_patient_admission_base">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="patient_id" Type="Guid" Nullable="false" />
+          <Property Name="admission_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="diagonosed_in" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="progressive_in_year" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="from_health_unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="discharge_date" Type="DateTime" Precision="3" />
+          <Property Name="discharge_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="discharge_instruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="admission_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Is_allergic" Type="Boolean" />
+          <Property Name="bed_days" Type="Int32" />
+          <Property Name="Is_malnutritious" Type="Boolean" />
+          <Property Name="ward_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="index_nember" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="hmis_patient_base" Relationship="DBModel.FK_hmis_patient_admission_base_hmis_patient_base" FromRole="hmis_patient_admission_base" ToRole="hmis_patient_base" />
+          <NavigationProperty Name="hmis_patient_admission_ext" Relationship="DBModel.FK_hmis_patient_admission_ext_hmis_patient_admission_base" FromRole="hmis_patient_admission_base" ToRole="hmis_patient_admission_ext" />
+          <NavigationProperty Name="hmis_patient_operation" Relationship="DBModel.FK_hmis_patient_operation_hmis_patient_admission_base" FromRole="hmis_patient_admission_base" ToRole="hmis_patient_operation" />
+        </EntityType>
+        <EntityType Name="hmis_patient_admission_ext">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="patient_admission_id" Type="Guid" Nullable="false" />
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="attribute_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="attribute_value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="hmis_patient_admission_base" Relationship="DBModel.FK_hmis_patient_admission_ext_hmis_patient_admission_base" FromRole="hmis_patient_admission_ext" ToRole="hmis_patient_admission_base" />
+        </EntityType>
+        <EntityType Name="hmis_patient_operation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="patient_admission_id" Type="Guid" Nullable="false" />
+          <Property Name="date_of_operation" Type="DateTime" Precision="3" />
+          <Property Name="number_of_nights" Type="Int32" />
+          <Property Name="proposed_surgery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="consent_on_surgery" Type="Boolean" />
+          <Property Name="consent_on_admission" Type="Boolean" />
+          <Property Name="notes_on_surgery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="consignee_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="consignee_relationship" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="special_instruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="medical_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="index_nember" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="hmis_patient_admission_base" Relationship="DBModel.FK_hmis_patient_operation_hmis_patient_admission_base" FromRole="hmis_patient_operation" ToRole="hmis_patient_admission_base" />
+        </EntityType>
+        <Association Name="FK_hmis_patient_admission_base_hmis_patient_base">
+          <End Type="DBModel.hmis_patient_base" Role="hmis_patient_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_patient_admission_base" Role="hmis_patient_admission_base" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_patient_base">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_patient_admission_base">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_patient_admission_ext_hmis_patient_admission_base">
+          <End Type="DBModel.hmis_patient_admission_base" Role="hmis_patient_admission_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_patient_admission_ext" Role="hmis_patient_admission_ext" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_patient_admission_base">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_patient_admission_ext">
+              <PropertyRef Name="patient_admission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_patient_operation_hmis_patient_admission_base">
+          <End Type="DBModel.hmis_patient_admission_base" Role="hmis_patient_admission_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_patient_operation" Role="hmis_patient_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_patient_admission_base">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_patient_operation">
+              <PropertyRef Name="patient_admission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -825,6 +1027,56 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
                 <ScalarProperty Name="role_name" ColumnName="role_name" />
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="role_description" ColumnName="role_description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_patient_admission_base">
+            <EntityTypeMapping TypeName="DBModel.hmis_patient_admission_base">
+              <MappingFragment StoreEntitySet="hmis_patient_admission_base">
+                <ScalarProperty Name="index_nember" ColumnName="index_nember" />
+                <ScalarProperty Name="ward_number" ColumnName="ward_number" />
+                <ScalarProperty Name="Is_malnutritious" ColumnName="Is_malnutritious" />
+                <ScalarProperty Name="bed_days" ColumnName="bed_days" />
+                <ScalarProperty Name="Is_allergic" ColumnName="Is_allergic" />
+                <ScalarProperty Name="admission_notes" ColumnName="admission_notes" />
+                <ScalarProperty Name="discharge_instruction" ColumnName="discharge_instruction" />
+                <ScalarProperty Name="discharge_type" ColumnName="discharge_type" />
+                <ScalarProperty Name="discharge_date" ColumnName="discharge_date" />
+                <ScalarProperty Name="from_health_unit" ColumnName="from_health_unit" />
+                <ScalarProperty Name="progressive_in_year" ColumnName="progressive_in_year" />
+                <ScalarProperty Name="diagonosed_in" ColumnName="diagonosed_in" />
+                <ScalarProperty Name="admission_type" ColumnName="admission_type" />
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_patient_admission_ext">
+            <EntityTypeMapping TypeName="DBModel.hmis_patient_admission_ext">
+              <MappingFragment StoreEntitySet="hmis_patient_admission_ext">
+                <ScalarProperty Name="attribute_value" ColumnName="attribute_value" />
+                <ScalarProperty Name="attribute_name" ColumnName="attribute_name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="patient_admission_id" ColumnName="patient_admission_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_patient_operation">
+            <EntityTypeMapping TypeName="DBModel.hmis_patient_operation">
+              <MappingFragment StoreEntitySet="hmis_patient_operation">
+                <ScalarProperty Name="index_nember" ColumnName="index_nember" />
+                <ScalarProperty Name="medical_notes" ColumnName="medical_notes" />
+                <ScalarProperty Name="special_instruction" ColumnName="special_instruction" />
+                <ScalarProperty Name="consignee_relationship" ColumnName="consignee_relationship" />
+                <ScalarProperty Name="consignee_name" ColumnName="consignee_name" />
+                <ScalarProperty Name="notes_on_surgery" ColumnName="notes_on_surgery" />
+                <ScalarProperty Name="consent_on_admission" ColumnName="consent_on_admission" />
+                <ScalarProperty Name="consent_on_surgery" ColumnName="consent_on_surgery" />
+                <ScalarProperty Name="proposed_surgery" ColumnName="proposed_surgery" />
+                <ScalarProperty Name="number_of_nights" ColumnName="number_of_nights" />
+                <ScalarProperty Name="date_of_operation" ColumnName="date_of_operation" />
+                <ScalarProperty Name="patient_admission_id" ColumnName="patient_admission_id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
