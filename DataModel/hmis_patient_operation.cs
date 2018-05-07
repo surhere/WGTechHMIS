@@ -27,7 +27,14 @@ namespace DataModel
         public string special_instruction { get; set; }
         public string medical_notes { get; set; }
         public int index_nember { get; set; }
+        public System.Guid modified_by { get; set; }
+        public System.Guid created_by { get; set; }
+        public System.DateTime created_on { get; set; }
+        public System.DateTime modified_on { get; set; }
+        public string operation_sequence { get; set; }
     
         public virtual hmis_patient_admission_base hmis_patient_admission_base { get; set; }
+        public virtual hmis_user_base hmis_user_base { get; set; }
+        public virtual hmis_user_base hmis_user_base1 { get; set; }
     }
 }

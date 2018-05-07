@@ -17,6 +17,7 @@ namespace BusinessServices
             registerComponent.RegisterType<ITokenServices, TokenServices>();
             registerComponent.RegisterType<IRoleService, RoleServices>();
             registerComponent.RegisterType<IPatientService, PatientServices>();
+            registerComponent.RegisterType<IPatientAdmissionService, PatientAdmissionService>();
         }
     }
 }

@@ -24,6 +24,9 @@ namespace DataModel.UnitOfWork
         private GenericRepository<Token> _tokenRepository;
         private GenericRepository<hmis_patient_base> _patientbaseRepository;
         private GenericRepository<hmis_patient_ext> _patientextRepository;
+        private GenericRepository<hmis_patient_admission_ext> _patientAdmissionExtRepository;
+        private GenericRepository<hmis_patient_admission_base> _patientAdmissionBaseRepository;
+        private GenericRepository<hmis_patient_operation> _patientOperationRepository;
 
         private GenericRepository<vw_user_roles> _vwRoleRepository;
         #endregion
@@ -125,6 +128,46 @@ namespace DataModel.UnitOfWork
                 if (this._patientextRepository == null)
                     this._patientextRepository = new GenericRepository<hmis_patient_ext>(_context);
                 return _patientextRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for Patient Admission Base Entity Repository.
+        /// </summary>
+        public GenericRepository<hmis_patient_admission_base> PatientAdmissionBaseRepository
+        {
+            get
+            {
+                if (this._patientAdmissionBaseRepository == null)
+                    this._patientAdmissionBaseRepository = new GenericRepository<hmis_patient_admission_base>(_context);
+                return _patientAdmissionBaseRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for Patient Admission Extension Entity Repository.
+        /// </summary>
+        public GenericRepository<hmis_patient_admission_ext> PatientAdmissionExtRepository
+        {
+            get
+            {
+                if (this._patientAdmissionExtRepository == null)
+                    this._patientAdmissionExtRepository = new GenericRepository<hmis_patient_admission_ext>(_context);
+                return _patientAdmissionExtRepository;
+            }
+        }
+
+
+        /// <summary>
+        /// Get/Set Property for Patient Post Admission - Operation  Entity Repository.
+        /// </summary>
+        public GenericRepository<hmis_patient_operation> PatientOperationRepository
+        {
+            get
+            {
+                if (this._patientOperationRepository == null)
+                    this._patientOperationRepository = new GenericRepository<hmis_patient_operation>(_context);
+                return _patientOperationRepository;
             }
         }
         #endregion

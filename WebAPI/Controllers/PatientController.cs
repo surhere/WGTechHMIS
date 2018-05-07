@@ -71,7 +71,7 @@ namespace WebAPI.Controllers
                 string[] returnData = createResult.ToString().Split(':');
                 patientEntity.ID = new Guid(returnData[0].ToString());
                 patientEntity.patient_registration_no = returnData[1].ToString();
-                _patientService.CreatePatientAdditionalInfo(patientEntity);
+             //   _patientService.CreatePatientAdditionalInfo(patientEntity);
                 var patientObject = _patientService.CreatePatientAdditionalInfo(patientEntity);
             }
 

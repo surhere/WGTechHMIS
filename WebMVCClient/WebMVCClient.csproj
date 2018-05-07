@@ -304,6 +304,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\PatientClient\Save.cshtml" />
+    <Content Include="Views\PatientClient\AdmitPatient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
