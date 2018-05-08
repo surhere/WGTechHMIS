@@ -14,7 +14,7 @@ using WebAPI.ActionFilters;
 namespace WebAPI.Controllers.Patients
 {
     [RoutePrefix("v1/PatientAdmissions/PatientAdmission")]
-    [AuthorizationRequired]
+    [AuthorizationRequired] 
     public class PatientAdmissionController : ApiController
     {
 
