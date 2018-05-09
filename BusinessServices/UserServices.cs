@@ -6,6 +6,9 @@ using AutoMapper;
 using System.Linq;
 using DataModel;
 using System.Transactions;
+using System.Text;
+using System.Security.Cryptography;
+using Utilities;
 
 namespace BusinessServices.Services
 {
@@ -32,7 +35,7 @@ namespace BusinessServices.Services
         /// <returns></returns>
         public System.Guid Authenticate(string userName, string password)
         {
-            var user = _unitOfWork.UserRepository.Get(u => u.user_name == userName && u.password == password);
+            var user = _unitOfWork.UserRepository.Get(u => u.user_name == userName && u.password == EncryptText("wgt_hmis", password));
             if (user != null && user.SID != System.Guid.Empty)
             {
                 return user.SID;
@@ -49,7 +52,7 @@ namespace BusinessServices.Services
         public hmisUserBase ValidateUser(string userName, string password)
         {
             hmisUserBase UserData = new hmisUserBase();
-            var user = _unitOfWork.UserRepository.Get(u => u.user_name == userName && u.password == password);
+            var user = _unitOfWork.UserRepository.Get(u => u.user_name == userName && u.password == EncryptText("wgt_hmis", password));
             if (user != null && user.SID != System.Guid.Empty)
             {
                 UserData.last_name = user.last_name;
@@ -96,7 +99,7 @@ namespace BusinessServices.Services
                 {
                     SID = Guid.NewGuid(),
                     user_name = userEntity.user_name,
-                    password = userEntity.password,
+                    password = EncryptText("wgt_hmis",userEntity.password),
                     first_name = userEntity.first_name,
                     last_name = userEntity.last_name,
                     createdby = "Test Data",
@@ -111,6 +114,41 @@ namespace BusinessServices.Services
                 scope.Complete();
                 return userHMIS.SID;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public string EncryptText(string input, string password)
+        {
+            // Get the bytes of the string
+            byte[] bytesToBeEncrypted = Encoding.UTF8.GetBytes(input);
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            // Hash the password with SHA256
+            passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
+            byte[] bytesEncrypted = AESManaged.AES_Encrypt(bytesToBeEncrypted, passwordBytes);
+            string result = Convert.ToBase64String(bytesEncrypted);
+            return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public string DecryptText(string input, string password)
+        {
+            // Get the bytes of the string
+            byte[] bytesToBeDecrypted = Convert.FromBase64String(input);
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
+            byte[] bytesDecrypted = AESManaged.AES_Decrypt(bytesToBeDecrypted, passwordBytes);
+            string result = Encoding.UTF8.GetString(bytesDecrypted);
+            return result;
         }
 
         /// <summary>

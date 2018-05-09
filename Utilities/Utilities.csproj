@@ -77,9 +77,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AES256Encryption\EncryptionLibrary.cs" />
+    <Compile Include="AESManaged.cs" />
     <Compile Include="AutomapperExt.cs" />
-    <Compile Include="netfx\System\Guard.cs" />
+    <Compile Include="PasswordManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
