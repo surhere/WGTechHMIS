@@ -10,9 +10,9 @@ namespace BusinessServices
     public interface IPatientAdmissionService
     {
         string AdmitPatient(hmisPatientAdmissionBase patientEntity);
-       // IEnumerable<hmisPatientAdmissionBase> GetAllAdmittedPatients();
-       // hmisPatientBase GetAdmittedPatientById(Guid patientId);
-       // bool UpdateAdmisionPatient(Guid patientId, BusinessEntities.hmisPatientAdmissionBase patientEntity);
-       // hmisPatientBase CreateAdmissionAdditionalInfo(hmisPatientAdmissionBase patientEntity);
+        IEnumerable<hmisPatientAdmissionBase> GetAllAdmittedPatients();
+        hmisPatientAdmissionBase GetAdmittedPatientById(Guid admissionId);
+        // bool UpdateAdmisionPatient(Guid patientId, BusinessEntities.hmisPatientAdmissionBase patientEntity);
+        hmisPatientAdmissionBase PatientAdmissionAdditionalInfo(BusinessEntities.hmisPatientAdmissionBase patientAdmissionEntity);
     }
 }

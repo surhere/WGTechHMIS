@@ -6,13 +6,51 @@
 }
 
 <h2>AdmitPatient</h2>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-@using (Html.BeginForm()) 
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#registrationform").submit(function (e) {
+            e.preventDefault();
+            debugger;
+            if ($(this).valid()) {
+                $("#divLoading").show();
+                $.ajax({
+                    type: "POST",
+                    url:$(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function (data, textStatus, xhr) {
+                        debugger;
+                        var statusCode = xhr.status;
+                        alert(statusCode);
+                        alert("Status : " + statusCode);
+                        $("#divLoading").hide();
+                        $("#patient_registration_no").val(data);
+                    },
+                    error: function (data) {
+                        alert("Ajax request failed!");
+                    },
+                    statusCode: {
+                        401: function () {
+                            alert("Unauthorised expect username to be equal to password e.g. foo & foo");
+                        }
+                    }
+                });
+            }
+        });
+
+    })
+
+</script>
+@using (Html.BeginForm("AdmitPatient", "AdmissionClient", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "admissionform", name = "admissionform" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>hmisPatientAdmissionBase</h4>
+        <h4>Admit A Patient</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -120,10 +158,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.index_nember, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.index_number, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.index_nember, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.index_nember, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.index_number, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.index_number, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -135,7 +173,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.created_on, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.created_on, new { htmlAttributes = new { @class = "form-control" } })
@@ -165,11 +203,88 @@
                 @Html.EditorFor(model => model.modified_by, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.modified_by, "", new { @class = "text-danger" })
             </div>
+        </div>*@
+        <div class="form-group">
+            <label for="patient_fathers_name" class="control-label col-md-2">Patient Height</label>
+            <div class="col-md-10">
+                <input type="text" name="FathersName" class="form-control" id="patientheight" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="patient_mothers_name" class="control-label col-md-2">Patient Weight</label>
+            <div class="col-md-10">
+                <input type="text" name="MothersName" class="form-control" id="patientwaight" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Reffered_Doctor" class="control-label col-md-2">Patient Arterial Pressure Min</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="lowpressure" name="lowpressure" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">Patient Arterial Pressure Max</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="highpressure" name="highpressure" />
+            </div>
+        </div>
+     
+        <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">Heart Rate</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="heartrate" name="heartrate" />
+            </div>
         </div>
 
         <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">Temparature</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="temparature" name="temparature" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">Saturation</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="saturation" name="saturation" />
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">Contacy Type</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="contacttype" name="contacttype" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">Contact First Name</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="contactfirstanme" name="contactfirstanme" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">Contact Last Name</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="contactlastanme" name="contactlastanme" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">Phone Number</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="contactphone" name="contactphone" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="bpl_card_holder" class="control-label col-md-2">Additional Phone Number</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="additionalphone" name="additionalphone" />
             </div>
         </div>
     </div>
@@ -177,4 +292,11 @@
 
 <div>
     @Html.ActionLink("Back to List", "Index")
+</div>
+<div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+    top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+    opacity: .8; filter: alpha(opacity=70);display:none">
+    <p style="position: relative; top: 30%; left: 45%; color: White;">
+        Loading, please wait...<img src="~/fonts/ajax-loading (1).gif">
+    </p>
 </div>

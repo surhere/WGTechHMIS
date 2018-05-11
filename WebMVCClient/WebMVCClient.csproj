@@ -152,6 +152,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdmissionClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientClientController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -304,7 +305,8 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\PatientClient\Save.cshtml" />
-    <Content Include="Views\PatientClient\AdmitPatient.cshtml" />
+    <Content Include="Views\AdmissionClient\AdmitPatient.cshtml" />
+    <Content Include="Views\AdmissionClient\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

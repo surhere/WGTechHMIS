@@ -139,7 +139,8 @@ namespace DataModel.UnitOfWork
             get
             {
                 if (this._patientAdmissionBaseRepository == null)
-                    this._patientAdmissionBaseRepository = new GenericRepository<hmis_patient_admission_base>(_context);
+                    this._context.Configuration.LazyLoadingEnabled = false;
+                this._patientAdmissionBaseRepository = new GenericRepository<hmis_patient_admission_base>(_context);
                 return _patientAdmissionBaseRepository;
             }
         }

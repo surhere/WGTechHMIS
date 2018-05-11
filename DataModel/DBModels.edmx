@@ -51,7 +51,7 @@ warning 6002: The table/view 'HMIS.dbo.hmis_link_user_roles' does not have a pri
           <Property Name="bed_days" Type="int" />
           <Property Name="Is_malnutritious" Type="bit" />
           <Property Name="ward_number" Type="nvarchar" MaxLength="50" />
-          <Property Name="index_nember" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="index_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="admission_sequence" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="created_on" Type="datetime" Nullable="false" />
           <Property Name="modified_on" Type="datetime" Nullable="false" />
@@ -902,7 +902,6 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <Property Name="bed_days" Type="Int32" />
           <Property Name="Is_malnutritious" Type="Boolean" />
           <Property Name="ward_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="index_nember" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="hmis_patient_base" Relationship="DBModel.FK_hmis_patient_admission_base_hmis_patient_base" FromRole="hmis_patient_admission_base" ToRole="hmis_patient_base" />
           <NavigationProperty Name="hmis_patient_admission_ext" Relationship="DBModel.FK_hmis_patient_admission_ext_hmis_patient_admission_base" FromRole="hmis_patient_admission_base" ToRole="hmis_patient_admission_ext" />
           <NavigationProperty Name="hmis_patient_operation" Relationship="DBModel.FK_hmis_patient_operation_hmis_patient_admission_base" FromRole="hmis_patient_admission_base" ToRole="hmis_patient_operation" />
@@ -913,6 +912,7 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <Property Name="modified_by" Type="Guid" Nullable="false" />
           <NavigationProperty Name="hmis_user_base" Relationship="DBModel.FK_hmis_patient_admission_base_hmis_user_base" FromRole="hmis_patient_admission_base" ToRole="hmis_user_base" />
           <NavigationProperty Name="hmis_user_base1" Relationship="DBModel.FK_hmis_patient_admission_base_hmis_user_base1" FromRole="hmis_patient_admission_base" ToRole="hmis_user_base" />
+          <Property Name="index_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="hmis_patient_admission_ext">
           <Key>
@@ -1189,12 +1189,12 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <EntitySetMapping Name="hmis_patient_admission_base">
             <EntityTypeMapping TypeName="DBModel.hmis_patient_admission_base">
               <MappingFragment StoreEntitySet="hmis_patient_admission_base">
+                <ScalarProperty Name="index_number" ColumnName="index_number" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="modified_on" ColumnName="modified_on" />
                 <ScalarProperty Name="created_on" ColumnName="created_on" />
                 <ScalarProperty Name="admission_sequence" ColumnName="admission_sequence" />
-                <ScalarProperty Name="index_nember" ColumnName="index_nember" />
                 <ScalarProperty Name="ward_number" ColumnName="ward_number" />
                 <ScalarProperty Name="Is_malnutritious" ColumnName="Is_malnutritious" />
                 <ScalarProperty Name="bed_days" ColumnName="bed_days" />

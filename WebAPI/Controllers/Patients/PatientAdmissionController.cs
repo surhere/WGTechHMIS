@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WebAPI.ActionFilters;
+using WebAPI.ErrorHelper;
 
 namespace WebAPI.Controllers.Patients
 {
@@ -35,25 +36,36 @@ namespace WebAPI.Controllers.Patients
             _patientAdmissionService = patientAdmissionService;
         }
         // GET: api/PatientAdmission
-        [GET("allpatients")]
+        [GET("alladmissions")]
         [GET("all")]
         // [ClaimsAuthorizationRequired(ClaimType = "UserManagement", ClaimValue = "1")]
-        public IEnumerable<string> Get()
+        public HttpResponseMessage Get()
         {
-            //var patients = _patientAdmissionService.GetAllPatients();
-            //var patientsEntities = patients as List<hmisPatientBase> ?? patients.ToList();
-            //if (patientsEntities.Any())
-            //    return Request.CreateResponse(HttpStatusCode.OK, patientsEntities);
-            //throw new ApiDataException(1000, "Patient not found", HttpStatusCode.NotFound);
+            var patients = _patientAdmissionService.GetAllAdmittedPatients();
+            var patientsEntities = patients as List<hmisPatientAdmissionBase> ?? patients.ToList();
+            if (patientsEntities.Any())
+                return Request.CreateResponse(HttpStatusCode.OK, patientsEntities);
+            throw new ApiDataException(1000, "Patient not found", HttpStatusCode.NotFound);
 
-            return new string[] { "value1", "value2" };
+           // return new string[] { "value1", "value2" };
 
         }
 
         // GET: api/PatientAdmission/5
-        public string Get(int id)
+        [GET("admission/{id?}")]
+        [GET("particularadmission/{id?}")]
+        [GET("myadmission/{id:range(1, 3)}")]
+        public HttpResponseMessage Get(Guid id)
         {
-            return "value";
+            if (id != null)
+            {
+                var patient = _patientAdmissionService.GetAdmittedPatientById(id);
+                if (patient != null)
+                    return Request.CreateResponse(HttpStatusCode.OK, patient);
+
+                throw new ErrorHelper.ApiDataException(1001, "No product found for this id.", HttpStatusCode.NotFound);
+            }
+            throw new ApiException() { ErrorCode = (int)HttpStatusCode.BadRequest, ErrorDescription = "Bad Request..." };
         }
 
         // POST: api/PatientAdmission
@@ -69,7 +81,8 @@ namespace WebAPI.Controllers.Patients
                 string[] returnData = createResult.ToString().Split(':');
                 patientAdmissionEntity.ID = new Guid(returnData[0].ToString());
                 patientAdmissionEntity.admission_sequence = returnData[1].ToString();
-                //var patientObject = _patientService.CreatePatientAdditionalInfo(patientEntity);
+                var patientObject = _patientAdmissionService.PatientAdmissionAdditionalInfo(patientAdmissionEntity);
+                
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, patientAdmissionEntity.admission_sequence);

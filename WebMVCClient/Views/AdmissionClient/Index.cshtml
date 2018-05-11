@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -20,20 +21,20 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
 
 
-    @Html.ActionLink("Create New", "RegisterPatient", new { @class = "btn btn-small btn-primary" })
+    @Html.ActionLink("Create New", "AdmitPatient", new { @class = "btn btn-small btn-primary" })
 </p>
-<div style="width:90%; margin:0 auto" class="tablecontainer">
-    <a class="popup btn btn-primary" href="/PatientClient/RegisterPatient/0" style="margin-bottom:20px; margin-top:20px;">Add New Patient</a>
-    <table id="myDatatable">
+<div style="width:90%; margin:0 auto" class="admissioncontainer">
+    <a class="popup btn btn-primary" href="/AdmissionClient/AdmitPatient/0" style="margin-bottom:20px; margin-top:20px;">Admit New Patient</a>
+    <table id="admitDatatable">
         <thead>
             <tr>
-                <th>Registration No.</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Blood Type</th>
-                <th>Phone</th>
-                <th>City</th>
-                <th>Sex</th>
+                <th>admission sequence No.</th>
+                <th>admission type</th>
+                <th>ward number</th>
+                <th>discharge date</th>
+                <th>discharge type</th>
+                <th>from health unit</th>
+                <th>diagonosed in</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -41,37 +42,35 @@
     </table>
 </div>
 
-@section Scripts {  
-@Scripts.Render("~/Scripts/jquery-3.3.1.min.js")
-@Scripts.Render("~/Scripts/jquery.validate.min.js")
-@Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
-@Scripts.Render("https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js")
-@Scripts.Render("~/Scripts/jquery-ui-1.12.1.min.js")
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-3.3.1.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    @Scripts.Render("https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.12.1.min.js")
+    <style>
+        span.field-validation-error {
+            color: red;
+        }
+    </style>
 
-
-<style>
-    span.field-validation-error {
-        color: red;
-    }
-</style>
-
-<script>
-    $(document).ready(function () {
-        var oTable = $('#myDatatable').DataTable({
+    <script>
+        $(document).ready(function () {
+            debugger;
+        var admitTable = $('#admitDatatable').DataTable({
             "ajax": {
-                "url": '/PatientClient/LoadPatient',
+                "url": '/AdmissionClient/Index',
                 "type": "get",
                 "datatype": "json"
             },
             "columns": [
-                { "data": "patient_registration_no", "name": "CustomerID", "autoWidth": true },
-                { "data": "patient_first_name", "name": "CompanyName", "autoWidth": true },
-                { "data": "patient_last_name", "title": "ContactName", "name": "ContactName", "autoWidth": true },
-                //{ "data": "patient_dob", "name": "DOB", "autoWidth": true },
-                { "data": "patient_blood_type", "name": "BloodGroup", "autoWidth": true },
-                { "data": "patient_phone", "name": "Phone", "autoWidth": true },
-                { "data": "patient_city", "name": "City", "autoWidth": true },
-                { "data": "patient_sex", "name": "Sex", "title": "Status", "autoWidth": true },
+                { "data": "admission_sequence", "name": "AdmissionID", "autoWidth": true },
+                { "data": "admission_type", "name": "AdmissionType", "autoWidth": true },
+                { "data": "ward_number", "title": "WardNumber", "name": "ContactName", "autoWidth": true },
+                { "data": "discharge_type", "name": "DischargeType", "autoWidth": true },
+                { "data": "diagonosed_in", "name": "DiagonosedIn", "autoWidth": true },
+                { "data": "from_health_unit", "name": "HealthUnit", "autoWidth": true },
+                { "data": "discharge_date", "name": "dischargedate", "autoWidth": true },
                 {
                     "data": "ID",  "render": function (data) {
                         return '<a class="popup" href="/PatientClient/save/' + data + '">Edit</a>';
@@ -84,7 +83,7 @@
                 }
             ]
         })
-        $('.tablecontainer').on('click', 'a.popup', function (e) {
+        $('.admissioncontainer').on('click', 'a.popup', function (e) {
             e.preventDefault();
             OpenPopup($(this).attr('href'));
         })
@@ -121,7 +120,7 @@
                     success: function (data) {
                         if (data.status) {
                             $dialog.dialog('close');
-                            oTable.ajax.reload();
+                            admitTable.ajax.reload();
                         }
                     }
                 })
@@ -132,6 +131,7 @@
             $dialog.dialog('open');
         }
     })
-</script>
-   
+    </script>
+
 }
+

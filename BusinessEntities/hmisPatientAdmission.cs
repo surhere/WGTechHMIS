@@ -39,7 +39,7 @@ namespace BusinessEntities
         public Nullable<int> bed_days { get; set; }
         public Nullable<bool> Is_malnutritious { get; set; }
         public string ward_number { get; set; }
-        public int index_nember { get; set; }
+        public int index_number { get; set; }
         public string admission_sequence { get; set; }
         public System.DateTime created_on { get; set; }
         public System.DateTime modified_on { get; set; }
