@@ -38,7 +38,7 @@ namespace BusinessServices
                 var patientHMIS = new hmis_patient_base
                 {
                     ID = Guid.NewGuid(),
-                    patient_registration_no = patientEntity.patient_registration_no + (lastNumber+1),
+                    patient_registration_no = patientEntity.patient_registration_no + (lastNumber + 1),
                     patient_first_name = patientEntity.patient_first_name,
                     patient_last_name = patientEntity.patient_last_name,
                     patient_dob = patientEntity.patient_dob,
@@ -51,6 +51,13 @@ namespace BusinessServices
                     additiona_info = patientEntity.additiona_info,
                     created_on = System.DateTime.Now,
                     modified_on = DateTime.Now,
+                    Is_Bpl_holder = patientEntity.Is_Bpl_holder,
+                    Is_Consent_Signed =patientEntity.Is_Consent_Signed,
+                    Is_Medicine_Adverse_Effect = patientEntity.Is_Medicine_Adverse_Effect,
+                    Is_Past_History = patientEntity.Is_Past_History,
+                    Is_Reffered_By = patientEntity.Is_Reffered_By,
+                    Reffered_Doctor = patientEntity.Reffered_Doctor,
+
 
                     // change by sending from mvc controller using session user ID
                     created_by = new Guid("6418baab-9f1d-4917-9ff6-33bdfc5c49cc") ,
@@ -180,6 +187,22 @@ namespace BusinessServices
                     if (patient != null)
                     {
                         patient.ID = patientEntity.ID;
+                        patient.additiona_info = patientEntity.additiona_info;
+                        patient.Is_Bpl_holder = patientEntity.Is_Bpl_holder;
+                        patient.Is_Consent_Signed = patientEntity.Is_Consent_Signed;
+                        patient.Is_Medicine_Adverse_Effect = patientEntity.Is_Medicine_Adverse_Effect;
+                        patient.patient_address = patientEntity.patient_address;
+                        patient.patient_blood_type = patientEntity.patient_blood_type;
+                        patient.patient_city = patientEntity.patient_city;
+                        patient.patient_dob = patientEntity.patient_dob;
+                        patient.patient_first_name = patientEntity.patient_first_name;
+                        patient.patient_last_name = patientEntity.patient_last_name;
+                        patient.patient_notes = patientEntity.patient_notes;
+                        patient.patient_phone = patientEntity.patient_phone;
+                        patient.patient_sex = patientEntity.patient_sex;
+                        patient.Reffered_Doctor = patientEntity.Reffered_Doctor;
+                        patient.modified_by = new Guid("6418baab-9f1d-4917-9ff6-33bdfc5c49cc");
+                        patient.modified_on = System.DateTime.Now;
                         _unitOfWork.PatientBaseRepository.Update(patient);
                         _unitOfWork.Save();
                         scope.Complete();

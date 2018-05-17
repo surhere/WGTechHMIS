@@ -68,6 +68,15 @@
     </Compile>
     <Compile Include="DependencyResolver.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
+    <Compile Include="hmis_department_master.cs">
+      <DependentUpon>DBModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="hmis_department_type_master.cs">
+      <DependentUpon>DBModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="hmis_doctor_master.cs">
+      <DependentUpon>DBModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="hmis_link_role_persmissions.cs">
       <DependentUpon>DBModels.tt</DependentUpon>
     </Compile>

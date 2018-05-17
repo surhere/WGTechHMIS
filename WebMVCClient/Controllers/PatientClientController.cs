@@ -135,8 +135,8 @@ namespace WebMVCClient.Controllers
                 patient_phone = patientInfo["patient_phone"] == null ? "" : patientInfo["patient_phone"].ToString() ?? "",
                 Reffered_Doctor = patientInfo["Reffered_Doctor"] == null ? "" : patientInfo["Reffered_Doctor"].ToString() ?? "",
                 patient_notes = patientInfo["patient_notes"] == null ? false : patientInfo["patient_notes"].ToString(),
-                Is_Bpl_holder = patientInfo["Is_Bpl_holder"] == null ? false : patientInfo["Is_Bpl_holder"].ToString(),
-                Is_Consent_Signed = patientInfo["Is_Bpl_holder"] == null ? false : patientInfo["Is_Bpl_holder"].ToString()
+                Is_Bpl_holder = patientInfo["Is_Bpl_holder"] == null ? false : Convert.ToBoolean(patientInfo["Is_Bpl_holder"].ToString()),
+                Is_Consent_Signed = patientInfo["Is_Bpl_holder"] == null ? false : Convert.ToBoolean(patientInfo["Is_Bpl_holder"].ToString())
             };
             return patientUnit;
 

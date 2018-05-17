@@ -35,6 +35,17 @@
         <AssociationConnector Association="DBModel.FK_hmis_patient_admission_base_hmis_user_base1" />
         <AssociationConnector Association="DBModel.FK_hmis_patient_operation_hmis_user_base" />
         <AssociationConnector Association="DBModel.FK_hmis_patient_operation_hmis_user_base1" />
+        <EntityTypeShape EntityType="DBModel.hmis_department_master" Width="1.5" PointX="3" PointY="28.5" />
+        <EntityTypeShape EntityType="DBModel.hmis_department_type_master" Width="1.5" PointX="3" PointY="24.625" />
+        <EntityTypeShape EntityType="DBModel.hmis_doctor_master" Width="1.5" PointX="6.25" PointY="16.875" />
+        <AssociationConnector Association="DBModel.FK_hmis_department_master_hmis_user_base" />
+        <AssociationConnector Association="DBModel.FK_hmis_department_master_hmis_user_base1" />
+        <AssociationConnector Association="DBModel.FK_hmis_doctor_master_hmis_department_master" />
+        <AssociationConnector Association="DBModel.FK_hmis_department_type_master_hmis_user_base" />
+        <AssociationConnector Association="DBModel.FK_hmis_department_type_master_hmis_user_base1" />
+        <AssociationConnector Association="DBModel.FK_hmis_doctor_master_hmis_department_type_master" />
+        <AssociationConnector Association="DBModel.FK_hmis_doctor_master_hmis_user_base" />
+        <AssociationConnector Association="DBModel.FK_hmis_doctor_master_hmis_user_base1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

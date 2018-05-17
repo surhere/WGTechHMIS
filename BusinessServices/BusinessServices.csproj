@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyResolver.cs" />
+    <Compile Include="MasterData\DepartmentTypeServices.cs" />
+    <Compile Include="MasterData\Interfaces\IDepartment.cs" />
+    <Compile Include="MasterData\Interfaces\IDepartmentType.cs" />
     <Compile Include="Patient\IPatientAdmission.cs" />
     <Compile Include="Patient\IPatientService.cs" />
     <Compile Include="Authentication\IRoleService.cs" />

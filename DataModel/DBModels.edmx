@@ -5,6 +5,59 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="hmis_department_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="department_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="department_description" Type="nvarchar" MaxLength="100" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="modified_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="modified_on" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hmis_department_type_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="department_type_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="100" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="modified_on" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="modified_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hmis_doctor_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="salutation" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="modified_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="modified_on" Type="datetime" Nullable="false" />
+          <Property Name="phone_number1" Type="int" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="200" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" />
+          <Property Name="photo" Type="nvarchar(max)" />
+          <Property Name="registration_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="department_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="designation" Type="nvarchar" MaxLength="50" />
+          <Property Name="degree" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone_number2" Type="int" />
+          <Property Name="email_address" Type="nvarchar" MaxLength="50" />
+          <Property Name="status" Type="bit" />
+          <Property Name="short_biography" Type="nvarchar" MaxLength="200" />
+          <Property Name="sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="department_type" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HMIS.dbo.hmis_link_role_persmissions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="hmis_link_role_persmissions">
@@ -218,6 +271,102 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <Property Name="is_active" Type="bit" Nullable="false" />
           <Property Name="role_description" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_hmis_department_master_hmis_user_base">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_department_master" Type="Self.hmis_department_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_department_master">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_department_master_hmis_user_base1">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_department_master" Type="Self.hmis_department_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_department_master">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_department_type_master_hmis_user_base">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_department_type_master" Type="Self.hmis_department_type_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_department_type_master">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_department_type_master_hmis_user_base1">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_department_type_master" Type="Self.hmis_department_type_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_department_type_master">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_doctor_master_hmis_department_master">
+          <End Role="hmis_department_master" Type="Self.hmis_department_master" Multiplicity="1" />
+          <End Role="hmis_doctor_master" Type="Self.hmis_doctor_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_department_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_doctor_master">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_doctor_master_hmis_department_type_master">
+          <End Role="hmis_department_type_master" Type="Self.hmis_department_type_master" Multiplicity="1" />
+          <End Role="hmis_doctor_master" Type="Self.hmis_doctor_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_department_type_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_doctor_master">
+              <PropertyRef Name="department_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_doctor_master_hmis_user_base">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_doctor_master" Type="Self.hmis_doctor_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_doctor_master">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_doctor_master_hmis_user_base1">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_doctor_master" Type="Self.hmis_doctor_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_doctor_master">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_hmis_link_role_persmissions_hmis_permission_base">
           <End Role="hmis_permission_base" Type="Self.hmis_permission_base" Multiplicity="1" />
           <End Role="hmis_link_role_persmissions" Type="Self.hmis_link_role_persmissions" Multiplicity="*" />
@@ -411,6 +560,9 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="hmis_department_master" EntityType="Self.hmis_department_master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hmis_department_type_master" EntityType="Self.hmis_department_type_master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hmis_doctor_master" EntityType="Self.hmis_doctor_master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_patient_admission_base" EntityType="Self.hmis_patient_admission_base" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_patient_admission_ext" EntityType="Self.hmis_patient_admission_ext" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_patient_base" EntityType="Self.hmis_patient_base" Schema="dbo" store:Type="Tables" />
@@ -459,6 +611,38 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
     [vw_user_roles].[role_description] AS [role_description]
     FROM [dbo].[vw_user_roles] AS [vw_user_roles]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_hmis_department_master_hmis_user_base" Association="Self.FK_hmis_department_master_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_department_master" EntitySet="hmis_department_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_department_master_hmis_user_base1" Association="Self.FK_hmis_department_master_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_department_master" EntitySet="hmis_department_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_department_type_master_hmis_user_base" Association="Self.FK_hmis_department_type_master_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_department_type_master" EntitySet="hmis_department_type_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_department_type_master_hmis_user_base1" Association="Self.FK_hmis_department_type_master_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_department_type_master" EntitySet="hmis_department_type_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_doctor_master_hmis_department_master" Association="Self.FK_hmis_doctor_master_hmis_department_master">
+            <End Role="hmis_department_master" EntitySet="hmis_department_master" />
+            <End Role="hmis_doctor_master" EntitySet="hmis_doctor_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_doctor_master_hmis_department_type_master" Association="Self.FK_hmis_doctor_master_hmis_department_type_master">
+            <End Role="hmis_department_type_master" EntitySet="hmis_department_type_master" />
+            <End Role="hmis_doctor_master" EntitySet="hmis_doctor_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_doctor_master_hmis_user_base" Association="Self.FK_hmis_doctor_master_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_doctor_master" EntitySet="hmis_doctor_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_doctor_master_hmis_user_base1" Association="Self.FK_hmis_doctor_master_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_doctor_master" EntitySet="hmis_doctor_master" />
+          </AssociationSet>
           <AssociationSet Name="FK_hmis_link_role_persmissions_hmis_permission_base" Association="Self.FK_hmis_link_role_persmissions_hmis_permission_base">
             <End Role="hmis_permission_base" EntitySet="hmis_permission_base" />
             <End Role="hmis_link_role_persmissions" EntitySet="hmis_link_role_persmissions" />
@@ -610,6 +794,12 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <NavigationProperty Name="hmis_patient_admission_base1" Relationship="DBModel.FK_hmis_patient_admission_base_hmis_user_base1" FromRole="hmis_user_base" ToRole="hmis_patient_admission_base" />
           <NavigationProperty Name="hmis_patient_operation" Relationship="DBModel.FK_hmis_patient_operation_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_patient_operation" />
           <NavigationProperty Name="hmis_patient_operation1" Relationship="DBModel.FK_hmis_patient_operation_hmis_user_base1" FromRole="hmis_user_base" ToRole="hmis_patient_operation" />
+          <NavigationProperty Name="hmis_department_master" Relationship="DBModel.FK_hmis_department_master_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_department_master" />
+          <NavigationProperty Name="hmis_department_master1" Relationship="DBModel.FK_hmis_department_master_hmis_user_base1" FromRole="hmis_user_base" ToRole="hmis_department_master" />
+          <NavigationProperty Name="hmis_department_type_master" Relationship="DBModel.FK_hmis_department_type_master_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_department_type_master" />
+          <NavigationProperty Name="hmis_department_type_master1" Relationship="DBModel.FK_hmis_department_type_master_hmis_user_base1" FromRole="hmis_user_base" ToRole="hmis_department_type_master" />
+          <NavigationProperty Name="hmis_doctor_master" Relationship="DBModel.FK_hmis_doctor_master_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_doctor_master" />
+          <NavigationProperty Name="hmis_doctor_master1" Relationship="DBModel.FK_hmis_doctor_master_hmis_user_base1" FromRole="hmis_user_base" ToRole="hmis_doctor_master" />
         </EntityType>
         <EntityType Name="hsmis_role_base">
           <Key>
@@ -883,6 +1073,41 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             <End Role="hmis_user_base" EntitySet="hmis_user_base" />
             <End Role="hmis_patient_operation" EntitySet="hmis_patient_operation" />
           </AssociationSet>
+          <EntitySet Name="hmis_department_master" EntityType="DBModel.hmis_department_master" />
+          <EntitySet Name="hmis_department_type_master" EntityType="DBModel.hmis_department_type_master" />
+          <EntitySet Name="hmis_doctor_master" EntityType="DBModel.hmis_doctor_master" />
+          <AssociationSet Name="FK_hmis_department_master_hmis_user_base" Association="DBModel.FK_hmis_department_master_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_department_master" EntitySet="hmis_department_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_department_master_hmis_user_base1" Association="DBModel.FK_hmis_department_master_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_department_master" EntitySet="hmis_department_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_doctor_master_hmis_department_master" Association="DBModel.FK_hmis_doctor_master_hmis_department_master">
+            <End Role="hmis_department_master" EntitySet="hmis_department_master" />
+            <End Role="hmis_doctor_master" EntitySet="hmis_doctor_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_department_type_master_hmis_user_base" Association="DBModel.FK_hmis_department_type_master_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_department_type_master" EntitySet="hmis_department_type_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_department_type_master_hmis_user_base1" Association="DBModel.FK_hmis_department_type_master_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_department_type_master" EntitySet="hmis_department_type_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_doctor_master_hmis_department_type_master" Association="DBModel.FK_hmis_doctor_master_hmis_department_type_master">
+            <End Role="hmis_department_type_master" EntitySet="hmis_department_type_master" />
+            <End Role="hmis_doctor_master" EntitySet="hmis_doctor_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_doctor_master_hmis_user_base" Association="DBModel.FK_hmis_doctor_master_hmis_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_doctor_master" EntitySet="hmis_doctor_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_doctor_master_hmis_user_base1" Association="DBModel.FK_hmis_doctor_master_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_doctor_master" EntitySet="hmis_doctor_master" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="hmis_patient_admission_base">
           <Key>
@@ -1030,6 +1255,165 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
               <PropertyRef Name="SID" />
             </Principal>
             <Dependent Role="hmis_patient_operation">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="hmis_department_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="department_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="department_description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="modified_by" Type="Guid" Nullable="false" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="hmis_user_base" Relationship="DBModel.FK_hmis_department_master_hmis_user_base" FromRole="hmis_department_master" ToRole="hmis_user_base" />
+          <NavigationProperty Name="hmis_user_base1" Relationship="DBModel.FK_hmis_department_master_hmis_user_base1" FromRole="hmis_department_master" ToRole="hmis_user_base" />
+          <NavigationProperty Name="hmis_doctor_master" Relationship="DBModel.FK_hmis_doctor_master_hmis_department_master" FromRole="hmis_department_master" ToRole="hmis_doctor_master" />
+        </EntityType>
+        <EntityType Name="hmis_department_type_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="department_type_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="modified_by" Type="Guid" Nullable="false" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="hmis_user_base" Relationship="DBModel.FK_hmis_department_type_master_hmis_user_base" FromRole="hmis_department_type_master" ToRole="hmis_user_base" />
+          <NavigationProperty Name="hmis_user_base1" Relationship="DBModel.FK_hmis_department_type_master_hmis_user_base1" FromRole="hmis_department_type_master" ToRole="hmis_user_base" />
+          <NavigationProperty Name="hmis_doctor_master" Relationship="DBModel.FK_hmis_doctor_master_hmis_department_type_master" FromRole="hmis_department_type_master" ToRole="hmis_doctor_master" />
+        </EntityType>
+        <EntityType Name="hmis_doctor_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="salutation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="modified_by" Type="Guid" Nullable="false" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="phone_number1" Type="Int32" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="registration_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="department_id" Type="Guid" Nullable="false" />
+          <Property Name="designation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="degree" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone_number2" Type="Int32" />
+          <Property Name="email_address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Boolean" />
+          <Property Name="short_biography" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="sex" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="department_type" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="hmis_department_master" Relationship="DBModel.FK_hmis_doctor_master_hmis_department_master" FromRole="hmis_doctor_master" ToRole="hmis_department_master" />
+          <NavigationProperty Name="hmis_department_type_master" Relationship="DBModel.FK_hmis_doctor_master_hmis_department_type_master" FromRole="hmis_doctor_master" ToRole="hmis_department_type_master" />
+          <NavigationProperty Name="hmis_user_base" Relationship="DBModel.FK_hmis_doctor_master_hmis_user_base" FromRole="hmis_doctor_master" ToRole="hmis_user_base" />
+          <NavigationProperty Name="hmis_user_base1" Relationship="DBModel.FK_hmis_doctor_master_hmis_user_base1" FromRole="hmis_doctor_master" ToRole="hmis_user_base" />
+        </EntityType>
+        <Association Name="FK_hmis_department_master_hmis_user_base">
+          <End Type="DBModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_department_master" Role="hmis_department_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_department_master">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_department_master_hmis_user_base1">
+          <End Type="DBModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_department_master" Role="hmis_department_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_department_master">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_doctor_master_hmis_department_master">
+          <End Type="DBModel.hmis_department_master" Role="hmis_department_master" Multiplicity="1" />
+          <End Type="DBModel.hmis_doctor_master" Role="hmis_doctor_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_department_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_doctor_master">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_department_type_master_hmis_user_base">
+          <End Type="DBModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_department_type_master" Role="hmis_department_type_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_department_type_master">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_department_type_master_hmis_user_base1">
+          <End Type="DBModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_department_type_master" Role="hmis_department_type_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_department_type_master">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_doctor_master_hmis_department_type_master">
+          <End Type="DBModel.hmis_department_type_master" Role="hmis_department_type_master" Multiplicity="1" />
+          <End Type="DBModel.hmis_doctor_master" Role="hmis_doctor_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_department_type_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_doctor_master">
+              <PropertyRef Name="department_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_doctor_master_hmis_user_base">
+          <End Type="DBModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_doctor_master" Role="hmis_doctor_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_doctor_master">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_doctor_master_hmis_user_base1">
+          <End Type="DBModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_doctor_master" Role="hmis_doctor_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_doctor_master">
               <PropertyRef Name="modified_by" />
             </Dependent>
           </ReferentialConstraint>
@@ -1242,6 +1626,62 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
                 <ScalarProperty Name="number_of_nights" ColumnName="number_of_nights" />
                 <ScalarProperty Name="date_of_operation" ColumnName="date_of_operation" />
                 <ScalarProperty Name="patient_admission_id" ColumnName="patient_admission_id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_department_master">
+            <EntityTypeMapping TypeName="DBModel.hmis_department_master">
+              <MappingFragment StoreEntitySet="hmis_department_master">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="modified_on" ColumnName="modified_on" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="department_description" ColumnName="department_description" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_department_type_master">
+            <EntityTypeMapping TypeName="DBModel.hmis_department_type_master">
+              <MappingFragment StoreEntitySet="hmis_department_type_master">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified_on" ColumnName="modified_on" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="department_type_name" ColumnName="department_type_name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_doctor_master">
+            <EntityTypeMapping TypeName="DBModel.hmis_doctor_master">
+              <MappingFragment StoreEntitySet="hmis_doctor_master">
+                <ScalarProperty Name="department_type" ColumnName="department_type" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="short_biography" ColumnName="short_biography" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="phone_number2" ColumnName="phone_number2" />
+                <ScalarProperty Name="degree" ColumnName="degree" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="registration_number" ColumnName="registration_number" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone_number1" ColumnName="phone_number1" />
+                <ScalarProperty Name="modified_on" ColumnName="modified_on" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="salutation" ColumnName="salutation" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

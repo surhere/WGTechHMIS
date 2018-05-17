@@ -26,6 +26,12 @@ namespace DataModel
             this.hmis_patient_admission_base1 = new HashSet<hmis_patient_admission_base>();
             this.hmis_patient_operation = new HashSet<hmis_patient_operation>();
             this.hmis_patient_operation1 = new HashSet<hmis_patient_operation>();
+            this.hmis_department_master = new HashSet<hmis_department_master>();
+            this.hmis_department_master1 = new HashSet<hmis_department_master>();
+            this.hmis_department_type_master = new HashSet<hmis_department_type_master>();
+            this.hmis_department_type_master1 = new HashSet<hmis_department_type_master>();
+            this.hmis_doctor_master = new HashSet<hmis_doctor_master>();
+            this.hmis_doctor_master1 = new HashSet<hmis_doctor_master>();
         }
     
         public System.Guid SID { get; set; }
@@ -58,5 +64,17 @@ namespace DataModel
         public virtual ICollection<hmis_patient_operation> hmis_patient_operation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<hmis_patient_operation> hmis_patient_operation1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_department_master> hmis_department_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_department_master> hmis_department_master1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_department_type_master> hmis_department_type_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_department_type_master> hmis_department_type_master1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_doctor_master> hmis_doctor_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_doctor_master> hmis_doctor_master1 { get; set; }
     }
 }

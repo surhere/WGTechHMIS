@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="hmisDepartmentMaster.cs" />
+    <Compile Include="hmisDepartmentTypeMaster.cs" />
+    <Compile Include="hmisDoctorMaster.cs" />
     <Compile Include="hmisPatientAdmission.cs" />
     <Compile Include="hmisPatientAdmissionExt.cs" />
     <Compile Include="hmisPatientBase.cs" />

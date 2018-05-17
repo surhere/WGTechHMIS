@@ -31,7 +31,7 @@
                 <th>admission sequence No.</th>
                 <th>admission type</th>
                 <th>ward number</th>
-                <th>discharge date</th>
+                @*<th>discharge date</th>*@
                 <th>discharge type</th>
                 <th>from health unit</th>
                 <th>diagonosed in</th>
@@ -42,12 +42,14 @@
     </table>
 </div>
 
+
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery-3.3.1.min.js")
     @Scripts.Render("~/Scripts/jquery.validate.min.js")
     @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
     @Scripts.Render("https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js")
     @Scripts.Render("~/Scripts/jquery-ui-1.12.1.min.js")
+
     <style>
         span.field-validation-error {
             color: red;
@@ -70,7 +72,7 @@
                 { "data": "discharge_type", "name": "DischargeType", "autoWidth": true },
                 { "data": "diagonosed_in", "name": "DiagonosedIn", "autoWidth": true },
                 { "data": "from_health_unit", "name": "HealthUnit", "autoWidth": true },
-                { "data": "discharge_date", "name": "dischargedate", "autoWidth": true },
+                //{ "data": "discharge_date", "name": "dischargedate", "autoWidth": true },
                 {
                     "data": "ID",  "render": function (data) {
                         return '<a class="popup" href="/PatientClient/save/' + data + '">Edit</a>';

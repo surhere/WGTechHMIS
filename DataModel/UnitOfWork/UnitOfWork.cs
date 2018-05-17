@@ -27,6 +27,9 @@ namespace DataModel.UnitOfWork
         private GenericRepository<hmis_patient_admission_ext> _patientAdmissionExtRepository;
         private GenericRepository<hmis_patient_admission_base> _patientAdmissionBaseRepository;
         private GenericRepository<hmis_patient_operation> _patientOperationRepository;
+        private GenericRepository<hmis_department_type_master> _masterDepartmentTypeRepository;
+        private GenericRepository<hmis_department_master> _masterDepartmentRepository;
+        private GenericRepository<hmis_doctor_master> _masterDoctorRepository;
 
         private GenericRepository<vw_user_roles> _vwRoleRepository;
         #endregion
@@ -169,6 +172,45 @@ namespace DataModel.UnitOfWork
                 if (this._patientOperationRepository == null)
                     this._patientOperationRepository = new GenericRepository<hmis_patient_operation>(_context);
                 return _patientOperationRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for Department Type Master Data.
+        /// </summary>
+        public GenericRepository<hmis_department_type_master> DepartmentTypeMasterRepository
+        {
+            get
+            {
+                if (this._masterDepartmentTypeRepository == null)
+                    this._masterDepartmentTypeRepository = new GenericRepository<hmis_department_type_master>(_context);
+                return _masterDepartmentTypeRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for department master data.
+        /// </summary>
+        public GenericRepository<hmis_department_master> DepartmentMasterRepository
+        {
+            get
+            {
+                if (this._masterDepartmentRepository == null)
+                    this._masterDepartmentRepository = new GenericRepository<hmis_department_master>(_context);
+                return _masterDepartmentRepository;
+            }
+        }
+
+         /// <summary>
+        /// Get/Set Property for Patient Post Admission - Operation  Entity Repository.
+        /// </summary>
+        public GenericRepository<hmis_doctor_master> DoctorMasterRepository
+        {
+            get
+            {
+                if (this._masterDoctorRepository == null)
+                    this._masterDoctorRepository = new GenericRepository<hmis_doctor_master>(_context);
+                return _masterDoctorRepository;
             }
         }
         #endregion
