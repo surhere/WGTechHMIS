@@ -28,10 +28,12 @@ namespace DataModel
         public System.DateTime created_on { get; set; }
         public System.DateTime modified_on { get; set; }
         public bool status { get; set; }
+        public System.Guid departmenttype_id { get; set; }
     
         public virtual hmis_user_base hmis_user_base { get; set; }
         public virtual hmis_user_base hmis_user_base1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<hmis_doctor_master> hmis_doctor_master { get; set; }
+        public virtual hmis_department_type_master hmis_department_type_master { get; set; }
     }
 }

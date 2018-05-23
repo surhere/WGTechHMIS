@@ -46,6 +46,7 @@
         <AssociationConnector Association="DBModel.FK_hmis_doctor_master_hmis_department_type_master" />
         <AssociationConnector Association="DBModel.FK_hmis_doctor_master_hmis_user_base" />
         <AssociationConnector Association="DBModel.FK_hmis_doctor_master_hmis_user_base1" />
+        <AssociationConnector Association="DBModel.FK_department_type" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

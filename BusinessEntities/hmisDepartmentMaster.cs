@@ -22,10 +22,11 @@ namespace BusinessEntities
         public System.DateTime created_on { get; set; }
         public System.DateTime modified_on { get; set; }
         public bool status { get; set; }
-
+        public System.Guid departmenttype_id { get; set; }
         public virtual hmisUserBase hmis_user_base { get; set; }
         public virtual hmisUserBase hmis_user_base1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<hmisDoctorMaster> hmis_doctor_master { get; set; }
+        public virtual hmisDepartmentTypeMaster hmis_department_type_master { get; set; }
     }
 }

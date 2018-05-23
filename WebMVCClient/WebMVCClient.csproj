@@ -310,6 +310,8 @@
     <Content Include="Views\AdmissionClient\Index.cshtml" />
     <Content Include="Views\DepartmentMaster\AddDeparetmentType.cshtml" />
     <Content Include="Views\DepartmentMaster\Index.cshtml" />
+    <Content Include="Views\DepartmentMaster\AddDeparetment.cshtml" />
+    <Content Include="Views\DepartmentMaster\LoadDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

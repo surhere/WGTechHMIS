@@ -18,6 +18,7 @@ namespace DataModel
         public hmis_department_type_master()
         {
             this.hmis_doctor_master = new HashSet<hmis_doctor_master>();
+            this.hmis_department_master = new HashSet<hmis_department_master>();
         }
     
         public System.Guid ID { get; set; }
@@ -33,5 +34,7 @@ namespace DataModel
         public virtual hmis_user_base hmis_user_base1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<hmis_doctor_master> hmis_doctor_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_department_master> hmis_department_master { get; set; }
     }
 }

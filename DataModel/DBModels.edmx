@@ -17,6 +17,7 @@
           <Property Name="created_on" Type="datetime" Nullable="false" />
           <Property Name="modified_on" Type="datetime" Nullable="false" />
           <Property Name="status" Type="bit" Nullable="false" />
+          <Property Name="departmenttype_id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="hmis_department_type_master">
           <Key>
@@ -271,6 +272,18 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <Property Name="is_active" Type="bit" Nullable="false" />
           <Property Name="role_description" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_department_type">
+          <End Role="hmis_department_type_master" Type="Self.hmis_department_type_master" Multiplicity="1" />
+          <End Role="hmis_department_master" Type="Self.hmis_department_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_department_type_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_department_master">
+              <PropertyRef Name="departmenttype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_hmis_department_master_hmis_user_base">
           <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
           <End Role="hmis_department_master" Type="Self.hmis_department_master" Multiplicity="*" />
@@ -611,6 +624,10 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
     [vw_user_roles].[role_description] AS [role_description]
     FROM [dbo].[vw_user_roles] AS [vw_user_roles]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_department_type" Association="Self.FK_department_type">
+            <End Role="hmis_department_type_master" EntitySet="hmis_department_type_master" />
+            <End Role="hmis_department_master" EntitySet="hmis_department_master" />
+          </AssociationSet>
           <AssociationSet Name="FK_hmis_department_master_hmis_user_base" Association="Self.FK_hmis_department_master_hmis_user_base">
             <End Role="hmis_user_base" EntitySet="hmis_user_base" />
             <End Role="hmis_department_master" EntitySet="hmis_department_master" />
@@ -1108,6 +1125,10 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             <End Role="hmis_user_base" EntitySet="hmis_user_base" />
             <End Role="hmis_doctor_master" EntitySet="hmis_doctor_master" />
           </AssociationSet>
+          <AssociationSet Name="FK_department_type" Association="DBModel.FK_department_type">
+            <End Role="hmis_department_type_master" EntitySet="hmis_department_type_master" />
+            <End Role="hmis_department_master" EntitySet="hmis_department_master" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="hmis_patient_admission_base">
           <Key>
@@ -1274,6 +1295,8 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <NavigationProperty Name="hmis_user_base" Relationship="DBModel.FK_hmis_department_master_hmis_user_base" FromRole="hmis_department_master" ToRole="hmis_user_base" />
           <NavigationProperty Name="hmis_user_base1" Relationship="DBModel.FK_hmis_department_master_hmis_user_base1" FromRole="hmis_department_master" ToRole="hmis_user_base" />
           <NavigationProperty Name="hmis_doctor_master" Relationship="DBModel.FK_hmis_doctor_master_hmis_department_master" FromRole="hmis_department_master" ToRole="hmis_doctor_master" />
+          <Property Name="departmenttype_id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="hmis_department_type_master" Relationship="DBModel.FK_department_type" FromRole="hmis_department_master" ToRole="hmis_department_type_master" />
         </EntityType>
         <EntityType Name="hmis_department_type_master">
           <Key>
@@ -1290,6 +1313,7 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <NavigationProperty Name="hmis_user_base" Relationship="DBModel.FK_hmis_department_type_master_hmis_user_base" FromRole="hmis_department_type_master" ToRole="hmis_user_base" />
           <NavigationProperty Name="hmis_user_base1" Relationship="DBModel.FK_hmis_department_type_master_hmis_user_base1" FromRole="hmis_department_type_master" ToRole="hmis_user_base" />
           <NavigationProperty Name="hmis_doctor_master" Relationship="DBModel.FK_hmis_doctor_master_hmis_department_type_master" FromRole="hmis_department_type_master" ToRole="hmis_doctor_master" />
+          <NavigationProperty Name="hmis_department_master" Relationship="DBModel.FK_department_type" FromRole="hmis_department_type_master" ToRole="hmis_department_master" />
         </EntityType>
         <EntityType Name="hmis_doctor_master">
           <Key>
@@ -1415,6 +1439,18 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
             </Principal>
             <Dependent Role="hmis_doctor_master">
               <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_department_type">
+          <End Type="DBModel.hmis_department_type_master" Role="hmis_department_type_master" Multiplicity="1" />
+          <End Type="DBModel.hmis_department_master" Role="hmis_department_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_department_type_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hmis_department_master">
+              <PropertyRef Name="departmenttype_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1633,6 +1669,7 @@ warning 6002: The table/view 'HMIS.dbo.vw_user_roles' does not have a primary ke
           <EntitySetMapping Name="hmis_department_master">
             <EntityTypeMapping TypeName="DBModel.hmis_department_master">
               <MappingFragment StoreEntitySet="hmis_department_master">
+                <ScalarProperty Name="departmenttype_id" ColumnName="departmenttype_id" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="modified_on" ColumnName="modified_on" />
                 <ScalarProperty Name="created_on" ColumnName="created_on" />

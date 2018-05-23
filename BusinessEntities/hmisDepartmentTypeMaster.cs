@@ -12,6 +12,7 @@ namespace BusinessEntities
         public hmisDepartmentTypeMaster()
         {
             this.hmis_doctor_master = new HashSet<hmisDoctorMaster>();
+            this.hmis_department_master = new HashSet<hmisDepartmentMaster>();
         }
 
         public System.Guid ID { get; set; }
@@ -27,5 +28,7 @@ namespace BusinessEntities
         public virtual hmisUserBase hmis_user_base1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<hmisDoctorMaster> hmis_doctor_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmisDepartmentMaster> hmis_department_master { get; set; }
     }
 }

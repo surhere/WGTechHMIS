@@ -21,6 +21,7 @@ namespace BusinessServices
             registerComponent.RegisterType<IPatientService, PatientServices>();
             registerComponent.RegisterType<IPatientAdmissionService, PatientAdmissionService>();
             registerComponent.RegisterType<IDepartmentTypeServices, DepartmentTypeServices>();
+            registerComponent.RegisterType<IDepartmentServices, DepartmentServices>();
 
         }
     }
