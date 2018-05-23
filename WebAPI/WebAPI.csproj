@@ -246,6 +246,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MasterData\DepartmentController.cs" />
     <Compile Include="Controllers\MasterData\DepartmentTypeController.cs" />
+    <Compile Include="Controllers\MasterData\DoctorController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\Patients\PatientAdmissionController.cs" />
     <Compile Include="Controllers\UserController.cs" />

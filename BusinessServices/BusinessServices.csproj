@@ -54,6 +54,8 @@
     <Compile Include="DependencyResolver.cs" />
     <Compile Include="MasterData\DepartmentServices.cs" />
     <Compile Include="MasterData\DepartmentTypeServices.cs" />
+    <Compile Include="MasterData\DoctorServices.cs" />
+    <Compile Include="MasterData\Interfaces\IDoctorServices.cs" />
     <Compile Include="MasterData\Interfaces\IDepartmentServices.cs" />
     <Compile Include="MasterData\Interfaces\IDepartmentType.cs" />
     <Compile Include="Patient\IPatientAdmission.cs" />

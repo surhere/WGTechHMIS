@@ -22,7 +22,7 @@ namespace BusinessServices
             registerComponent.RegisterType<IPatientAdmissionService, PatientAdmissionService>();
             registerComponent.RegisterType<IDepartmentTypeServices, DepartmentTypeServices>();
             registerComponent.RegisterType<IDepartmentServices, DepartmentServices>();
-
+            registerComponent.RegisterType<IDoctorServices, DoctorServices>();
         }
     }
 }
