@@ -183,7 +183,11 @@ namespace DataModel.UnitOfWork
             get
             {
                 if (this._masterDepartmentTypeRepository == null)
+                {
+                    this._context.Configuration.LazyLoadingEnabled = false;
                     this._masterDepartmentTypeRepository = new GenericRepository<hmis_department_type_master>(_context);
+                }
+
                 return _masterDepartmentTypeRepository;
             }
         }
@@ -196,7 +200,10 @@ namespace DataModel.UnitOfWork
             get
             {
                 if (this._masterDepartmentRepository == null)
+                {
+                    this._context.Configuration.LazyLoadingEnabled = false;
                     this._masterDepartmentRepository = new GenericRepository<hmis_department_master>(_context);
+                }                    
                 return _masterDepartmentRepository;
             }
         }
@@ -209,7 +216,10 @@ namespace DataModel.UnitOfWork
             get
             {
                 if (this._masterDoctorRepository == null)
+                {
+                    this._context.Configuration.LazyLoadingEnabled = false;
                     this._masterDoctorRepository = new GenericRepository<hmis_doctor_master>(_context);
+                }                   
                 return _masterDoctorRepository;
             }
         }

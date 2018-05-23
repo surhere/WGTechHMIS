@@ -244,6 +244,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthenticateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MasterData\DepartmentTypeController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\Patients\PatientAdmissionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -389,7 +390,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\MasterData\" />
     <Folder Include="Models\" />
     <Folder Include="WebAPILog\" />
   </ItemGroup>

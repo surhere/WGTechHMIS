@@ -153,6 +153,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdmissionClientController.cs" />
+    <Compile Include="Controllers\DepartmentMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientClientController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -307,6 +308,8 @@
     <Content Include="Views\PatientClient\Save.cshtml" />
     <Content Include="Views\AdmissionClient\AdmitPatient.cshtml" />
     <Content Include="Views\AdmissionClient\Index.cshtml" />
+    <Content Include="Views\DepartmentMaster\AddDeparetmentType.cshtml" />
+    <Content Include="Views\DepartmentMaster\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

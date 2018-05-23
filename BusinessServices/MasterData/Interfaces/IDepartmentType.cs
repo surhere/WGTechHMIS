@@ -7,8 +7,9 @@ using BusinessEntities;
 
 namespace BusinessServices.MasterData.Interfaces
 {
-    public interface IDepartmentType
+    public interface IDepartmentTypeServices
     {
          string CreateDepartmentType(hmisDepartmentTypeMaster departmentTypeEntity);
+         IEnumerable<hmisDepartmentTypeMaster> GetAllDepartmentTypes();
     }
 }

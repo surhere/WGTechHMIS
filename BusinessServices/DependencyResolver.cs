@@ -4,6 +4,8 @@ using DataModel.UnitOfWork;
 using Resolver;
 using BusinessServices.Service.Interfaces;
 using BusinessServices.Services;
+using BusinessServices.MasterData.Interfaces;
+using BusinessServices.MasterData;
 
 namespace BusinessServices
 {
@@ -18,6 +20,8 @@ namespace BusinessServices
             registerComponent.RegisterType<IRoleService, RoleServices>();
             registerComponent.RegisterType<IPatientService, PatientServices>();
             registerComponent.RegisterType<IPatientAdmissionService, PatientAdmissionService>();
+            registerComponent.RegisterType<IDepartmentTypeServices, DepartmentTypeServices>();
+
         }
     }
 }

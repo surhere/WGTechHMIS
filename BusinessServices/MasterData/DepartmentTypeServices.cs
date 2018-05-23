@@ -7,10 +7,12 @@ using BusinessServices.MasterData.Interfaces;
 using DataModel.UnitOfWork;
 using System.Transactions;
 using DataModel;
+using BusinessEntities;
+using AutoMapper;
 
 namespace BusinessServices.MasterData
 {
-    public class DepartmentTypeServices : IDepartmentType
+    public class DepartmentTypeServices : IDepartmentTypeServices
     {
         private readonly UnitOfWork _unitOfWork;
 
@@ -50,6 +52,30 @@ namespace BusinessServices.MasterData
                 scope.Complete();
                 return departmentTypeHMIS.ID.ToString();
             }
+        }
+
+        /// <summary>
+        /// Get All Department Types.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public IEnumerable<hmisDepartmentTypeMaster> GetAllDepartmentTypes()
+        {
+            var departments = _unitOfWork.DepartmentTypeMasterRepository.GetAll().ToList();
+            if (departments.Any())
+            {
+                Mapper.Reset();
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<hmis_department_type_master, hmisDepartmentTypeMaster>();
+
+                });
+                // Mapper.CreateMap<hmis_patient_base, hmisPatientBase>();
+                var patientModel = Mapper.Map<List<hmis_department_type_master>, List<hmisDepartmentTypeMaster>>(departments);
+                return patientModel;
+            }
+            return null;
         }
     }
 }
