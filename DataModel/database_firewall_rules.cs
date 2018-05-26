@@ -12,14 +12,13 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class hmis_link_user_roles
+    public partial class database_firewall_rules
     {
-        public System.Guid user_id { get; set; }
-        public System.Guid role_id { get; set; }
-        public System.DateTime created_on { get; set; }
-        public System.DateTime modified_on { get; set; }
-    
-        public virtual hmis_role_base hmis_role_base { get; set; }
-        public virtual hmis_user_base hmis_user_base { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string start_ip_address { get; set; }
+        public string end_ip_address { get; set; }
+        public System.DateTime create_date { get; set; }
+        public System.DateTime modify_date { get; set; }
     }
 }

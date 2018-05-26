@@ -19,7 +19,7 @@ namespace DataModel.UnitOfWork
 
         private DBModels _context = null;
         private GenericRepository<hmis_user_base> _userRepository;
-        private GenericRepository<hsmis_role_base> _roleRepository;
+        private GenericRepository<hmis_role_base> _roleRepository;
         private GenericRepository<hmis_permission_base> _permissionRepository;
         private GenericRepository<Token> _tokenRepository;
         private GenericRepository<hmis_patient_base> _patientbaseRepository;
@@ -49,6 +49,7 @@ namespace DataModel.UnitOfWork
             get
             {
                 if (this._userRepository == null)
+
                     this._userRepository = new GenericRepository<hmis_user_base>(_context);
                 return _userRepository;
             }
@@ -57,12 +58,12 @@ namespace DataModel.UnitOfWork
         /// <summary>
         /// Get/Set Property for user repository.
         /// </summary>
-        public GenericRepository<hsmis_role_base> RoleRepository
+        public GenericRepository<hmis_role_base> RoleRepository
         {
             get
             {
                 if (this._roleRepository == null)
-                    this._roleRepository = new GenericRepository<hsmis_role_base>(_context);
+                this._roleRepository = new GenericRepository<hmis_role_base>(_context);
                 return _roleRepository;
             }
         }
@@ -75,7 +76,8 @@ namespace DataModel.UnitOfWork
             get
             {
                 if (this._permissionRepository == null)
-                    this._permissionRepository = new GenericRepository<hmis_permission_base>(_context);
+                   // this._context.Configuration.LazyLoadingEnabled = false;
+                this._permissionRepository = new GenericRepository<hmis_permission_base>(_context);
                 return _permissionRepository;
             }
         }

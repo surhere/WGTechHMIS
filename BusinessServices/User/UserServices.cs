@@ -211,8 +211,11 @@ namespace BusinessServices.Services
         /// <returns></returns>
         public UserEntity GetUserById(Guid userId)
         {
-           // UserEntity responseUser = new UserEntity();
-            var user = _unitOfWork.UserRepository.GetByID(userId);            
+            // UserEntity responseUser = new UserEntity();
+            var user = _unitOfWork.UserRepository.GetByID(userId);
+
+            //string[] includes = { "hmis_role_base" };
+            // var user = _unitOfWork.UserRepository.GetWithInclude(c => c.SID == userId, includes).ToList().FirstOrDefault();
 
             if (user != null)
             {
@@ -221,6 +224,8 @@ namespace BusinessServices.Services
                 Mapper.Initialize(cfg =>
                 {
                     cfg.CreateMap<hmis_user_base, hmisUserBase>();
+                    //cfg.CreateMap<hmis_link_role_persmissions, hmisRolePermissions>();
+                    //cfg.CreateMap<hmis_permission_base, hmisPermisionBase>();
 
                 });
                 var userModel = Mapper.Map<hmis_user_base, hmisUserBase>(user);
@@ -240,7 +245,7 @@ namespace BusinessServices.Services
 
                 foreach (hmis_link_user_roles uroles in userModel.hmis_link_user_roles)
                 {
-                    var userRoles = uroles.hsmis_role_base;
+                    var userRoles = uroles.hmis_role_base;
                     hmisRoleBase roles = new hmisRoleBase();                    
                     //
                     roles.role_name = userRoles.role_name;

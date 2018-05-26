@@ -12,10 +12,10 @@ namespace DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class hsmis_role_base
+    public partial class hmis_role_base
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public hsmis_role_base()
+        public hmis_role_base()
         {
             this.hmis_link_role_persmissions = new HashSet<hmis_link_role_persmissions>();
             this.hmis_link_user_roles = new HashSet<hmis_link_user_roles>();

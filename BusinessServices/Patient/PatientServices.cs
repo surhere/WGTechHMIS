@@ -148,7 +148,6 @@ namespace BusinessServices
         public hmisPatientBase GetPatientById(Guid patientId)
         {
             var patient = _unitOfWork.PatientBaseRepository.GetByID(patientId);
-
             string[] includes = { "hmis_patient_ext" };
             var patient1 = _unitOfWork.PatientBaseRepository.GetWithInclude(c => c.ID == patientId, includes).ToList();
 

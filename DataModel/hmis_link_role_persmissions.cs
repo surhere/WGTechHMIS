@@ -20,6 +20,6 @@ namespace DataModel
         public System.DateTime modified_on { get; set; }
     
         public virtual hmis_permission_base hmis_permission_base { get; set; }
-        public virtual hsmis_role_base hsmis_role_base { get; set; }
+        public virtual hmis_role_base hmis_role_base { get; set; }
     }
 }
