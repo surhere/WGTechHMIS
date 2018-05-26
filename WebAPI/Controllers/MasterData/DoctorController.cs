@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WebAPI.ActionFilters;
+using WebAPI.ErrorHelper;
 
 namespace WebAPI.Controllers.MasterData
 {
@@ -35,9 +36,13 @@ namespace WebAPI.Controllers.MasterData
         }
         // GET: api/Doctor
 
-        public IEnumerable<string> Get()
+        public HttpResponseMessage Get()
         {
-            return new string[] { "value1", "value2" };
+            var doctors = _doctorService.GetAllDoctors();
+            var doctorsEntities = doctors as List<hmisDoctorMaster> ?? doctors.ToList();
+            if (doctorsEntities.Any())
+                return Request.CreateResponse(HttpStatusCode.OK, doctorsEntities);
+            throw new ApiDataException(1000, "Patient not found", HttpStatusCode.NotFound);
         }
 
         // GET: api/Doctor/5

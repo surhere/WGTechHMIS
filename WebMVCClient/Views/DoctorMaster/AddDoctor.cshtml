@@ -115,8 +115,7 @@
             @Html.LabelFor(model => model.department_id, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <td>
-                    @Html.DropDownList("Department", (IEnumerable
-        <SelectListItem>)ViewData["Department"])
+                    @Html.DropDownList("Department", (IEnumerable<SelectListItem>)ViewData["Department"])
                 </td>
                   
             </div>
@@ -126,8 +125,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.department_type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <td>@Html.DropDownList("DepartmentType", (IEnumerable
-        <SelectListItem>)ViewData["DepartmentType"])</td>
+                <td>@Html.DropDownList("DepartmentType", (IEnumerable <SelectListItem>)ViewData["DepartmentType"])</td>
                
             </div>
         </div>

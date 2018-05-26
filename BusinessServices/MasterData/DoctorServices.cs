@@ -1,4 +1,6 @@
-﻿using BusinessServices.MasterData.Interfaces;
+﻿using AutoMapper;
+using BusinessEntities;
+using BusinessServices.MasterData.Interfaces;
 using DataModel;
 using DataModel.UnitOfWork;
 using System;
@@ -28,7 +30,6 @@ namespace BusinessServices.MasterData
         /// <returns></returns>
         public string CreateDoctor(BusinessEntities.hmisDoctorMaster doctorEntity)
         {
-            //int lastNumber = _unitOfWork.PatientBaseRepository.GetLastIndex("index_number", "hmis_patient_base");
 
             using (var scope = new TransactionScope())
             {
@@ -62,6 +63,29 @@ namespace BusinessServices.MasterData
                 scope.Complete();
                 return doctorHMIS.ID.ToString();
             }
+        }
+
+        /// <summary>
+        /// Get All Department Types.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public IEnumerable<hmisDoctorMaster> GetAllDoctors()
+        {
+            var doctors = _unitOfWork.DoctorMasterRepository.GetAll().ToList();
+            if (doctors.Any())
+            {
+                Mapper.Reset();
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<hmis_doctor_master, hmisDoctorMaster>();
+
+                });
+                var patientModel = Mapper.Map<List<hmis_doctor_master>, List<hmisDoctorMaster>>(doctors);
+                return patientModel;
+            }
+            return null;
         }
     }
 }

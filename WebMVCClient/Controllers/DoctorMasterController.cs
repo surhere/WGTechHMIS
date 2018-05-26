@@ -15,7 +15,32 @@ namespace WebMVCClient.Controllers
         // GET: DoctorMaster
         public ActionResult Index()
         {
-            return View();
+            var Token = "";
+            if (Session != null)
+            {
+                if (Session["AuthUserToken"] != null)
+                {
+                    Token = Session["AuthUserToken"].ToString();
+                }
+            }
+
+
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Clear();
+            GlobalVarriables.WebApiClient.DefaultRequestHeaders.Add("Token", Token);
+            IEnumerable<hmisDoctorMaster> doctorList = null;
+            HttpResponseMessage response = GlobalVarriables.WebApiClient.GetAsync("Doctor").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                //Storing the response details recieved from web api   
+                var EmpResponse = response.Content.ReadAsStringAsync().Result;
+                //Deserializing the response recieved from web api and storing into the Employee list  
+                doctorList = JsonConvert.DeserializeObject<List<hmisDoctorMaster>>(EmpResponse);
+                //Sorting    
+
+                //return Json(new { data = patientList }, JsonRequestBehavior.AllowGet);
+            }
+
+            return View(doctorList);
         }
         // GET: User
         public ActionResult AddDoctor()
@@ -23,7 +48,7 @@ namespace WebMVCClient.Controllers
             ViewData["Department"] = GetDepartment();
             ViewData["DepartmentType"] = GetDepartmentTypes();
             //ViewBag.DepartmentType = GetDepartmentTypes();
-
+  
             return View();
         }
 
@@ -136,5 +161,6 @@ namespace WebMVCClient.Controllers
             }
             return View();
         }
+
     }
 }

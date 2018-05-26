@@ -10,5 +10,6 @@ namespace BusinessServices.MasterData.Interfaces
     public interface IDoctorServices
     {
         string CreateDoctor(hmisDoctorMaster departmentTypeEntity);
+        IEnumerable<hmisDoctorMaster> GetAllDoctors();
     }
 }

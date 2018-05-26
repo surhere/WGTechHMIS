@@ -314,6 +314,7 @@
     <Content Include="Views\DepartmentMaster\AddDeparetment.cshtml" />
     <Content Include="Views\DepartmentMaster\LoadDepartment.cshtml" />
     <Content Include="Views\DoctorMaster\AddDoctor.cshtml" />
+    <Content Include="Views\DoctorMaster\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
