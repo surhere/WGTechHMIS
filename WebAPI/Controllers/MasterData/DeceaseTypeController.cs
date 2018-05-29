@@ -14,63 +14,63 @@ using WebAPI.ErrorHelper;
 
 namespace WebAPI.Controllers.MasterData
 {
-    [RoutePrefix("v1/DepartmentType/DepartmentType")]
+
+    [RoutePrefix("v1/DeceaseType/DeceaseType")]
     [AuthorizationRequired]
-    public class DepartmentTypeController : ApiController
+    public class DeceaseTypeController : ApiController
     {
         private readonly IUserServices _userServices;
         private readonly ITokenServices _tokenServices;
         private readonly IRoleService _roleService;
-  
-        private readonly IDepartmentTypeServices _departmentTypeService;
+
+        private readonly IDeceaseTypeServices _deceaseTypeService;
 
 
-        public DepartmentTypeController(IUserServices userServices, ITokenServices tokenServices, IRoleService roleService,
-            IDepartmentTypeServices departmentTypeService)
+        public DeceaseTypeController(IUserServices userServices, ITokenServices tokenServices, IRoleService roleService,
+            IDeceaseTypeServices deceaseTypeService)
         {
             _userServices = userServices;
             _tokenServices = tokenServices;
             _roleService = roleService;
-            _departmentTypeService = departmentTypeService;
+            _deceaseTypeService = deceaseTypeService;
         }
-        // GET: api/DepartmentType
+        // GET: api/DeceaseType
         public HttpResponseMessage Get()
         {
             //  return new string[] { "value1", "value2" };
-            var patients = _departmentTypeService.GetAllDepartmentTypes();
-            var patientsEntities = patients as List<hmisDepartmentTypeMaster> ?? patients.ToList();
+            var patients = _deceaseTypeService.GetAllDeceaseTypes();
+            var patientsEntities = patients as List<hmisDeceaseTypeMaster> ?? patients.ToList();
             if (patientsEntities.Any())
                 return Request.CreateResponse(HttpStatusCode.OK, patientsEntities);
             throw new ApiDataException(1000, "Patient not found", HttpStatusCode.NotFound);
-
         }
 
-        // GET: api/DepartmentType/5
+        // GET: api/DeceaseType/5
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/DepartmentType
+        // POST: api/DeceaseType
         [POST("Create")]
-        [POST("DepartmentType")]
-        public HttpResponseMessage Post([FromBody] hmisDepartmentTypeMaster hmisDepartmentTypeMaster)
+        [POST("DeseaseType")]
+        public HttpResponseMessage Post([FromBody] hmisDeceaseTypeMaster hmisDeseaseTypeMaster)
         {
-            var createResult = _departmentTypeService.CreateDepartmentType(hmisDepartmentTypeMaster);
+            var createResult = _deceaseTypeService.CreateDeceaseType(hmisDeseaseTypeMaster);
             if (createResult.Length > 0)
             {
                 string[] returnData = createResult.ToString().Split(':');
-                hmisDepartmentTypeMaster.ID = new Guid(returnData[0].ToString());
+                hmisDeseaseTypeMaster.ID = new Guid(returnData[0].ToString());
             }
-            return Request.CreateResponse(HttpStatusCode.OK, hmisDepartmentTypeMaster.ID);
+            return Request.CreateResponse(HttpStatusCode.OK, hmisDeseaseTypeMaster.ID);
         }
 
-        // PUT: api/DepartmentType/5
+        // PUT: api/DeceaseType/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE: api/DepartmentType/5
+        // DELETE: api/DeceaseType/5
         public void Delete(int id)
         {
         }

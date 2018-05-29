@@ -52,9 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyResolver.cs" />
+    <Compile Include="MasterData\DeceaseTypeServices.cs" />
     <Compile Include="MasterData\DepartmentServices.cs" />
     <Compile Include="MasterData\DepartmentTypeServices.cs" />
     <Compile Include="MasterData\DoctorServices.cs" />
+    <Compile Include="MasterData\Interfaces\IDeceaseTypeServices.cs" />
     <Compile Include="MasterData\Interfaces\IDoctorServices.cs" />
     <Compile Include="MasterData\Interfaces\IDepartmentServices.cs" />
     <Compile Include="MasterData\Interfaces\IDepartmentType.cs" />

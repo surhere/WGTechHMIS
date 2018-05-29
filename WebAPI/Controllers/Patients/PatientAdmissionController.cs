@@ -22,12 +22,12 @@ namespace WebAPI.Controllers.Patients
         private readonly IUserServices _userServices;
         private readonly ITokenServices _tokenServices;
         private readonly IRoleService _roleService;
-        private readonly IPatientService _patientService;
+        private readonly IDeceaseTypeService _patientService;
         private readonly IPatientAdmissionService _patientAdmissionService;
 
 
         public PatientAdmissionController(IUserServices userServices, ITokenServices tokenServices, IRoleService roleService, 
-            IPatientService patientService, IPatientAdmissionService patientAdmissionService)
+            IDeceaseTypeService patientService, IPatientAdmissionService patientAdmissionService)
         {
             _userServices = userServices;
             _tokenServices = tokenServices;

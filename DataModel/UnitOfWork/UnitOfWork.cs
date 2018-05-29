@@ -30,6 +30,7 @@ namespace DataModel.UnitOfWork
         private GenericRepository<hmis_department_type_master> _masterDepartmentTypeRepository;
         private GenericRepository<hmis_department_master> _masterDepartmentRepository;
         private GenericRepository<hmis_doctor_master> _masterDoctorRepository;
+        private GenericRepository<hmis_decease_type_master> _masterDeceaseType;
 
         private GenericRepository<vw_user_roles> _vwRoleRepository;
         #endregion
@@ -210,6 +211,7 @@ namespace DataModel.UnitOfWork
             }
         }
 
+
          /// <summary>
         /// Get/Set Property for Patient Post Admission - Operation  Entity Repository.
         /// </summary>
@@ -223,6 +225,23 @@ namespace DataModel.UnitOfWork
                     this._masterDoctorRepository = new GenericRepository<hmis_doctor_master>(_context);
                 }                   
                 return _masterDoctorRepository;
+            }
+        }
+
+
+        /// <summary>
+        /// Get/Set Property for Patient Post Admission - Operation  Entity Repository.
+        /// </summary>
+        public GenericRepository<hmis_decease_type_master> DeceaseTypeMasterRepository
+        {
+            get
+            {
+                if (this._masterDeceaseType == null)
+                {
+                    this._context.Configuration.LazyLoadingEnabled = false;
+                    this._masterDeceaseType = new GenericRepository<hmis_decease_type_master>(_context);
+                }
+                return _masterDeceaseType;
             }
         }
         #endregion

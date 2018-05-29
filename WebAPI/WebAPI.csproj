@@ -244,6 +244,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthenticateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MasterData\DeceaseTypeController.cs" />
     <Compile Include="Controllers\MasterData\DepartmentController.cs" />
     <Compile Include="Controllers\MasterData\DepartmentTypeController.cs" />
     <Compile Include="Controllers\MasterData\DoctorController.cs" />

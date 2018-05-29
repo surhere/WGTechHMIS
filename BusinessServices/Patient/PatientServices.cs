@@ -13,7 +13,7 @@ using Utilities;
 
 namespace BusinessServices
 {
-    public class PatientServices : IPatientService
+    public class PatientServices : IDeceaseTypeService
     {
         private readonly UnitOfWork _unitOfWork;
 

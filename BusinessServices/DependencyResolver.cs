@@ -18,11 +18,12 @@ namespace BusinessServices
             registerComponent.RegisterType<IUserServices, UserServices>();
             registerComponent.RegisterType<ITokenServices, TokenServices>();
             registerComponent.RegisterType<IRoleService, RoleServices>();
-            registerComponent.RegisterType<IPatientService, PatientServices>();
+            registerComponent.RegisterType<IDeceaseTypeService, PatientServices>();
             registerComponent.RegisterType<IPatientAdmissionService, PatientAdmissionService>();
             registerComponent.RegisterType<IDepartmentTypeServices, DepartmentTypeServices>();
             registerComponent.RegisterType<IDepartmentServices, DepartmentServices>();
             registerComponent.RegisterType<IDoctorServices, DoctorServices>();
+            registerComponent.RegisterType<IDeceaseTypeServices, DeceaseTypeServices>();
         }
     }
 }

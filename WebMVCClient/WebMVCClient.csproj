@@ -153,6 +153,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdmissionClientController.cs" />
+    <Compile Include="Controllers\DeceaseTypeController.cs" />
     <Compile Include="Controllers\DepartmentMasterController.cs" />
     <Compile Include="Controllers\DoctorMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -315,6 +316,8 @@
     <Content Include="Views\DepartmentMaster\LoadDepartment.cshtml" />
     <Content Include="Views\DoctorMaster\AddDoctor.cshtml" />
     <Content Include="Views\DoctorMaster\Index.cshtml" />
+    <Content Include="Views\DeceaseType\AddDeceaseType.cshtml" />
+    <Content Include="Views\DeceaseType\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -43,5 +43,6 @@ namespace DataModel
         public virtual DbSet<hmis_user_ext> hmis_user_ext { get; set; }
         public virtual DbSet<vw_user_roles> vw_user_roles { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<hmis_decease_type_master> hmis_decease_type_master { get; set; }
     }
 }

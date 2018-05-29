@@ -8,7 +8,7 @@ using DataModel;
 
 namespace BusinessServices
 {
-    public interface IPatientService
+    public interface IDeceaseTypeService
     {
         string CreatePatient(hmisPatientBase patientEntity);
         IEnumerable<hmisPatientBase> GetAllPatients();

@@ -21,9 +21,9 @@ namespace WebAPI.Controllers
         private readonly IUserServices _userServices;
         private readonly ITokenServices _tokenServices;
         private readonly IRoleService _roleService;
-        private readonly IPatientService _patientService;
+        private readonly IDeceaseTypeService _patientService;
 
-        public PatientController(IUserServices userServices, ITokenServices tokenServices, IRoleService roleService, IPatientService patientService)
+        public PatientController(IUserServices userServices, ITokenServices tokenServices, IRoleService roleService, IDeceaseTypeService patientService)
         {
             _userServices = userServices;
             _tokenServices = tokenServices;

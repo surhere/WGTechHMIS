@@ -48,6 +48,9 @@
         <AssociationConnector Association="DBModel.FK_hmis_link_user_roles_hmis_user_base" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_hmis_user_ext_hmis_user_base" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Tokens_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBModel.hmis_decease_type_master" Width="1.5" PointX="3" PointY="12.125" />
+        <AssociationConnector Association="DBModel.FK_hmis_decease_type_master_hmis_user_base1" />
+        <AssociationConnector Association="DBModel.FK_hmis_decease_type_master_html_user_base" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

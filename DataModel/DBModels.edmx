@@ -4,7 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="hmis_decease_type_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="decease_type_name" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="nchar" MaxLength="100" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="modified_on" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="modified_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="hmis_department_master">
           <Key>
             <PropertyRef Name="ID" />
@@ -302,6 +315,30 @@ warning 6002: The table/view 'HMIS-Azure.sys.database_firewall_rules' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_hmis_decease_type_master_hmis_user_base1">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_decease_type_master" Type="Self.hmis_decease_type_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_decease_type_master">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_decease_type_master_html_user_base">
+          <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
+          <End Role="hmis_decease_type_master" Type="Self.hmis_decease_type_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_decease_type_master">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_hmis_department_master_hmis_user_base">
           <End Role="hmis_user_base" Type="Self.hmis_user_base" Multiplicity="1" />
           <End Role="hmis_department_master" Type="Self.hmis_department_master" Multiplicity="*" />
@@ -591,6 +628,7 @@ warning 6002: The table/view 'HMIS-Azure.sys.database_firewall_rules' does not h
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="hmis_decease_type_master" EntityType="Self.hmis_decease_type_master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_department_master" EntityType="Self.hmis_department_master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_department_type_master" EntityType="Self.hmis_department_type_master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hmis_doctor_master" EntityType="Self.hmis_doctor_master" Schema="dbo" store:Type="Tables" />
@@ -655,6 +693,14 @@ warning 6002: The table/view 'HMIS-Azure.sys.database_firewall_rules' does not h
           <AssociationSet Name="FK_department_type" Association="Self.FK_department_type">
             <End Role="hmis_department_type_master" EntitySet="hmis_department_type_master" />
             <End Role="hmis_department_master" EntitySet="hmis_department_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_decease_type_master_hmis_user_base1" Association="Self.FK_hmis_decease_type_master_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_decease_type_master" EntitySet="hmis_decease_type_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_decease_type_master_html_user_base" Association="Self.FK_hmis_decease_type_master_html_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_decease_type_master" EntitySet="hmis_decease_type_master" />
           </AssociationSet>
           <AssociationSet Name="FK_hmis_department_master_hmis_user_base" Association="Self.FK_hmis_department_master_hmis_user_base">
             <End Role="hmis_user_base" EntitySet="hmis_user_base" />
@@ -753,8 +799,7 @@ warning 6002: The table/view 'HMIS-Azure.sys.database_firewall_rules' does not h
             <End Role="Tokens" EntitySet="Tokens" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -993,6 +1038,8 @@ warning 6002: The table/view 'HMIS-Azure.sys.database_firewall_rules' does not h
           <NavigationProperty Name="hmis_link_user_roles" Relationship="Self.FK_hmis_link_user_roles_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_link_user_roles" />
           <NavigationProperty Name="hmis_user_ext" Relationship="Self.FK_hmis_user_ext_hmis_user_base" FromRole="hmis_user_base" ToRole="hmis_user_ext" />
           <NavigationProperty Name="Tokens" Relationship="Self.FK_Tokens_User" FromRole="hmis_user_base" ToRole="Tokens" />
+          <NavigationProperty Name="hmis_decease_type_master" Relationship="DBModel.FK_hmis_decease_type_master_hmis_user_base1" FromRole="hmis_user_base" ToRole="hmis_decease_type_master" />
+          <NavigationProperty Name="hmis_decease_type_master1" Relationship="DBModel.FK_hmis_decease_type_master_html_user_base" FromRole="hmis_user_base" ToRole="hmis_decease_type_master" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -1499,7 +1546,55 @@ warning 6002: The table/view 'HMIS-Azure.sys.database_firewall_rules' does not h
             <End Role="hmis_user_base" EntitySet="hmis_user_base" />
             <End Role="Tokens" EntitySet="Tokens" />
           </AssociationSet>
+          <EntitySet Name="hmis_decease_type_master" EntityType="DBModel.hmis_decease_type_master" />
+          <AssociationSet Name="FK_hmis_decease_type_master_hmis_user_base1" Association="DBModel.FK_hmis_decease_type_master_hmis_user_base1">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_decease_type_master" EntitySet="hmis_decease_type_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hmis_decease_type_master_html_user_base" Association="DBModel.FK_hmis_decease_type_master_html_user_base">
+            <End Role="hmis_user_base" EntitySet="hmis_user_base" />
+            <End Role="hmis_decease_type_master" EntitySet="hmis_decease_type_master" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="hmis_decease_type_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="decease_type_name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="modified_by" Type="Guid" Nullable="false" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="hmis_user_base" Relationship="DBModel.FK_hmis_decease_type_master_hmis_user_base1" FromRole="hmis_decease_type_master" ToRole="hmis_user_base" />
+          <NavigationProperty Name="hmis_user_base1" Relationship="DBModel.FK_hmis_decease_type_master_html_user_base" FromRole="hmis_decease_type_master" ToRole="hmis_user_base" />
+        </EntityType>
+        <Association Name="FK_hmis_decease_type_master_hmis_user_base1">
+          <End Type="DBModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_decease_type_master" Role="hmis_decease_type_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_decease_type_master">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hmis_decease_type_master_html_user_base">
+          <End Type="DBModel.hmis_user_base" Role="hmis_user_base" Multiplicity="1" />
+          <End Type="DBModel.hmis_decease_type_master" Role="hmis_decease_type_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hmis_user_base">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="hmis_decease_type_master">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1778,6 +1873,20 @@ warning 6002: The table/view 'HMIS-Azure.sys.database_firewall_rules' does not h
                 <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
                 <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hmis_decease_type_master">
+            <EntityTypeMapping TypeName="DBModel.hmis_decease_type_master">
+              <MappingFragment StoreEntitySet="hmis_decease_type_master">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified_on" ColumnName="modified_on" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="decease_type_name" ColumnName="decease_type_name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

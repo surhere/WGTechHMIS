@@ -32,6 +32,8 @@ namespace DataModel
             this.hmis_link_user_roles = new HashSet<hmis_link_user_roles>();
             this.hmis_user_ext = new HashSet<hmis_user_ext>();
             this.Tokens = new HashSet<Token>();
+            this.hmis_decease_type_master = new HashSet<hmis_decease_type_master>();
+            this.hmis_decease_type_master1 = new HashSet<hmis_decease_type_master>();
         }
     
         public System.Guid SID { get; set; }
@@ -76,5 +78,9 @@ namespace DataModel
         public virtual ICollection<hmis_user_ext> hmis_user_ext { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Token> Tokens { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_decease_type_master> hmis_decease_type_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<hmis_decease_type_master> hmis_decease_type_master1 { get; set; }
     }
 }
